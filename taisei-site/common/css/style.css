@@ -1,14 +1,18 @@
+/* [WC] 2026-08-18、うにさんとの配色検討の結果「ライト＆ブルー案」に決定。
+   --tea系の変数名は旧グリーン基調時代の名残（緑茶の「tea」）だが、サイト全体で
+   100箇所以上参照されているため、値だけ差し替えて変数名はそのまま維持している
+   （taisei-site-プロジェクト情報.md 3.2節参照）。 */
 :root{
-  --tea:#3E6B4A;
-  --tea-deep:#2A4A34;
-  --tea-pale:#E7EFE4;
+  --tea:#2E6DA4;
+  --tea-deep:#1F4E75;
+  --tea-pale:#EAF2F9;
   --mikan:#F3903F;
   --mikan-deep:#D97425;
-  --paper:#FBF8F1;
+  --paper:#FAFBFC;
   --card:#FFFFFF;
-  --ink:#2B2A22;
-  --ink-soft:#6E6C5C;
-  --line:#E4DFCF;
+  --ink:#1F2733;
+  --ink-soft:#667085;
+  --line:#E2E6EB;
   --radius:16px;
   --maxw:1160px;
   --ease:cubic-bezier(.2,.8,.3,1);
@@ -203,38 +207,33 @@ h6{font-size:11px;}
   #editView .navUl>li{opacity:1;transform:none;}
 }
 
-#hero{position:relative;overflow:hidden;color:#fff;min-height:560px;display:flex;align-items:flex-end;}
-@media(max-width:760px){#hero{min-height:460px;}}
-.heroSlider{position:absolute;inset:0;z-index:0;}
+/* [WC] 2026-08-18、配色検討の結果「ライト＆ブルー案」採用に伴いヒーローを刷新。
+   写真を暗いスクリムで覆うフルブリード構成から、写真とテキストを左右に分割する
+   構成に変更した（見た目の重さを減らす狙い、taisei-site-プロジェクト情報.md
+   3.2節参照）。#editViewフォールバックは、写真パネルがposition:absoluteの
+   フルブリードでなくなったことで大部分不要になったが、.slideの不透明度切り替え
+   （JS依存）だけは引き続き必要（CLAUDE.md 8節）。 */
+#hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1.1fr 1fr;grid-template-rows:1fr;background:linear-gradient(160deg,#fff 0%,var(--tea-pale) 100%);}
+@media(max-width:760px){#hero{display:block;}}
+.heroSlider{position:relative;grid-column:2;grid-row:1;min-height:360px;overflow:hidden;}
+@media(max-width:760px){.heroSlider{min-height:220px;}}
 .heroSlider .slide{position:absolute;inset:0;opacity:0;transition:opacity .8s var(--ease);}
 .heroSlider .slide.isActive{opacity:1;}
 .heroSlider .slide .imgPlaceholder{height:100%;border-radius:0;border-width:0;}
-.heroScrim{position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(20,32,24,.86) 0%,rgba(20,32,24,.42) 46%,rgba(20,32,24,.18) 100%);}
-.heroDots{position:absolute;bottom:22px;left:0;right:0;display:flex;gap:8px;justify-content:center;z-index:3;}
-.heroDots button{width:8px;height:8px;border-radius:50%;border:0;background:rgba(255,255,255,.5);padding:0;cursor:pointer;transition:all .2s;}
+.heroDots{position:absolute;bottom:18px;left:0;right:0;display:flex;gap:8px;justify-content:center;z-index:3;}
+.heroDots button{width:8px;height:8px;border-radius:50%;border:0;background:rgba(255,255,255,.6);padding:0;cursor:pointer;transition:all .2s;}
 .heroDots button.isActive{background:var(--mikan);transform:scale(1.3);}
-/* [WC] .heroSlider/.slide/.heroScrim/.heroDotsはposition:absoluteの重なりレイヤー。
-   #heroSlider内の画像は将来エリア化・画像スライドブロック化される可能性があり、
-   その場合.rdareaItem等の追加ラップ（position:relative）の影響で絶対配置の
-   基準がずれ、位置がくずれるおそれがある（CLAUDE.md 8節）。編集画面では厳密な
-   重ね合わせ位置の再現よりも「常時表示・編集可能」を優先し、staticに変更する。
-   あわせて.slideはJSが動かないため2枚目以降が.isActive無しのままopacity:0で
-   埋もれてしまう点も、編集画面では全スライドをopacity:1にして解決する
-   （実際の見え方が本番と異なる点は編集画面限定の許容範囲、CLAUDE.md 8節参照） */
-#editView .heroSlider,
-#editView .heroSlider .slide,
-#editView .heroScrim,
-#editView .heroDots{position:static;}
 #editView .heroSlider .slide{opacity:1;}
-.heroContent{position:relative;z-index:2;width:100%;padding:56px 0 44px;}
+.heroContent{grid-column:1;grid-row:1;position:relative;z-index:2;padding:56px 40px 56px 24px;display:flex;flex-direction:column;justify-content:center;}
+@media(max-width:760px){.heroContent{padding:40px 24px 48px;}}
 .heroTop{max-width:680px;}
-.heroBadge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:7px 16px;font-size:12.5px;font-weight:700;color:#fff;}
-.heroBadge .dot{width:7px;height:7px;border-radius:50%;background:var(--mikan);}
-.heroTitle{font-size:clamp(28px,4.4vw,44px);font-weight:900;line-height:1.55;color:#fff;margin-top:18px;text-shadow:0 2px 16px rgba(0,0,0,.25);}
-.heroTitle .accent{color:var(--mikan);}
-.heroLead{margin-top:18px;font-size:14.5px;color:#E7EFE4;max-width:520px;}
-.heroCards{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:40px;}
-@media(max-width:760px){.heroCards{grid-template-columns:1fr;}}
+.heroBadge{display:inline-flex;align-items:center;gap:8px;background:var(--tea-pale);border:1px solid var(--line);border-radius:999px;padding:7px 16px;font-size:12.5px;font-weight:700;color:var(--tea-deep);}
+.heroBadge .fuji{width:15px;height:15px;color:var(--mikan-deep);flex-shrink:0;}
+.heroTitle{font-size:clamp(26px,3.6vw,40px);font-weight:900;line-height:1.55;color:var(--tea-deep);margin-top:18px;}
+.heroTitle .accent{color:var(--mikan-deep);}
+.heroLead{margin-top:18px;font-size:14.5px;color:var(--ink-soft);max-width:520px;}
+.heroCards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:36px;}
+@media(max-width:980px){.heroCards{grid-template-columns:1fr;}}
 .heroCard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px;transition:transform .2s,box-shadow .2s;}
 .heroCard:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(43,42,34,.08);}
 .heroCard .hcTag{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--mikan-deep);}

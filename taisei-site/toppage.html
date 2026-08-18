@@ -77,7 +77,11 @@
 
 <section id="hero">
 <!-- [WC] このheroSlider内の画像3枚は、装飾用の固定画像ではなく差し替え頻度が高いコンテンツ画像。
-     エリア化するか、画像スライドブロックへの置き換えを検討 -->
+     エリア化するか、画像スライドブロックへの置き換えを検討。
+     2026-08-18、配色検討の結果「ライト＆ブルー案」採用に伴い、写真を暗いスクリムで
+     覆う従来のフルブリード構成から、写真とテキストを左右に分割するレイアウトに変更
+     （taisei-site-プロジェクト情報.md 3.2節参照）。heroScrimは廃止、heroDotsは
+     写真パネル内に移動した。 -->
 <div class="heroSlider" id="heroSlider">
 <div class="slide isActive">
 <div class="imgPlaceholder">
@@ -100,17 +104,15 @@
 <span class="phSize">推奨サイズ 1600 × 900px</span>
 </div>
 </div>
-</div>
-<div class="heroScrim"></div>
 <div class="heroDots" id="heroDots"></div>
+</div>
 
 <div class="heroContent">
-<div class="inner">
 <div class="heroTop">
 <!-- [WC] エリア候補: are005（見出し・リード文をテキストブロックとして編集可能に）
      ※h1はbody先頭の視覚非表示テキストがWebChangerのH1指定対象。
        このheroTitleはデザイン上の見出し(h2)で、H1指定の対象ではない。 -->
-<span class="heroBadge"><span class="dot"></span>焼津・藤枝　自社物件を自社管理</span>
+<span class="heroBadge"><svg class="fuji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 19 L9 6.5 L11.3 10 L13 7.3 L21.5 19Z"/><path d="M9.7 11.8 L10.7 13.2 L11.6 12 L12.6 13.3 L13.6 12"/></svg>焼津・藤枝　自社物件を自社管理</span>
 <h2 class="heroTitle">大家の顔が見えるから、<br><span class="accent">住んでからも、任せてからも</span>安心。</h2>
 <p class="heroLead">仲介会社を挟まず、13棟130世帯を家族で直接管理。入居者様にもオーナー様にも、同じ担当者がずっと向き合います。</p>
 </div>
@@ -142,7 +144,6 @@
 <p>売買・土地運用・ソーラー発電・リフォームまで、同じ大家目線でご相談に乗ります。</p>
 <span class="hcLink">オーナー向けサービスを見る<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8 H13 M8 3 L13 8 L8 13"/></svg></span>
 </a>
-</div>
 </div>
 </div>
 </section>
