@@ -185,9 +185,18 @@
   `common/css`・`common/js`への同梱に置き換えるのは、CDN側に問題がある
   （提供終了・案件固有の細かいカスタマイズが必要等）といった個別の事情がある
   場合のみでよい。`taisei-site/`では一時期Google FontsのCDN参照をやめて
-  システムフォントに切り替えていたが（`taisei-site-プロジェクト情報.md`3.3節参照）、
-  これは上記の実務知見が判明する前の対応であり、他案件でこの判断を踏襲する
-  必要はない。
+  システムフォントに切り替えていたが、2026-08-18にこの実務知見を踏まえて
+  CDN参照に戻した（`taisei-site-プロジェクト情報.md`3.3節参照）。
+  Google Fonts埋め込みの標準形（`<head>`内、`common/css/style.css`の
+  `<link>`より前に置く）：
+  ```html
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=フォント名:wght@400;700&display=swap">
+  ```
+  複数書体をまとめて読み込む場合は`&family=`をクエリに追加する
+  （`?family=A:wght@400;700&family=B:wght@400&display=swap`）。使うウェイトを
+  絞って指定しておくと読み込むファイル数を抑えられる。
 - **汎用`button`セレクタや`#何か button`のような広いセレクタでボタンの位置
   （position/top/right/bottom/left/width等）を指定してはいけない**。
   WebChanger自身が内容変更画面に出す「編集する」ボタン（YouTube/マップ埋め込み
