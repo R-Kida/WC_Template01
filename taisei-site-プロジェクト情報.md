@@ -286,12 +286,22 @@ WebChanger化してリニューアルする、その**準備段階のデザイ�
 - 本文用：`Noto Sans JP` → フォールバック `Hiragino Kaku Gothic ProN, Yu Gothic, sans-serif`
 - 数値・ラベル用（家賃・徒歩分数など、データとして見せたい箇所）：`Space Mono`
   → フォールバック `SFMono-Regular, Consolas, monospace`
+- **絵文字フォールバック追加済み（2026-08-18）**：ブログ本文等で編集者が絵文字を
+  使う場面を想定し、上記3スタックすべての末尾（総称ファミリーの直前）に
+  `"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"`
+  を`--font-emoji`という共通CSS変数として追加した（CLAUDE.md 4節参照）。
+  Chromiumでのスクリーンショットでフルカラー絵文字表示を確認済み。
 
 **重要**：当初はGoogle Fonts CDNで読み込んでいたが、WebChanger化ツールが
 外部CDN参照のCSS/JSに警告を出す仕様のため、**システムフォントのフォールバック
-スタックに変更済み**（`var(--font-display)`等のCSS変数経由）。Zen Maru Gothicの
-見た目を本気で再現したい場合は、フォントファイルを`common/css`配下に自前で
-配置し`@font-face`で読み込む必要がある（未対応、将来検討事項）。
+スタックに変更済み**（`var(--font-display)`等のCSS変数経由）。
+**訂正（2026-08-18）**：この判断は「外部CDNは原則使用不可」という誤った理解に
+基づくものだった。実務上はGoogle Fonts等の定番CDNはほぼ全案件で使用されており
+（CLAUDE.md 4節参照）、`taisei-site/`をシステムフォントのままにしておく技術的
+必然性はない。Zen Maru Gothicの見た目を本気で再現したい場合、CDN参照に戻すか
+（現状の方針転換を踏まえれば選択肢として有力）、フォントファイルを
+`common/css`配下に自前で配置し`@font-face`で読み込むか、どちらでも対応可能
+（いずれも未対応、実写真差し替え等と合わせて将来判断）。
 
 ### 3.4 レスポンシブブレークポイント
 
