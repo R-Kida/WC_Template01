@@ -1,10 +1,35 @@
 (function(){
   var navToggle = document.getElementById('navToggle');
   var globalNav = document.getElementById('globalNav');
+  var navBackdrop = document.getElementById('navBackdrop');
+  function closeNav(){
+    if(navToggle){ navToggle.classList.remove('isOpen'); }
+    if(globalNav){ globalNav.classList.remove('isOpen'); }
+    if(navBackdrop){ navBackdrop.classList.remove('isOpen'); }
+  }
   if(navToggle && globalNav){
     navToggle.addEventListener('click', function(){
-      navToggle.classList.toggle('isOpen');
-      globalNav.classList.toggle('isOpen');
+      var willOpen = !globalNav.classList.contains('isOpen');
+      navToggle.classList.toggle('isOpen', willOpen);
+      globalNav.classList.toggle('isOpen', willOpen);
+      if(navBackdrop){ navBackdrop.classList.toggle('isOpen', willOpen); }
+    });
+    if(navBackdrop){
+      navBackdrop.addEventListener('click', closeNav);
+    }
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){ closeNav(); }
+    });
+  }
+
+  var toTopBtn = document.getElementById('toTop');
+  if(toTopBtn){
+    window.addEventListener('scroll', function(){
+      if(window.scrollY > 480){ toTopBtn.classList.add('isVisible'); }
+      else{ toTopBtn.classList.remove('isVisible'); }
+    }, {passive: true});
+    toTopBtn.addEventListener('click', function(){
+      window.scrollTo({top: 0, behavior: 'smooth'});
     });
   }
 

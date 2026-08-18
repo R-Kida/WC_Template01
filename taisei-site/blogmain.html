@@ -45,6 +45,9 @@
 </nav>
 <button id="navToggle" aria-label="メニュー"><span></span><span></span><span></span></button>
 </div>
+<!-- [WC] ハンバーガーメニューを開いた時の背景幕。エリア・ブロック化しない
+     固定UI要素（common/css/style.cssのnavBackdrop・common/js/script.js参照） -->
+<div id="navBackdrop"></div>
 </header>
 
 <!-- [WC] エリア候補: are0XX（パンくずリスト。トップページ以外に設置する通例、
@@ -143,6 +146,11 @@
 <div id="copy">© Taisei Kogyo Co., Ltd.</div>
 </footer>
 
+<!-- [WC] ページトップへ戻るボタン。エリア・ブロック化しない固定UI要素。
+     common/js/script.jsがスクロール位置に応じて表示・非表示を切り替える -->
+<button id="toTop" aria-label="ページトップへ戻る">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19 V5 M5 12 L12 5 L19 12"/></svg>
+</button>
 <script src="common/js/script.js"></script>
 </body>
 </html>

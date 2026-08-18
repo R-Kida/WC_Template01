@@ -435,7 +435,7 @@ WebChanger化ツールの変換工程で自動生成されるものであり、�
 
 | 問題 | 対応状況 | 詳細 |
 |---|---|---|
-| Google Fonts CDN依存 | ✅対応済み | システムフォントに切替（3.3節） |
+| Google Fonts CDN依存 | ✅対応済み（Google Fonts CDNへ復帰） | 実務上CDNはほぼ全案件で使用するとの方針転換を受け、CDN参照に戻した（3.3節・CLAUDE.mdの4節） |
 | 汎用`button`セレクタでの位置指定崩れ | ✅対応済み | `#navToggle`等に個別スコープ（CLAUDE.mdの4節） |
 | ブログ記事タイトルがh1担っていた | ✅対応済み | h3に修正、隠しh1を別設置（CLAUDE.mdの5節） |
 | 全ページのh1誤用（デザイン見出し=h1） | ✅対応済み | 隠しh1＋デザイン見出しをh2/h3に変更（CLAUDE.mdの5節） |
@@ -451,6 +451,8 @@ WebChanger化ツールの変換工程で自動生成されるものであり、�
 | `<html class="cmshtml">`/`<body class="cmsbody">`の設置 | ✅対応済み | `taisei-site/`の4テンプレート全てに追加済み（CLAUDE.mdの3節・12節A） |
 | `#globalNav`の`position:fixed`に`#editView`フォールバック | ✅対応済み | `#editView #globalNav{position:static;transform:none;}`を追加（CLAUDE.mdの10節3番・7章参照） |
 | ヒーロー画像レイヤー（`.heroSlider`等）のposition:absoluteの編集画面ズレ | ✅対応済み | `#editView`向け`position:static`フォールバック追加（CLAUDE.mdの10節4番） |
+| `#globalHeader`の`backdrop-filter`が`#globalNav`の`position:fixed`を破壊 | ✅対応済み（2026-08-18発見・即修正） | `backdrop-filter`は`fixed`子孫のcontaining blockになるため、モバイルメニューを開くとパネルがヘッダーの高さ分に潰れる不具合。ヘッドレスブラウザで実際にメニュー展開状態をレンダリングして発見。`backdrop-filter`を`::before`疑似要素に移して解消（CLAUDE.mdの4節） |
+| ページトップへ戻るボタン・スムーズスクロール・ハンバーガーメニューの開閉演出 | ✅対応済み | `#toTop`（スクロール追従ボタン）・`#navBackdrop`（開いた時の背景幕）・メニュー項目のstagger（ずらしフェードイン）を追加。`#contactBar`との重なりは`:has()`で回避、編集画面でのナビ本体の永久非表示は`.reveal`と同じ理屈で`#editView`フォールバック追加。スムーズスクロールは元々`html{scroll-behavior:smooth}`で対応済みだった（実装ガイド1.10節参照） |
 | モバイルナビのJS依存・編集画面での挙動 | ✅対応済み | `transform:none`を同時に解除して常時表示に（CLAUDE.mdの10節5番） |
 | `position:sticky`の編集画面影響 | ❓未検証 | CLAUDE.mdの10節3番 |
 | 横並び／折り返しエリアの列数制御の実際の挙動 | ✅解決済み | WebChanger公式資料で確認（CLAUDE.mdの10節6番・13節D） |

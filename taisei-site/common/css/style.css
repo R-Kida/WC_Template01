@@ -104,7 +104,19 @@ h6{font-size:11px;}
 #utilityBar a:hover{color:var(--mikan);}
 #utilityBar .ubBadge{background:rgba(255,255,255,.12);padding:3px 10px;border-radius:999px;font-size:11px;}
 
-#globalHeader{position:sticky;top:0;z-index:100;background:rgba(251,248,241,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+/* [WC] 重要な干渉に注意：backdrop-filterをposition:fixedの子孫を持つ要素に直接
+   付けると、その要素がfixed子孫の「containing block」になってしまい、
+   position:fixedが画面（ビューポート）基準ではなくこの要素基準の配置に化ける
+   （filter/backdrop-filter/transform/will-change:transform全般に共通するCSS仕様）。
+   #globalHeaderの子孫である#globalNav（モバイルメニュー、980px以下でposition:fixed
+   に切り替わる、6節参照）がまさにこれに該当し、実際にヘッドレスChromiumで
+   ハンバーガーメニューを開いた状態を検証した際、パネルが画面全体を覆わずヘッダーの
+   高さ分に潰れてしまう不具合として発見した（2026-08-18）。対処として、背景色と
+   backdrop-filterを#globalHeader自体ではなく::before疑似要素に移し、
+   #globalHeader自身はbackdrop-filterを持たない（＝fixed子孫のcontaining blockに
+   ならない）ようにしてある。 */
+#globalHeader{position:sticky;top:0;z-index:100;border-bottom:1px solid var(--line);}
+#globalHeader::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(251,248,241,.94);backdrop-filter:blur(8px);}
 #globalHeader .inner{display:flex;align-items:center;justify-content:space-between;height:82px;gap:20px;}
 #logo a{display:flex;align-items:center;gap:10px;}
 .logoMark{width:36px;height:36px;flex-shrink:0;}
@@ -125,16 +137,38 @@ h6{font-size:11px;}
 #navToggle.isOpen span:nth-child(2){opacity:0;}
 #navToggle.isOpen span:nth-child(3){top:20px;transform:rotate(-45deg);}
 @media(max-width:980px){
-  #globalNav{position:fixed;inset:82px 0 0 0;background:var(--paper);flex-direction:column;padding:16px 20px 32px;overflow-y:auto;transform:translateX(100%);transition:transform .3s var(--ease);}
+  #globalNav{position:fixed;inset:82px 0 0 0;z-index:99;background:var(--paper);flex-direction:column;padding:16px 20px 32px;overflow-y:auto;transform:translateX(100%);transition:transform .3s var(--ease);}
   #globalNav.isOpen{transform:translateX(0);}
+  #navToggle{z-index:99;}
   .navUl{flex-direction:column;align-items:stretch;gap:2px;}
   .navUl>li>div>a{padding:15px;border-bottom:1px solid var(--line);border-radius:0;}
   #navToggle{display:block;}
+  /* [WC] メニューを開いた時の演出：背景に半透明の幕(#navBackdrop)をフェードイン
+     させつつ、メニュー項目を上から順にずらしてフェードイン(stagger)させる。
+     #navBackdropはnavToggleクリック時にJS側でも.isOpenをトグルするだけ
+     （common/js/script.js）で、見た目はすべてCSS側のトランジションに任せている。
+     #navBackdrop(z-index:98)は#globalNav/#navToggle(z-index:99)より低くし、
+     幕がメニュー本体や閉じるボタンを覆って操作不能にならないようにしている。 */
+  #navBackdrop{position:fixed;inset:0;z-index:98;background:rgba(20,32,24,.4);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .3s var(--ease);}
+  #navBackdrop.isOpen{opacity:1;pointer-events:auto;}
+  .navUl>li{opacity:0;transform:translateX(16px);transition:opacity .35s var(--ease),transform .35s var(--ease);}
+  #globalNav.isOpen .navUl>li{opacity:1;transform:translateX(0);}
+  .navUl>li:nth-child(1){transition-delay:.05s;}
+  .navUl>li:nth-child(2){transition-delay:.1s;}
+  .navUl>li:nth-child(3){transition-delay:.15s;}
+  .navUl>li:nth-child(4){transition-delay:.2s;}
+  .navUl>li:nth-child(5){transition-delay:.25s;}
+  .navUl>li:nth-child(6){transition-delay:.3s;}
   /* [WC] position:fixedは内容変更画面の外へ要素が飛び出すため編集画面ではstaticに変更する。
      あわせてtransformも解除しないと、JSが動かない編集画面ではtranslateX(100%)のまま
      ナビが常に画面外に隠れた状態になり、576px以下でレンダリングされた場合に
-     編集できなくなってしまう（CLAUDE.md 8節・10節3/5番参照） */
+     編集できなくなってしまう（CLAUDE.md 8節・10節3/5番参照）。ナビ項目のstagger演出も
+     同じ理由（JSが動かず.isOpenが付かない）で初期状態のopacity:0のまま埋もれて
+     しまうため、.revealと同様に#editViewで強制的に見える状態に上書きする。
+     #navBackdropは実コンテンツではない装飾要素なので、初期状態(非表示)のままで
+     問題ない（強制表示すると逆に編集画面を覆ってしまうため、あえて対応しない）。 */
   #editView #globalNav{position:static;transform:none;}
+  #editView .navUl>li{opacity:1;transform:none;}
 }
 
 #hero{position:relative;overflow:hidden;color:#fff;min-height:560px;display:flex;align-items:flex-end;}
@@ -187,6 +221,22 @@ h6{font-size:11px;}
 #contactBar .cbTel .telNum{font-family:var(--font-mono);font-size:15px;}
 #contactBar .cbTel .telLabel{font-size:10px;font-weight:500;color:var(--ink-soft);}
 @media(max-width:600px){#contactBar .cbItem{font-size:11.5px;padding:12px 6px;}}
+/* [WC] ページトップへ戻るボタン。common/js/script.jsがスクロール位置に応じて
+   .isVisibleを付け外しする。#contactBar（スクロール追従の下部固定バー）が
+   存在するページでは重なってしまうため、:has()で#contactBarの有無を判定して
+   bottomを押し上げている（うにさんの「干渉しがち」という懸念への対応）。
+   内容変更画面ではJSが動かないため常に非表示のまま（8節）だが、これは装飾用の
+   固定UIチャンプであり編集対象コンテンツではないため実害なしと判断し、
+   #editView向けの強制表示フォールバックはあえて追加していない。 */
+#toTop{position:fixed;right:20px;bottom:20px;z-index:80;width:46px;height:46px;border-radius:50%;border:0;background:var(--tea-deep);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(43,42,34,.2);cursor:pointer;opacity:0;pointer-events:none;transform:translateY(14px);transition:opacity .25s var(--ease),transform .25s var(--ease),background .2s;}
+#toTop svg{width:18px;height:18px;}
+#toTop:hover{background:var(--mikan-deep);}
+#toTop.isVisible{opacity:1;pointer-events:auto;transform:translateY(0);}
+body:has(#contactBar) #toTop{bottom:88px;}
+@media(max-width:760px){
+  #toTop{right:14px;bottom:14px;width:42px;height:42px;}
+  body:has(#contactBar) #toTop{bottom:78px;}
+}
 
 .section{padding:92px 0;}
 @media(max-width:760px){.section{padding:58px 0;}}

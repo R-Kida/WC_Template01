@@ -163,6 +163,39 @@
   自動判定できない（未検証、CLAUDE.md 10節参照）。その場合はリンク文言側に
   「（PDF）」等を手動で書き添えること。
 
+### 1.10 固定UI要素（ページトップへ戻る・ハンバーガーメニューの演出）
+
+いずれも4テンプレート共通の固定要素で、エリア・ブロック化しない
+（1.1節と同じ扱い）。
+
+- **`#toTop`（ページトップへ戻るボタン）**：右下固定、`common/js/script.js`が
+  `window.scrollY > 480`でクラス`isVisible`を付け外しする。スムーズスクロールは
+  `html{scroll-behavior:smooth}`（元々`common/css/style.css`に設置済み）任せで、
+  ボタン自体は`window.scrollTo({top:0,behavior:'smooth'})`を呼ぶだけ。
+  `#contactBar`（トップ・一般ページ・ブログ一覧に存在するスクロール追従の
+  下部固定バー）と重なるため、`body:has(#contactBar) #toTop{bottom:88px;}`で
+  そのページだけ位置を押し上げている。内容変更画面ではJSが動かないため
+  常に非表示のままだが、装飾用の固定UIチャンプ（編集対象コンテンツではない）
+  なので実害なしと判断し、`#editView`向けの強制表示フォールバックはあえて
+  追加していない。
+- **`#navBackdrop`（メニューを開いた時の背景幕）＋メニュー項目のstagger演出**：
+  `#navToggle`クリック時に`common/js/script.js`が`#navBackdrop`にも`isOpen`を
+  トグルし、背景を薄暗くフェードインさせつつ`.navUl>li`を上から順にずらして
+  フェードインさせる（「ちょっとおしゃれな動き」の要望への対応、2026-08-18）。
+  背景幕クリックでも閉じられる（`navBackdrop`のクリックで`closeNav()`）ほか、
+  Escapeキーでも閉じられる。ナビ本体（実際のコンテンツであるリンク）は
+  JSが動かない編集画面で開いた状態にならず初期状態のopacity:0のまま埋もれて
+  しまうため、`.reveal`と同じ理屈で`#editView .navUl>li{opacity:1;transform:none;}`
+  を追加済み。`#navBackdrop`自体は装飾要素なので強制表示していない。
+- **重要な発見（2026-08-18）**：`#globalHeader`に付けていた`backdrop-filter`
+  （すりガラス効果）が、子孫の`#globalNav`の`position:fixed`を壊す不具合が
+  あった（`backdrop-filter`はfixed子孫のcontaining blockになる、というCSS仕様。
+  CLAUDE.md 4節参照）。ヘッドレスブラウザで実際にメニュー展開状態を
+  レンダリングして発見し、`backdrop-filter`を`#globalHeader::before`疑似要素に
+  移して解消した。**この手のコンポーネント（アコーディオン・モーダル等、
+  「開いた状態」が通常のページロードでは現れないUI）を追加・変更した場合は、
+  可能なら実際にその状態をスクリーンショット等で確認すること**。
+
 ---
 
 ## 2. ページ別ガイド
