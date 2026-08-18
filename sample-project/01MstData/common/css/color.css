@@ -1,0 +1,152 @@
+.cmsbody {
+    background: #000;
+}
+
+.cmshtml .globalh1 {
+    color: #fff;
+}
+
+.cmshtml #globalHeader {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(255, 255, 255, 0) 100%);
+    background-repeat: no-repeat;
+    background-position: 0 -200px;
+}
+
+.cmshtml #globalNav .navUl .navUl>* {
+    background: #fff;
+    border: 1px solid #ccc;
+
+}
+
+.cmshtml #globalNav .navUl .navUl a {
+    color: #222;
+}
+
+.cmshtml #globalNav .navUl .navUl>*:hover a {
+    color: #fff;
+}
+
+.cmshtml #globalNav .navUl .navUl>*:hover {
+    background: #222;
+    color: #fff;
+}
+
+.cmshtml #globalNav a {
+    color: #fff;
+}
+
+
+.cmshtml #globalNavSub a {
+    border: 1px solid #fff;
+
+}
+
+.cmshtml #wrapper_topMovieBg {
+    background: #000;
+}
+
+.cmshtml #wrapper_topMovieBg:before {
+    background-image: radial-gradient(rgba(0, 0, 0, 0.4) 30%, rgba(0, 0, 0, 0.1) 30%);
+    background-size: 3px 3px;
+
+}
+
+.cmshtml .topMovieCatch {
+    color: #fff;
+
+}
+
+.cmshtml #globalNavSub a:hover {
+    background: #222;
+    color: #fff;
+}
+
+.cmshtml .sp-button {
+    background: #ddd;
+
+}
+
+.cmshtml .contentsLink a {
+    background-image: linear-gradient(to right, #43cea2 0%, #185a9d 51%, #43cea2 100%);
+    background-size: 200% auto;
+    background-position: 0 50%;
+
+}
+
+.cmshtml #globalFooter {
+    background: #5d6270;
+    color: #fff;
+}
+
+.cmshtml #globalFooter a:link,
+.cmshtml #globalFooter a:visited {
+    color: #ffffff;
+}
+
+.cmshtml #globalFooter a:hover,
+.cmshtml #globalFooter a:active {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+}
+
+.cmshtml #copy {
+    background: #444;
+    color: rgba(255, 255, 255, 0.6);
+
+
+}
+
+
+.cmshtml .sp-button.sp-selected-button {
+    background: #222;
+}
+
+
+
+.cmshtml .footerContactItem01 a {
+    background-image: linear-gradient(to right, #FF512F 0%, #DD2476 51%, #FF512F 100%);
+}
+
+.cmshtml .footerContactItem02 a {
+    background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA 51%, #1FA2FF 100%);
+}
+
+
+
+
+
+.cmshtml a:link,
+.cmshtml a:visited {
+    color: #0055dd;
+    transition: 0.2s color;
+}
+
+.cmshtml a:hover,
+.cmshtml a:active {
+    color: #73c7f8;
+}
+
+.cmshtml .contentsBg {
+    background: url(../img/bg02.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+@media (min-width: 1px) and (max-width: 576px) {
+    .cmshtml #globalNav .navUl a {
+        color: #222;
+        display: block;
+    }
+
+    .cmshtml #globalNavMain>.navUl>li {
+        background: #eee;
+    }
+
+    .cmshtml #globalNavSub a:hover {
+        color: #fff;
+    }
+
+
+
+
+
+}
