@@ -36,12 +36,34 @@
 <span class="logoText">タイセイホーム<small>太盛工業株式会社 不動産部</small></span>
 </a>
 </div>
+<!-- [WC] ドロップダウンメニュー（準備のみ・現状は非表示、2026-08-18うにさんの要望）：
+     普段はサブメニューを畳んでおき、将来必要になったら有効化できるよう先に組んでおく。
+     有効化方法：<body class="cmsbody">に`hasSubNav`クラスを追加するだけ
+     （common/css/style.cssの`.hasSubNav`スコープ参照）。
+     注意：現状ヘッダーナビ自体をエリア・ブロック化しない固定要素として扱っている方針
+     （9節）のため、この表示・非表示はWebChanger管理画面の「表示・非表示」機能とは別物
+     （あちらはブロック単位の機能、13節K）。クライアント側で本当にCMS画面から
+     オン・オフしたい場合は、このサブメニュー部分だけを別途エリア・ブロック化する
+     （12節Hの再帰参照パターン）方針に切り替える必要がある。
+     また、有効化する際はモバイル（ハンバーガーメニュー）側のタップ開閉挙動が未実装
+     なので、common/js/script.jsに追加対応が必要。 -->
 <nav id="globalNav">
 <ul class="navUl">
 <li><div><a href="toppage.html">トップ</a></div></li>
 <li><div><a href="toppage.html#features">タイセイの特徴</a></div></li>
-<li><div><a href="normalpage.html">賃貸物件</a></div></li>
-<li><div><a href="normalpage.html">売買物件</a></div></li>
+<li class="hasDropdown"><div><a href="normalpage.html">賃貸物件<svg class="navCaret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9 L12 15 L18 9"/></svg></a></div>
+<ul class="subNav">
+<li><a href="normalpage.html">エリアで探す</a></li>
+<li><a href="normalpage.html">間取りで探す</a></li>
+<li><a href="normalpage.html">空室一覧</a></li>
+</ul>
+</li>
+<li class="hasDropdown"><div><a href="normalpage.html">売買物件<svg class="navCaret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9 L12 15 L18 9"/></svg></a></div>
+<ul class="subNav">
+<li><a href="normalpage.html">売買物件を探す</a></li>
+<li><a href="normalpage.html">土地活用のご相談</a></li>
+</ul>
+</li>
 <li class="isActive"><div><a href="blogframe.html">お知らせ</a></div></li>
 <li><div><a href="normalpage.html">会社案内</a></div></li>
 </ul>

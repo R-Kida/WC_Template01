@@ -125,8 +125,38 @@ h6{font-size:11px;}
 
 .navUl{display:flex;gap:2px;align-items:center;}
 .navUl>li{position:relative;}
-.navUl>li>div>a{display:block;padding:11px 14px;font-size:13.5px;font-weight:700;color:var(--ink);border-radius:999px;transition:all .2s;white-space:nowrap;}
+.navUl>li>div>a{position:relative;display:flex;align-items:center;padding:11px 14px;font-size:13.5px;font-weight:700;color:var(--ink);border-radius:999px;transition:background .2s,color .2s;white-space:nowrap;}
 .navUl>li>div>a:hover,.navUl>li.isActive>div>a{background:var(--tea-pale);color:var(--tea-deep);}
+/* [WC] オンマウス時、背景色の変化に加えて中央から伸びる下線アニメーションを追加
+   （2026-08-18、「色が変わるだけじゃない気の利いたアニメーション」の要望対応） */
+.navUl>li>div>a::after{content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;border-radius:2px;background:var(--mikan);transform:scaleX(0);transition:transform .25s var(--ease);transform-origin:center;}
+.navUl>li>div>a:hover::after,.navUl>li.isActive>div>a::after{transform:scaleX(1);}
+.navCaret{width:11px;height:11px;margin-left:2px;flex-shrink:0;transition:transform .25s var(--ease);}
+.navUl>li.hasDropdown:hover .navCaret,.navUl>li.hasDropdown:focus-within .navCaret{transform:rotate(180deg);}
+/* [WC] ドロップダウンサブメニュー。準備のみで現状は非表示（2026-08-18）。
+   <body>に`hasSubNav`クラスを追加すると有効化される（toppage.html等の
+   #globalNav手前のコメント参照）。有効化前は.hasSubNavが存在しないため
+   ホバーしても何も起きない＝安全に「予備」の状態を保てる。 */
+.subNav{position:absolute;top:100%;left:0;min-width:190px;margin-top:8px;padding:8px;
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 18px 36px rgba(43,42,34,.14);
+  opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-8px);
+  transition:opacity .25s var(--ease),transform .25s var(--ease),visibility .25s;}
+.subNav>li{opacity:0;transform:translateY(-4px);transition:opacity .2s var(--ease),transform .2s var(--ease);}
+/* [WC] ドロップダウンのホバー表示はデスクトップ幅限定（981px以上）にスコープしている。
+   モバイル（ハンバーガーメニュー）側はタップでの開閉挙動が別途必要なため、
+   実装するまでは.hasSubNavを付けてもモバイルでは何も表示されない安全設計 */
+@media(min-width:981px){
+  .hasSubNav .navUl>li.hasDropdown:hover .subNav,
+  .hasSubNav .navUl>li.hasDropdown:focus-within .subNav{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);}
+  .hasSubNav .navUl>li.hasDropdown:hover .subNav>li,
+  .hasSubNav .navUl>li.hasDropdown:focus-within .subNav>li{opacity:1;transform:translateY(0);}
+}
+.subNav>li:nth-child(1){transition-delay:.03s;}
+.subNav>li:nth-child(2){transition-delay:.06s;}
+.subNav>li:nth-child(3){transition-delay:.09s;}
+.subNav>li>a{display:block;padding:10px 14px;border-radius:9px;font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;transition:background .15s,color .15s,padding-left .15s;}
+.subNav>li>a:hover{background:var(--tea-pale);color:var(--tea-deep);padding-left:18px;}
 
 #navToggle{display:none;background:none;border:0;width:40px;height:40px;position:relative;flex-shrink:0;font-family:inherit;cursor:pointer;}
 #navToggle span{position:absolute;left:8px;right:8px;height:2.4px;border-radius:2px;background:var(--tea-deep);transition:all .25s var(--ease);}
@@ -142,6 +172,8 @@ h6{font-size:11px;}
   #navToggle{z-index:99;}
   .navUl{flex-direction:column;align-items:stretch;gap:2px;}
   .navUl>li>div>a{padding:15px;border-bottom:1px solid var(--line);border-radius:0;}
+  .navUl>li>div>a::after{display:none;}
+  .navCaret{display:none;}
   #navToggle{display:block;}
   /* [WC] メニューを開いた時の演出：背景に半透明の幕(#navBackdrop)をフェードイン
      させつつ、メニュー項目を上から順にずらしてフェードイン(stagger)させる。
