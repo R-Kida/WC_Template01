@@ -1,0 +1,7 @@
+{
+"cmndata": {"type":"cmndata","file":"","block":"cmndata.blk","name":"※共通エリア"},
+"blogframe": {"type":"blogframe","file":"blogframe.html","block":"blogframe.blk","name":"ブログ枠"},
+"blogmain": {"type":"blogmain","file":"blogmain.html","block":"blogmain.blk","name":"ブログ記事"},
+"page": {"type":"pagecont","file":"page.html","block":"page.blk","name":"ページ"},
+"toppage": {"type":"pagetop","file":"toppage.html","block":"toppage.blk","name":"トップページ"}
+}
