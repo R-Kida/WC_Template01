@@ -328,6 +328,14 @@
 </div>
 </section>
 
+<!-- [WC] .numはスクロールで表示された時にcommon/js/script.jsが0から数え上げる
+     カウントアップ演出付き（2026-08-18）。静的HTML側には常に最終値（50/13/130/2）を
+     書いておき、JSが実際に動いた場合だけ0にリセットしてアニメーションする方式。
+     WebChangerの編集画面ではJSが一切動かないため（CLAUDE.md 8節）、静的な最終値がそのまま
+     表示され続け壊れない。目標値はJSにハードコードせずDOM（この.numの中身）から
+     読み取るため、将来ここが編集されても対応不要。#statsは既存の.reveal（スクロール
+     フェードイン）と同じIntersectionObserverに相乗りさせており、専用の別観測を
+     追加していない（干渉を避けるため、CLAUDE.md 8節参照）。 -->
 <section id="stats" class="reveal">
 <div class="inner statsRow">
 <div class="item"><div class="num">50<span>年</span></div><div class="label">創業からの実績（昭和51年〜）</div></div>
