@@ -45,7 +45,12 @@
 </div>
 </header>
 
-<!-- [WC] エリア候補: are002（ページタイトル・リード文。ページごとに内容を差し替える） -->
+<!-- [WC] エリア候補: are002（パンくずリスト。トップページ以外に設置する通例、
+     6.6節参照）。標準ブロックの「パンくずリスト」ブロック（.rdBreadcrumb）を配置。
+     このテンプレートは複数ページで使い回すため、内容はページごとに差し替える -->
+<div id="breadcrumb" class="inner"></div>
+
+<!-- [WC] エリア候補: are003（ページタイトル・リード文。ページごとに内容を差し替える） -->
 <section id="pageHead">
 <div class="inner">
 <span class="pageEyebrow">RENTAL PROPERTIES</span>
@@ -67,6 +72,14 @@
 <!-- [WC] このテンプレートは「一般ページ用」の共通骨格。
      賃貸物件一覧に限らず、会社案内・売買物件一覧・初めての方へ 等、
      複数ページで使い回す想定。ページごとに中身が変わる部分＝下のrentListがメインエリア候補。 -->
+
+<!-- [WC] リリース後の保険エリア（メインエリアの上、6.6節参照）：空の共通エリア
+     ＋空の通常エリアのペア。将来「メインコンテンツの上にもう1セクション追加したい」
+     という要望が来た際にテンプレート改修なしで対応するための予備枠。空の状態では
+     見た目に影響しない -->
+<div id="mainAreaAboveCmn"></div>
+<div id="mainAreaAboveAre"></div>
+
 <main>
 <!-- [WC] エリア候補: are001 メインエリア（mstcon="1"）。data-prc=""をこのdivに付与 -->
 <div class="inner" id="rentList">
@@ -198,6 +211,11 @@
 </div>
 </div>
 </main>
+
+<!-- [WC] リリース後の保険エリア（メインエリアの下、6.6節参照）：空の共通エリア
+     ＋空の通常エリアのペア。上の保険エリアと対になる予備枠 -->
+<div id="mainAreaBelowCmn"></div>
+<div id="mainAreaBelowAre"></div>
 
 <footer id="globalFooter">
 <div class="inner footerTop">
