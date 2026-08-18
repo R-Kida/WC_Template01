@@ -437,7 +437,7 @@ WebChanger化ツールの変換工程で自動生成されるものであり、�
 | `blogframe.html`のH1指定可否 | △ほぼ解決 | テンプレート機構としては通常ページと同格のH1プレースホルダーを確認。化ツールGUI上の実操作は未検証（CLAUDE.mdの10節2番・12節M） |
 | `<html class="cmshtml">`/`<body class="cmsbody">`の設置 | ✅対応済み | `taisei-site/`の4テンプレート全てに追加済み（CLAUDE.mdの3節・12節A） |
 | `#globalNav`の`position:fixed`に`#editView`フォールバック | ✅対応済み | `#editView #globalNav{position:static;transform:none;}`を追加（CLAUDE.mdの10節3番・7章参照） |
-| `.propTag`等のposition:absoluteの編集画面ズレ | ❌未対応 | CLAUDE.mdの10節4番 |
+| ヒーロー画像レイヤー（`.heroSlider`等）のposition:absoluteの編集画面ズレ | ✅対応済み | `#editView`向け`position:static`フォールバック追加（CLAUDE.mdの10節4番） |
 | モバイルナビのJS依存・編集画面での挙動 | ✅対応済み | `transform:none`を同時に解除して常時表示に（CLAUDE.mdの10節5番） |
 | `position:sticky`の編集画面影響 | ❓未検証 | CLAUDE.mdの10節3番 |
 | 横並び／折り返しエリアの列数制御の実際の挙動 | ✅解決済み | WebChanger公式資料で確認（CLAUDE.mdの10節6番・13節D） |
@@ -482,8 +482,13 @@ WebChanger化ツールの変換工程で自動生成されるものであり、�
    上記1番のカード設計変更を先に固めてから着手するとやり直しが少ない）
 4. **お問い合わせページの作成**（CLAUDE.mdの9節の`.contact_item_table`系クラスに
    準拠したデザイン）
-5. **未対応の`position:absolute`要素（`.heroDots`・`.heroScrim`・
-   `.recoTag`相当等）の`#editView`フォールバック追加**（CLAUDE.mdの10節4番）
+5. ~~**未対応の`position:absolute`要素（`.heroDots`・`.heroScrim`等）の
+   `#editView`フォールバック追加**~~
+   → **✅対応済み（2026-08-18）**：`.heroSlider`/`.slide`/`.heroScrim`/
+   `.heroDots`に`#editView`向け`position:static`（`.slide`は`opacity:1`も）
+   フォールバックを追加した（CLAUDE.mdの10節4番）。フォームページ完成後、
+   お問い合わせページ用の表示枠（`.contact_item_table`系）にも同種の
+   確認が必要になれば追って対応する。
 6. **標準ブロック仕様書の残り2回分（合計56ファイル中、未受領の分）が届いたら
    精読し、CLAUDE.mdの13節・11節を更新する**（2026-08-18時点でうにさんから「出せる資料は
    1回目の44ファイルまで」と申告あり、追加分は保留中。画像スライド全属性・地図・

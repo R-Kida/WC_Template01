@@ -430,11 +430,18 @@
   「編集画面と実際の表示が異なる場合がある」「編集時の利便性を考え、
   内容変更画面でのレイアウトを調整している場合がある」という点は
   **顧客への事前説明が必要**、と資料に明記されている。
-  → `taisei-site/`内で`position:absolute`を使っている箇所
-  （`.propTag`バッジ、`.heroScrim`、`.heroDots`等）のうち、実際に
-  エリア・ブロック化する予定の箇所（特に`.recoCard`内の`.recoTag`相当）は
-  要注意。現状は本番用CSSのみで、`#editView`対応は**未着手**
-  （10節「要検証事項」参照）。
+  → `taisei-site/`内で`position:absolute`を使っている箇所のうち、
+  `.heroSlider`/`.slide`/`.heroScrim`/`.heroDots`（ヒーロー画像の重なり
+  レイヤー。将来エリア化・画像スライドブロック化の可能性がある）は
+  **✅対応済み（2026-08-18）**：`#editView`向けに`position:static`
+  （`.slide`は`opacity:1`も追加）のフォールバックを`common/css/style.css`に
+  追加した。なお当初この項目で挙げていた`.propTag`は現行デザインには
+  存在せず（`.recoCard`内のバッジは現状`.recoTag`というクラス名で
+  `display:inline-block`実装のため、そもそも`position:absolute`ではなく
+  この問題に該当しない）。`#navToggle span`（ハンバーガーメニューの3本線）も
+  `position:absolute`だが、`#navToggle`自体がどのテンプレートでもエリア・
+  ブロック化候補になっていない固定UIのため、`.rdareaItem`ラップの影響を
+  受けず対応不要と判断した。
 
 - **`position: fixed`は編集画面の外へ要素が飛び出してしまうため、
   `absolute`か`static`に変更する**：
@@ -635,12 +642,18 @@ WebChangerが常に読み込む固定CSS/JS（`{%%rdtplcmn_fix%%}/force.css`、
    使用しているため、実際に編集画面で確認が必要（未検証のまま）。
    なお`#globalNav`（モバイルメニュー展開時）の`position:fixed`については
    ✅対応済み（下記・`taisei-site-プロジェクト情報.md`7章参照）。`sticky`単体の検証課題のみ残っている。
-4. **`.propTag`（物件カードの「賃貸」等のバッジ、`position:absolute`）が
-   編集画面でズレるか**：これがユーザーブロック化された場合、
+4. ~~**`position:absolute`要素（`.heroDots`・`.heroScrim`等）が
+   編集画面でズレるか**~~
+   → **✅対応済み（2026-08-18）**：これらがユーザーブロック化された場合、
    `.rdareaItem`/`.rdareaContents`の追加ラップの影響で位置がズレる
-   可能性が高い。`#editView`向けの`position:static`フォールバックを
-   追加すべきか検討要。**未対応**（`.heroDots`・`.heroScrim`・`.navToggle span`等
-   他のposition:absolute箇所も同様に要点検、12節I参照）。
+   可能性を考慮し、`.heroSlider`/`.slide`/`.heroScrim`/`.heroDots`
+   （ヒーロー画像の重なりレイヤー）に`#editView`向け`position:static`
+   フォールバック（`.slide`は`opacity:1`も併せて）を`common/css/style.css`に
+   追加した（12節I参照）。`#navToggle span`は`#navToggle`自体がエリア・
+   ブロック化候補になっていない固定UIのため対応不要と判断（対応見送りではなく
+   検討の結果不要と確定）。当初この項目で挙げていた`.propTag`は現行デザインには
+   存在しない（`.recoCard`のバッジは`.recoTag`というクラス名で
+   `display:inline-block`実装のため、そもそもこの問題に該当しない）。
 5. ~~**モバイルナビ（`#navToggle`によるJS制御）の編集画面での挙動**~~
    → **✅対応済み（2026-08-18）**：`#globalNav`の`position:fixed`に
    `#editView`フォールバック（`position:static;transform:none;`）を追加した際に、

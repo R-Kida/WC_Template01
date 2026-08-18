@@ -68,7 +68,7 @@ h1,h2,h3{font-family:var(--font-display);margin:0;}
   /* [WC] position:fixedは内容変更画面の外へ要素が飛び出すため編集画面ではstaticに変更する。
      あわせてtransformも解除しないと、JSが動かない編集画面ではtranslateX(100%)のまま
      ナビが常に画面外に隠れた状態になり、576px以下でレンダリングされた場合に
-     編集できなくなってしまう（CLAUDE.md 6.8節・6.10節3/5番参照） */
+     編集できなくなってしまう（CLAUDE.md 8節・10節3/5番参照） */
   #editView #globalNav{position:static;transform:none;}
 }
 
@@ -82,6 +82,19 @@ h1,h2,h3{font-family:var(--font-display);margin:0;}
 .heroDots{position:absolute;bottom:22px;left:0;right:0;display:flex;gap:8px;justify-content:center;z-index:3;}
 .heroDots button{width:8px;height:8px;border-radius:50%;border:0;background:rgba(255,255,255,.5);padding:0;cursor:pointer;transition:all .2s;}
 .heroDots button.isActive{background:var(--mikan);transform:scale(1.3);}
+/* [WC] .heroSlider/.slide/.heroScrim/.heroDotsはposition:absoluteの重なりレイヤー。
+   #heroSlider内の画像は将来エリア化・画像スライドブロック化される可能性があり、
+   その場合.rdareaItem等の追加ラップ（position:relative）の影響で絶対配置の
+   基準がずれ、位置がくずれるおそれがある（CLAUDE.md 8節）。編集画面では厳密な
+   重ね合わせ位置の再現よりも「常時表示・編集可能」を優先し、staticに変更する。
+   あわせて.slideはJSが動かないため2枚目以降が.isActive無しのままopacity:0で
+   埋もれてしまう点も、編集画面では全スライドをopacity:1にして解決する
+   （実際の見え方が本番と異なる点は編集画面限定の許容範囲、CLAUDE.md 8節参照） */
+#editView .heroSlider,
+#editView .heroSlider .slide,
+#editView .heroScrim,
+#editView .heroDots{position:static;}
+#editView .heroSlider .slide{opacity:1;}
 .heroContent{position:relative;z-index:2;width:100%;padding:56px 0 44px;}
 .heroTop{max-width:680px;}
 .heroBadge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:7px 16px;font-size:12.5px;font-weight:700;color:#fff;}
