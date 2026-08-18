@@ -23,11 +23,27 @@ body{margin:0;font-family:var(--font-body);color:var(--ink);background:var(--pap
 img{max-width:100%;display:block;}
 a{color:inherit;text-decoration:none;}
 ul{list-style:none;margin:0;padding:0;}
-h1,h2,h3{font-family:var(--font-display);margin:0;}
-/* 見出しブロック(.rdplanetitle)のforce.css既定サイズ(h2=3rem等)をブランドに合わせて上書き */
-.rdplanetitle h2{font-family:var(--font-display);font-weight:900 !important;font-size:clamp(21px,2.8vw,29px) !important;color:var(--tea-deep);}
-.rdplanetitle h3{font-family:var(--font-display);font-weight:900 !important;font-size:19px !important;color:var(--tea-deep);}
-.rdplanetitle h4,.rdplanetitle h5,.rdplanetitle h6{font-family:var(--font-display);font-weight:700 !important;color:var(--tea-deep);}
+/* [WC] 見出し(h1〜h6)は「無加工のまま使うことはない」前提で、素のタグに対して
+   常時ブランドデザインを適用する（2026-08-18、うにさんの方針決定）。個別の
+   設置箇所（.sectionTitle・.heroCard h3等）は下記のタグ単体ルールより詳細度が
+   高い個別クラス指定なので、そちらが優先されて上書きされる。デザイン不要な
+   箇所（ヘッダーのロゴ文言等）はそもそも見出しタグ・見出しブロックを使わず
+   固定要素として組むこと。 */
+h1,h2,h3,h4,h5,h6{font-family:var(--font-display);color:var(--tea-deep);margin:0;line-height:1.4;}
+h1,h2,h3{font-weight:900;}
+h4,h5,h6{font-weight:700;}
+h2{font-size:clamp(21px,2.8vw,29px);}
+h3{font-size:16.5px;}
+h4{font-size:13px;}
+h5{font-size:12px;}
+h6{font-size:11px;}
+/* 見出しブロック(.rdplanetitle)のforce.css既定サイズ(h2=3rem等)をブランドに合わせて上書き。
+   force.css側の詳細度・読込順に確実に勝つよう!importantを付与（CLAUDE.md 7節・9節参照） */
+.rdplanetitle h2{font-weight:900 !important;font-size:clamp(21px,2.8vw,29px) !important;}
+.rdplanetitle h3{font-weight:900 !important;font-size:16.5px !important;}
+.rdplanetitle h4{font-weight:700 !important;font-size:13px !important;}
+.rdplanetitle h5{font-weight:700 !important;font-size:12px !important;}
+.rdplanetitle h6{font-weight:700 !important;font-size:11px !important;}
 .inner{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
 @media(max-width:760px){.inner{padding:0 20px;}}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
