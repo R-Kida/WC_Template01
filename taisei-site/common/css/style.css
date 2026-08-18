@@ -65,6 +65,11 @@ h1,h2,h3{font-family:var(--font-display);margin:0;}
   .navUl{flex-direction:column;align-items:stretch;gap:2px;}
   .navUl>li>div>a{padding:15px;border-bottom:1px solid var(--line);border-radius:0;}
   #navToggle{display:block;}
+  /* [WC] position:fixedは内容変更画面の外へ要素が飛び出すため編集画面ではstaticに変更する。
+     あわせてtransformも解除しないと、JSが動かない編集画面ではtranslateX(100%)のまま
+     ナビが常に画面外に隠れた状態になり、576px以下でレンダリングされた場合に
+     編集できなくなってしまう（CLAUDE.md 6.8節・6.10節3/5番参照） */
+  #editView #globalNav{position:static;transform:none;}
 }
 
 #hero{position:relative;overflow:hidden;color:#fff;min-height:560px;display:flex;align-items:flex-end;}
