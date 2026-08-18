@@ -84,9 +84,13 @@
      一覧カードの実際の見た目は、common/css/style.cssの
      .rdnewArticle系セレクタ（ブログ最新記事一覧ブロックの出力用）で調整する。 -->
 
-<!-- [WC] リリース後の保険エリア（メインコンテンツの上、6節参照）：空の共通
-     エリア。blogframe.htmlは通常エリアを置けないため`cmn`のみ（7節） -->
-<div id="mainAreaAboveCmn"></div>
+<!-- [WC] リリース後の保険エリア（メインコンテンツの上、6節参照）：空のエリア。
+     blogframe.htmlは通常エリア（are）を置けないため`cmn`系のみ（7節）。
+     ただし通常の`cmn`（サイト全体共通）ではなく、blogframe.html/blogmain.html
+     同士だけで共有される**ブログ共通エリア（`blogcmn="1"`）**として登録すること
+     （2026-08-18、うにさんの指摘。12節L参照）。一般ページ（normalpage.html）の
+     保険エリアとはIDも別番号にし、互いに予備コンテンツが漏れないようにする -->
+<div id="mainAreaAboveBlogCmn"></div>
 
 <main>
 <div class="inner" id="blogList">
@@ -149,8 +153,9 @@
 </div>
 </main>
 
-<!-- [WC] リリース後の保険エリア（メインコンテンツの下、6節参照）：空の共通エリア -->
-<div id="mainAreaBelowCmn"></div>
+<!-- [WC] リリース後の保険エリア（メインコンテンツの下、6節参照）：空のブログ共通
+     エリア（`blogcmn="1"`、上の注記参照） -->
+<div id="mainAreaBelowBlogCmn"></div>
 
 <footer id="globalFooter">
 <div class="inner footerTop">
