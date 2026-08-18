@@ -22,6 +22,21 @@ html{scroll-behavior:smooth;}
 body{margin:0;font-family:var(--font-body);color:var(--ink);background:var(--paper);line-height:1.85;-webkit-font-smoothing:antialiased;}
 img{max-width:100%;display:block;}
 a{color:inherit;text-decoration:none;}
+/* [WC] ナビ・ボタン・カード等の構造的リンクはcolor:inheritのままでよいが（個別クラスで
+   別途デザイン済み）、本文中のテキストリンク（リッチテキストエディタが挿入する素のaタグ、
+   13節G）はこのままだと地の文と見分けがつかない。太字は<strong>と紛らわしくなるため
+   使わず、通常時は下線なし・色のみ（コントラストは強めに）とし、hover/focus時にだけ
+   下線を追加して「触れると分かる」手がかりを補う（2026-08-18、うにさんとの方針決定）。
+   訪問済みリンクの色分けもテキストリンクの範囲だけに限定する（ナビ・ボタンは常設UIの
+   ため、訪問済みで色が変わると不自然）。対象は標準テキストブロックの出力クラス
+   （.rdplanetext/.rdplanetext2、9節）と、独自の本文相当コンテナ（.articleBody・
+   .noticeBox p）。 */
+.rdplanetext a,.rdplanetext2 a,.articleBody a,.noticeBox p a{color:var(--tea-deep);text-decoration:none;text-underline-offset:3px;}
+.rdplanetext a:visited,.rdplanetext2 a:visited,.articleBody a:visited,.noticeBox p a:visited{color:var(--tea);}
+.rdplanetext a:hover,.rdplanetext a:focus-visible,
+.rdplanetext2 a:hover,.rdplanetext2 a:focus-visible,
+.articleBody a:hover,.articleBody a:focus-visible,
+.noticeBox p a:hover,.noticeBox p a:focus-visible{color:var(--mikan-deep);text-decoration:underline;}
 ul{list-style:none;margin:0;padding:0;}
 /* [WC] 見出し(h1〜h6)は「無加工のまま使うことはない」前提で、素のタグに対して
    常時ブランドデザインを適用する（2026-08-18、うにさんの方針決定）。個別の
