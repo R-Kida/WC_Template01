@@ -471,7 +471,7 @@ WebChanger化ツールの変換工程で自動生成されるものであり、�
 | 賃貸一覧ページの物件掲載漏れ（プレステージ） | ✅対応済み | リニューアル版に追加済み（2.5節） |
 | 工業製品事業部の露出 | ✅対応済み | フッターのみに縮小（2.8節） |
 | `body`セレクタの`.cmsbody`自動変換有無 | ✅確認済み（対応不要） | 自動変換されると実物確認済み。手動修正不要（CLAUDE.mdの12節B） |
-| `blogframe.html`のH1指定可否 | △ほぼ解決 | テンプレート機構としては通常ページと同格のH1プレースホルダーを確認。化ツールGUI上の実操作は未検証（CLAUDE.mdの10節2番・12節M） |
+| `blogframe.html`/`blogmain.html`のH1指定可否 | ✅実機確認済み（2026-08-19） | 「5.H1部分の指定」画面には他ページと同様に一覧表示され、h1タグの存在は認識されるが、この画面からの内容の手動保存はブログテンプレート専用の警告で不可（内容は別の仕組みに委ねられると推測、未確認）。`toppage.html`/`normalpage.html`は問題なく保存される（CLAUDE.mdの5節・10節2番） |
 | `<html class="cmshtml">`/`<body class="cmsbody">`の設置 | ✅対応済み | `taisei-site/`の4テンプレート全てに追加済み（CLAUDE.mdの3節・12節A） |
 | `#globalNav`の`position:fixed`に`#editView`フォールバック | ✅対応済み | `#editView #globalNav{position:static;transform:none;}`を追加（CLAUDE.mdの10節3番・7章参照） |
 | ヒーロー画像レイヤー（`.heroSlider`等）のposition:absoluteの編集画面ズレ | ✅対応済み（過去の経緯） | `#editView`向け`position:static`フォールバックを追加していたが（CLAUDE.mdの10節4番）、2026-08-19に`.slide`/`.heroDots`構造自体を廃止したため現在は該当なし。下記の新しい行を参照 |
