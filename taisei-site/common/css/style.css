@@ -245,7 +245,7 @@ h6{font-size:11px;}
 .heroCard:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(43,42,34,.08);}
 .heroCard .hcTag{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--mikan-deep);}
 .heroCard h3{font-size:19px;color:var(--tea-deep);margin-top:10px;}
-.heroCard p{font-size:13px;color:var(--ink-soft);margin-top:10px;}
+.heroCard .hcBody{font-size:13px;color:var(--ink-soft);margin-top:10px;}
 .heroCard .hcLink{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:13px;font-weight:700;color:var(--tea-deep);}
 .heroCard .hcLink svg{width:14px;height:14px;transition:transform .2s;}
 .heroCard:hover .hcLink svg{transform:translateX(3px);}
@@ -378,27 +378,18 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .rentCta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:12.5px;font-weight:700;color:var(--tea-deep);}
 .rentCta svg{width:13px;height:13px;}
 
-#blogList{padding:56px 0 96px;}
-.blogGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-@media(max-width:900px){.blogGrid{grid-template-columns:1fr 1fr;}}
-@media(max-width:600px){.blogGrid{grid-template-columns:1fr;}}
-.blogCard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .2s,box-shadow .2s;}
-.blogCard:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(43,42,34,.08);}
-.blogShot{height:170px;}
-.blogBody{padding:20px 22px 24px;}
-.blogDate{font-family:var(--font-mono);font-size:11px;color:var(--mikan-deep);}
 .blogCat{display:inline-block;font-size:10.5px;font-weight:700;color:var(--tea-deep);background:var(--tea-pale);padding:3px 10px;border-radius:999px;margin-left:8px;}
-.blogBody h3{font-size:15px;color:var(--tea-deep);margin-top:10px;line-height:1.6;}
-.blogExcerpt{font-size:12.5px;color:var(--ink-soft);margin-top:8px;line-height:1.85;}
-.blogPager{display:flex;justify-content:center;gap:8px;margin-top:48px;}
-.blogPager a{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:8px;font-size:13px;font-weight:700;color:var(--tea-deep);}
-.blogPager a.isActive{background:var(--tea-deep);border-color:var(--tea-deep);color:#fff;}
 
 /* ============================================================
    ブログ最新記事一覧ブロック（rdnewArticle）用の装飾
    WebChanger側が出力する実際のHTML構造に対して当てるCSS。
-   .blogGrid/.blogCard はblogframe.html内の見た目確認用モックアップで、
-   実運用では下記rdnewArticle系クラスが本体になる。
+   ★2026-08-19：blogframe.html内にあった見た目確認用モックアップ
+   （#blogList/.blogGrid/.blogCard/.blogShot/.blogBody/.blogDate/.blogExcerpt/
+   .blogPager）はHTML側を削除したのに合わせてCSSも削除した（エリア化できない
+   箇所に静的HTMLを残すと化ツール登録作業で紛らわしいため、
+   taisei-site-エリアブロック設置ガイド.md 1.12節参照）。実運用では下記
+   rdnewArticle系クラスが本体になる（.blogCatはblogmain.htmlの記事メタ情報で
+   引き続き使用しているため残してある）。
    サムネイル・カテゴリ/タグはWebChanger標準でdisplay:noneのため
    明示的にdisplay:blockで解除する必要がある（公式リリースノート記載の仕様）。
 ============================================================ */
@@ -450,12 +441,12 @@ body:has(#contactBar) #toTop{bottom:88px;}
   .footerTop{grid-template-columns:1fr 1fr;row-gap:32px;column-gap:20px;}
   .footerBrand{grid-column:1 / -1;text-align:center;}
   .footerBrand a{justify-content:center;}
-  .footerBrand p{max-width:320px;margin:0 auto;}
+  .footerBrand .footerDesc{max-width:320px;margin:0 auto;}
   .footerContact{grid-column:1 / -1;text-align:center;}
 }
 .footerBrand a{display:flex;align-items:center;gap:10px;color:#fff;margin-bottom:14px;}
 .footerBrand .logoText{font-family:var(--font-display);font-weight:900;font-size:15px;}
-.footerBrand p{font-size:12px;line-height:1.9;}
+.footerBrand .footerDesc{font-size:12px;line-height:1.9;}
 .footerCol h4{font-size:11.5px;letter-spacing:.08em;color:#F3C08D;font-family:var(--font-mono);margin-bottom:14px;}
 .footerCol ul li{margin-bottom:9px;}
 .footerCol ul a{font-size:12.5px;}

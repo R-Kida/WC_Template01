@@ -121,13 +121,17 @@
 </div>
 
 <div class="heroContent">
-<div class="heroTop">
 <!-- [WC] エリア候補: are005（見出し・リード文をテキストブロックとして編集可能に）
+     ★対象要素：直後の<div class="heroTop">をエリアの親にする。このコメントは
+     heroTopの直下（子要素）ではなく、必ずheroTopより外側に置くこと（エリア直下に
+     コメントがあるとバリデーションエラーになるため、2026-08-19実機検証・
+     CLAUDE.md 3節参照）。
      ※h1はbody先頭の視覚非表示テキストがWebChangerのH1指定対象。
        このheroTitleはデザイン上の見出し(h2)で、H1指定の対象ではない。 -->
+<div class="heroTop">
 <span class="heroBadge"><svg class="fuji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 19 L9 6.5 L11.3 10 L13 7.3 L21.5 19Z"/><path d="M9.7 11.8 L10.7 13.2 L11.6 12 L12.6 13.3 L13.6 12"/></svg>焼津・藤枝　自社物件を自社管理</span>
 <h2 class="heroTitle">大家の顔が見えるから、<br><span class="accent">住んでからも、任せてからも</span>安心。</h2>
-<p class="heroLead">仲介会社を挟まず、13棟130世帯を家族で直接管理。入居者様にもオーナー様にも、同じ担当者がずっと向き合います。</p>
+<div class="heroLead">仲介会社を挟まず、13棟130世帯を家族で直接管理。入居者様にもオーナー様にも、同じ担当者がずっと向き合います。</div>
 </div>
 
 <!-- [WC] 修正（13節A-1・2026-08-18、うにさんの指摘で方針修正）：
@@ -148,13 +152,13 @@
 <a href="normalpage.html" class="heroCard">
 <span class="hcTag">FOR TENANTS</span>
 <h3>お部屋をお探しの方へ</h3>
-<p>自社物件は仲介手数料無料。トラブル時も自社管理だから即時対応します。</p>
+<div class="hcBody">自社物件は仲介手数料無料。トラブル時も自社管理だから即時対応します。</div>
 <span class="hcLink">賃貸物件を見る<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8 H13 M8 3 L13 8 L8 13"/></svg></span>
 </a>
 <a href="toppage.html#business" class="heroCard">
 <span class="hcTag">FOR OWNERS</span>
 <h3>土地・不動産のご相談</h3>
-<p>売買・土地運用・ソーラー発電・リフォームまで、同じ大家目線でご相談に乗ります。</p>
+<div class="hcBody">売買・土地運用・ソーラー発電・リフォームまで、同じ大家目線でご相談に乗ります。</div>
 <span class="hcLink">オーナー向けサービスを見る<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8 H13 M8 3 L13 8 L8 13"/></svg></span>
 </a>
 </div>
@@ -180,14 +184,18 @@
 <main>
 
 <!-- [WC] エリア候補: are001 メインエリア（mstcon="1"）
-     このsectionをメインコンテンツに指定する場合、親のdiv.innerにdata-prc=""を付与
+     ★対象要素：直後の<section id="properties">の中の<div class="inner">を
+     メインエリアの配置先（親タグ）にする。つまり<div class="inner">の直下に
+     {%%rdarea id="are001" mstcon="1"%%}を配置し、<div class="inner">自体に
+     data-prc=""属性を付与する（1節参照）。<section>タグ自体をエリアの親にする
+     わけではない点に注意。
      新着情報・RSSの概要はこのエリアから自動生成される -->
 <section id="properties" class="section reveal">
 <div class="inner">
 <div class="sectionHead">
 <span class="sectionEyebrow">RECOMMENDED</span>
 <h2 class="sectionTitle">おすすめ賃貸物件情報</h2>
-<p class="sectionLead">すべて自社所有・自社管理の物件です。仲介手数料はかかりません。詳しくは賃貸物件一覧ページをご覧ください。</p>
+<div class="sectionLead">すべて自社所有・自社管理の物件です。仲介手数料はかかりません。詳しくは賃貸物件一覧ページをご覧ください。</div>
 </div>
 <!-- [WC] 修正（13節A-1・2026-08-18、うにさんの指摘で方針修正）：
      recoCardは画像・タグ・物件名・価格・所在地の5項目が編集可能で、カスタム
@@ -299,7 +307,8 @@
 
 </div>
 
-<!-- [WC] 共通エリア候補: cmn001（複数ページで使い回す注意書きのため） -->
+<!-- [WC] 共通エリア候補: cmn001（複数ページで使い回す注意書きのため）
+     ★対象要素：直後の<div class="noticeBox">をエリアの親にする。 -->
 <div class="noticeBox">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 9 V13 M12 16.5 H12.01 M10.3 3.9 L1.8 18 A2 2 0 0 0 3.5 21 H20.5 A2 2 0 0 0 22.2 18 L13.7 3.9 A2 2 0 0 0 10.3 3.9 Z"/></svg>
 <div>
@@ -310,16 +319,21 @@
 </div>
 </section>
 
-<!-- [WC] エリア候補: are002 サブエリア（.bizGrid内、.bizCell 1つ=ブロック1つの目安）。
-     ※bizCellは編集可能項目がh3見出し1つだけ（アイコンは固定装飾）なので、
-     13節Aの「1ブロック=編集可能領域1箇所」を満たしており、recoCard等と違い
-     この構成のままでカスタムブロック化して問題ない（2026-08-18確認済み） -->
 <section id="features" class="section reveal">
 <div class="inner">
 <div class="sectionHead">
 <span class="sectionEyebrow">WHY TAISEI HOME</span>
 <h2 class="sectionTitle">タイセイの特徴</h2>
 </div>
+<!-- [WC] エリア候補: are002 サブエリア。
+     ★対象要素：直後の<div class="bizGrid">をエリアの親にする（このsectionヘッダー
+     部分〈sectionEyebrow/sectionTitle〉は含めない、固定文言）。
+     .bizCell 1つ=ブロック1つの目安。bizCellは編集可能項目がh3見出し1つだけ
+     （アイコンは固定装飾）なので、13節Aの「1ブロック=編集可能領域1箇所」を
+     満たしており、recoCard等と違い折り返しエリア+単体エリアの入れ子は不要。
+     <div class="bizGrid">を通常エリア（useronly="1"を検討）にし、配下の
+     4つの<div class="bizCell">をそれぞれ直接カスタムブロックとして登録すれば
+     よい（2026-08-18確認済み） -->
 <div class="bizGrid">
 <div class="bizCell">
 <svg class="bicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21 V9 L12 3 L20 9 V21 M9 21 V14 H15 V21"/></svg>
@@ -358,15 +372,20 @@
 </div>
 </section>
 
-<!-- [WC] エリア候補: are003 サブエリア（.bizGrid内、.bizCell 1つ=ブロック1つの目安）。
-     ※bizCellは編集可能項目がh3見出し1つだけなので13節Aの制約を満たす（are002と同様） -->
 <section id="business" class="section reveal">
 <div class="inner">
 <div class="sectionHead">
 <span class="sectionEyebrow">OUR BUSINESS</span>
 <h2 class="sectionTitle">事業案内</h2>
-<p class="sectionLead">不動産だけでなく、太盛工業として幅広い事業を展開しています。</p>
+<div class="sectionLead">不動産だけでなく、太盛工業として幅広い事業を展開しています。</div>
 </div>
+<!-- [WC] エリア候補: are003 サブエリア。
+     ★対象要素：直後の<div class="bizGrid">をエリアの親にする（are002と同様の
+     考え方、13節A参照）。このsectionヘッダー部分〈sectionEyebrow/sectionTitle/
+     sectionLead〉は含めない。
+     .bizCell 1つ=ブロック1つの目安。bizCellは編集可能項目がh3見出し1つだけなので
+     13節Aの制約を満たす。<div class="bizGrid">を通常エリアにし、配下の
+     <div class="bizCell">をそれぞれ直接カスタムブロックとして登録すればよい -->
 <div class="bizGrid">
 <div class="bizCell">
 <svg class="bicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21 V9 L12 3 L20 9 V21"/></svg>
@@ -388,19 +407,22 @@
 </div>
 </section>
 
-<!-- [WC] エリア候補: are004 サブエリア（テキストブロック1つ） -->
+<!-- [WC] エリア候補: are004 サブエリア（テキストブロック1つ）
+     ★対象要素：直後の<section id="philosophy">の中の<div class="inner philoWrap">
+     をエリアの親にする（sectionEyebrow・philoQuote・philoBodyをまとめて
+     1つのテキストブロックにする想定）。 -->
 <section id="philosophy" class="section reveal">
 <div class="inner philoWrap">
 <span class="sectionEyebrow">OUR PHILOSOPHY</span>
-<p class="philoQuote">理想は、江戸の長屋の大家さん。</p>
-<p class="philoBody">入居者様と大家、お互いに顔の見える関係でありたい。それが私たちの変わらない考え方です。<br>大手仲介会社に管理を任せていた時期もありましたが、対応に納得がいかず、今はすべて自社で管理しています。</p>
+<div class="philoQuote">理想は、江戸の長屋の大家さん。</div>
+<div class="philoBody">入居者様と大家、お互いに顔の見える関係でありたい。それが私たちの変わらない考え方です。<br>大手仲介会社に管理を任せていた時期もありましたが、対応に納得がいかず、今はすべて自社で管理しています。</div>
 </div>
 </section>
 
 <section id="cta" class="reveal">
 <div class="inner">
 <h2 class="ctaTitle">まずはお気軽にご相談ください</h2>
-<p class="ctaLead">賃貸のお部屋探しも、売買・土地運用のご相談も、同じ窓口で承ります。</p>
+<div class="ctaLead">賃貸のお部屋探しも、売買・土地運用のご相談も、同じ窓口で承ります。</div>
 <div class="ctaBtns">
 <a href="normalpage.html" class="btnPrimary">賃貸物件を見る</a>
 <a href="tel:0546284186" class="btnGhost">電話で相談する（054-628-4186）</a>
@@ -420,7 +442,7 @@
      同様.imgPlaceholderで仮置きしている。 -->
 <section id="listingBanners" class="reveal">
 <div class="inner">
-<p class="listingBannersLabel">掲載サイト</p>
+<div class="listingBannersLabel">掲載サイト</div>
 <div class="listingBannersRow">
 <a href="https://suumo.jp/" target="_blank" rel="noopener" class="listingBanner">
 <div class="imgPlaceholder">
@@ -439,8 +461,8 @@
 <svg class="logoMark" viewBox="0 0 40 40"><path d="M8 34 V18 L20 8 L32 18 V34 Z" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/><circle cx="26" cy="27" r="2.6" fill="#F3903F"/></svg>
 <span class="logoText">タイセイホーム</span>
 </a>
-<p>太盛工業株式会社 不動産部。焼津・藤枝で自社物件を自社管理しています。</p>
-<p class="footerLicense">宅地建物取引業者免許番号　静岡県知事（6）第6874号<br>（社）静岡県宅地建物取引業協会会員</p>
+<div class="footerDesc">太盛工業株式会社 不動産部。焼津・藤枝で自社物件を自社管理しています。</div>
+<div class="footerLicense">宅地建物取引業者免許番号　静岡県知事（6）第6874号<br>（社）静岡県宅地建物取引業協会会員</div>
 </div>
 <div class="footerCol footerMenu">
 <h4>MENU</h4>

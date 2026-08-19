@@ -94,14 +94,15 @@
 <!-- [WC] エリア候補: cmn0XX（パンくずリスト。トップページ以外に設置する通例、
      6節参照）。標準ブロックの「パンくずリスト」ブロック（.rdBreadcrumb）を配置。
      ※blogframe.htmlは通常エリア（are）を置けず共通エリア／ブログ共通エリアのみ
-     設置可能（7節）なので、`are`ではなく`cmn`（またはblogcmn）を使うこと -->
+     設置可能（7節）なので、`are`ではなく`cmn`（またはblogcmn）を使うこと
+     ★対象要素：直後の<div id="breadcrumb">をエリアの親にする。 -->
 <div id="breadcrumb" class="inner"></div>
 
 <section id="pageHead">
 <div class="inner">
 <span class="pageEyebrow">NEWS &amp; BLOG</span>
 <h2 class="pageTitle">お知らせ・ブログ一覧</h2>
-<p class="pageLead">空室情報の更新や、地域のお役立ち情報などをお届けします。</p>
+<div class="pageLead">空室情報の更新や、地域のお役立ち情報などをお届けします。</div>
 </div>
 </section>
 
@@ -114,14 +115,6 @@
 </a>
 </div>
 
-<!-- [WC] 重要: このHTMLは「ブログフレーム用」テンプレート。
-     K-012仕様により、ここには通常のエリア（{%%rdarea%%}）は設置できません。
-     設置できるのは共通エリア／ブログ共通エリア／ブログフレームタグ（{%%rdblogframe%%}）のみ。
-     下の.blogGrid〜.blogPagerはあくまで見た目確認用のモックアップで、
-     変換後は実際にこのブロックごと{%%rdblogframe%%}に置き換える想定。
-     一覧カードの実際の見た目は、common/css/style.cssの
-     .rdnewArticle系セレクタ（ブログ最新記事一覧ブロックの出力用）で調整する。 -->
-
 <!-- [WC] リリース後の保険エリア（メインコンテンツの上、6節参照）：空のエリア。
      blogframe.htmlは通常エリア（are）を置けないため`cmn`系のみ（7節）。
      ただし通常の`cmn`（サイト全体共通）ではなく、blogframe.html/blogmain.html
@@ -130,65 +123,18 @@
      保険エリアとはIDも別番号にし、互いに予備コンテンツが漏れないようにする -->
 <div id="mainAreaAboveBlogCmn"></div>
 
+<!-- [WC] 重要: このHTMLは「ブログフレーム用」テンプレート。
+     K-012仕様により、ここには通常のエリア（{%%rdarea%%}）は設置できません。
+     設置できるのは共通エリア／ブログ共通エリア／ブログフレームタグ（{%%rdblogframe%%}）のみ。
+     ★対象要素：直後の<main>の中に{%%rdblogframe%%}を配置する。
+     2026-08-19、うにさんの指示によりコンテンツのモックアップ（.blogGrid〜
+     .blogPager、記事カード3件分）は削除した。エリア化できない箇所に見た目確認用の
+     静的HTMLを残すと、化ツールでの登録作業時に紛らわしい・エリア直下のブロック化
+     チェックに巻き込まれる等の混乱の元になるため
+     （taisei-site-エリアブロック設置ガイド.md 1.12節参照）。
+     一覧カードの実際の見た目は、common/css/style.cssの
+     .rdnewArticle系セレクタ（ブログ最新記事一覧ブロックの出力用）で調整する。 -->
 <main>
-<div class="inner" id="blogList">
-
-<div class="blogGrid">
-
-<article class="blogCard">
-<div class="blogShot">
-<div class="imgPlaceholder">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="9" cy="10" r="2"/><path d="M3 17 L9 12 L13 15 L21 8"/></svg>
-<span class="phLabel">記事サムネイル</span>
-<span class="phSize">300 × 200px</span>
-</div>
-</div>
-<div class="blogBody">
-<span class="blogDate">2026.08.10</span><span class="blogCat">空室情報</span>
-<h3>ルミエール203号室、入居者様決定のお知らせ</h3>
-<p class="blogExcerpt">おかげさまで満室となりました。次の空室情報が出次第、こちらでお知らせいたします。</p>
-</div>
-</article>
-
-<article class="blogCard">
-<div class="blogShot">
-<div class="imgPlaceholder">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="9" cy="10" r="2"/><path d="M3 17 L9 12 L13 15 L21 8"/></svg>
-<span class="phLabel">記事サムネイル</span>
-<span class="phSize">300 × 200px</span>
-</div>
-</div>
-<div class="blogBody">
-<span class="blogDate">2026.07.28</span><span class="blogCat">保護者の方へ</span>
-<h3>新生活応援ガイドを更新しました</h3>
-<p class="blogExcerpt">初めて親元を離れるお子様のお部屋探しについて、よくあるご質問をまとめました。</p>
-</div>
-</article>
-
-<article class="blogCard">
-<div class="blogShot">
-<div class="imgPlaceholder">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="9" cy="10" r="2"/><path d="M3 17 L9 12 L13 15 L21 8"/></svg>
-<span class="phLabel">記事サムネイル</span>
-<span class="phSize">300 × 200px</span>
-</div>
-</div>
-<div class="blogBody">
-<span class="blogDate">2026.07.02</span><span class="blogCat">お知らせ</span>
-<h3>夏季休業のご案内</h3>
-<p class="blogExcerpt">8月13日〜16日は休業とさせていただきます。緊急のトラブル対応は例年通り承ります。</p>
-</div>
-</article>
-
-</div>
-
-<div class="blogPager">
-<a href="blogframe.html" class="isActive">1</a>
-<a href="blogframe.html">2</a>
-<a href="blogframe.html">3</a>
-</div>
-
-</div>
 </main>
 
 <!-- [WC] リリース後の保険エリア（メインコンテンツの下、6節参照）：空のブログ共通
@@ -202,8 +148,8 @@
 <svg class="logoMark" viewBox="0 0 40 40"><path d="M8 34 V18 L20 8 L32 18 V34 Z" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/><circle cx="26" cy="27" r="2.6" fill="#F3903F"/></svg>
 <span class="logoText">タイセイホーム</span>
 </a>
-<p>太盛工業株式会社 不動産部。焼津・藤枝で自社物件を自社管理しています。</p>
-<p class="footerLicense">宅地建物取引業者免許番号　静岡県知事（6）第6874号<br>（社）静岡県宅地建物取引業協会会員</p>
+<div class="footerDesc">太盛工業株式会社 不動産部。焼津・藤枝で自社物件を自社管理しています。</div>
+<div class="footerLicense">宅地建物取引業者免許番号　静岡県知事（6）第6874号<br>（社）静岡県宅地建物取引業協会会員</div>
 </div>
 <div class="footerCol">
 <h4>MENU</h4>

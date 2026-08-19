@@ -348,7 +348,7 @@ CLAUDE.md 5節）。
 |---|---|---|---|
 | `#breadcrumb` | `cmn0XX`（共通エリア） | パンくずリスト標準ブロック | 通常エリア不可のため`cmn`（1.3節） |
 | `#pageHead` | `cmn018`相当（ブログ共通エリア、`blogcmn="1"`） | 見出し・リード文 | sample-project実物で`cmn018`＋`blogcmn="1"`という第3のエリア共有スコープを確認済み（CLAUDE.md 12節L） |
-| `#blogList`（メイン） | エリア化不可、`{%%rdblogframe%%}` | システム生成の記事一覧 | `.blogGrid`〜`.blogPager`は見た目確認用のモックアップ（実運用は`.rdnewArticle`系クラスで調整、CLAUDE.md 7節） |
+| `<main>`（メイン） | エリア化不可、`{%%rdblogframe%%}` | システム生成の記事一覧 | 2026-08-19、うにさんの指示でモックアップ（`.blogGrid`〜`.blogPager`、記事カード3件分）は削除済み。`<main>`は空のまま、化ツールで`{%%rdblogframe%%}`を直接配置する。実運用の見た目は`.rdnewArticle`系クラスで調整（CLAUDE.md 7節） |
 
 ### 2.4 `blogmain.html`
 
