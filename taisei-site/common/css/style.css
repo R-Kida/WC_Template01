@@ -1,7 +1,7 @@
 /* [WC] 2026-08-18、うにさんとの配色検討の結果「ライト＆ブルー案」に決定。
    --tea系の変数名は旧グリーン基調時代の名残（緑茶の「tea」）だが、サイト全体で
    100箇所以上参照されているため、値だけ差し替えて変数名はそのまま維持している
-   （taisei-site-プロジェクト情報.md 3.2節参照）。 */
+   （taisei-site-project-info.md 3.2節参照）。 */
 :root{
   --tea:#2E6DA4;
   --tea-deep:#1F4E75;
@@ -140,7 +140,7 @@ h6{font-size:11px;}
    ホバー時の背景・下線演出はdiv側に付け替えた。理由：化ツールでの検証時、
    単独<a>をテキストブロックに自動吸収する仕組み（CLAUDE.md 12節F）が、
    アイコンとテキストが<a>内に混在していると働かず「コンテンツ枠がブロック要素
-   でない」エラーになることが判明したため（taisei-site-エリアブロック設置ガイド.md
+   でない」エラーになることが判明したため（taisei-site-area-block-guide.md
    1.11節参照）。 */
 .navUl>li>div:hover,.navUl>li.isActive>div{background:var(--tea-pale);color:var(--tea-deep);}
 /* [WC] オンマウス時、背景色の変化に加えて中央から伸びる下線アニメーションを追加
@@ -221,7 +221,7 @@ h6{font-size:11px;}
 
 /* [WC] 2026-08-18、配色検討の結果「ライト＆ブルー案」採用に伴いヒーローを刷新。
    写真を暗いスクリムで覆うフルブリード構成から、写真とテキストを左右に分割する
-   構成に変更した（見た目の重さを減らす狙い、taisei-site-プロジェクト情報.md
+   構成に変更した（見た目の重さを減らす狙い、taisei-site-project-info.md
    3.2節参照）。#editViewフォールバックは、写真パネルがposition:absoluteの
    フルブリードでなくなったことで不要になった。 */
 #hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1.1fr 1fr;grid-template-rows:1fr;background:linear-gradient(160deg,#fff 0%,var(--tea-pale) 100%);}
@@ -408,7 +408,7 @@ body:has(#contactBar) #toTop{bottom:88px;}
    （#blogList/.blogGrid/.blogCard/.blogShot/.blogBody/.blogDate/.blogExcerpt/
    .blogPager）はHTML側を削除したのに合わせてCSSも削除した（エリア化できない
    箇所に静的HTMLを残すと化ツール登録作業で紛らわしいため、
-   taisei-site-エリアブロック設置ガイド.md 1.12節参照）。実運用では下記
+   taisei-site-area-block-guide.md 1.12節参照）。実運用では下記
    rdnewArticle系クラスが本体になる（.blogCatはblogmain.htmlの記事メタ情報で
    引き続き使用しているため残してある）。
    サムネイル・カテゴリ/タグはWebChanger標準でdisplay:noneのため
