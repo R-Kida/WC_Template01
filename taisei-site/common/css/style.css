@@ -129,12 +129,19 @@ h6{font-size:11px;}
 
 .navUl{display:flex;gap:2px;align-items:center;}
 .navUl>li{position:relative;}
-.navUl>li>div>a{position:relative;display:flex;align-items:center;padding:11px 14px;font-size:13.5px;font-weight:700;color:var(--ink);border-radius:999px;transition:background .2s,color .2s;white-space:nowrap;}
-.navUl>li>div>a:hover,.navUl>li.isActive>div>a{background:var(--tea-pale);color:var(--tea-deep);}
+.navUl>li>div{position:relative;display:flex;align-items:center;padding:11px 14px;font-size:13.5px;font-weight:700;color:var(--ink);border-radius:999px;transition:background .2s,color .2s;white-space:nowrap;}
+.navUl>li>div>a{color:inherit;}
+/* [WC] 2026-08-19：navCaret(svg)を<a>の外（同じdiv内の兄弟要素）に出したため、
+   ホバー時の背景・下線演出はdiv側に付け替えた。理由：化ツールでの検証時、
+   単独<a>をテキストブロックに自動吸収する仕組み（CLAUDE.md 12節F）が、
+   アイコンとテキストが<a>内に混在していると働かず「コンテンツ枠がブロック要素
+   でない」エラーになることが判明したため（taisei-site-エリアブロック設置ガイド.md
+   1.11節参照）。 */
+.navUl>li>div:hover,.navUl>li.isActive>div{background:var(--tea-pale);color:var(--tea-deep);}
 /* [WC] オンマウス時、背景色の変化に加えて中央から伸びる下線アニメーションを追加
    （2026-08-18、「色が変わるだけじゃない気の利いたアニメーション」の要望対応） */
-.navUl>li>div>a::after{content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;border-radius:2px;background:var(--mikan);transform:scaleX(0);transition:transform .25s var(--ease);transform-origin:center;}
-.navUl>li>div>a:hover::after,.navUl>li.isActive>div>a::after{transform:scaleX(1);}
+.navUl>li>div::after{content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;border-radius:2px;background:var(--mikan);transform:scaleX(0);transition:transform .25s var(--ease);transform-origin:center;}
+.navUl>li>div:hover::after,.navUl>li.isActive>div::after{transform:scaleX(1);}
 .navCaret{width:11px;height:11px;margin-left:2px;flex-shrink:0;transition:transform .25s var(--ease);}
 .navUl>li.hasDropdown:hover .navCaret,.navUl>li.hasDropdown:focus-within .navCaret{transform:rotate(180deg);}
 /* [WC] ドロップダウンサブメニュー。準備のみで現状は非表示（2026-08-18）。
@@ -175,8 +182,8 @@ h6{font-size:11px;}
   #globalNav.isOpen{transform:translateX(0);}
   #navToggle{z-index:99;}
   .navUl{flex-direction:column;align-items:stretch;gap:2px;}
-  .navUl>li>div>a{padding:15px;border-bottom:1px solid var(--line);border-radius:0;}
-  .navUl>li>div>a::after{display:none;}
+  .navUl>li>div{padding:15px;border-bottom:1px solid var(--line);border-radius:0;}
+  .navUl>li>div::after{display:none;}
   .navCaret{display:none;}
   #navToggle{display:block;}
   /* [WC] メニューを開いた時の演出：背景に半透明の幕(#navBackdrop)をフェードイン

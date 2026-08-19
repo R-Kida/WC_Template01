@@ -28,6 +28,33 @@
 </div>
 </div>
 
+<!-- [WC] メインナビ全体をエリア・ブロック化する方針（2026-08-18、うにさんの判断で
+     方針転換。詳細はtaisei-site-エリアブロック設置ガイド.md 1.11節参照）：
+     ドロップダウンサブメニュー（賃貸物件・売買物件）を管理画面から内容編集・
+     表示非表示できるようにするため、ナビ自体を固定HTMLではなくWebChangerの
+     エリア・ブロックの仕組みに乗せる。sample-project実物確認済みの「同一エリアIDの
+     再帰参照」パターン（CLAUDE.md 12節H）に沿って、化ツールで<nav id="globalNav">
+     直下の<ul class="navUl">を共通エリア（useronly="1"）、各<li>をその配下エリアと
+     して登録する想定。
+     ★2026-08-19・実機検証で判明：エリアの開始位置は必ず<nav id="globalNav">
+     （またはその直下の<ul class="navUl">）にすること。<header>やその直下の
+     <div class="inner">までエリアにしてしまうと、中に含まれる#logo（固定ロゴ）・
+     #navBackdrop（固定の背景幕、空div）がブロック化されておらず「エリア直下は
+     全てブロック要素で構成されていなければならない」エラーになる（実際に化ツールで
+     発生・確認済み）。ロゴと#navBackdropはそもそもエリア・ブロック化しない固定要素
+     という設計のため、このコメントを<header>の外に置いている。
+     あわせて、ドロップダウン項目（賃貸物件・売買物件）の<a>内にはアイコン
+     （navCaret svg）を入れず、<a>の外＝同じdiv内の兄弟要素にする（2026-08-19対応
+     済み）。理由：単独<a>をテキストブロックに自動吸収する仕組み（CLAUDE.md 12節F）
+     は<a>内がテキストのみの場合しか働かず、アイコンが混在すると「コンテンツ枠が
+     ブロック要素でない」エラーになることが実機検証で判明したため。
+     実際のエリアID割り当ては化ツール操作時に確定させるため、このHTML自体は
+     素朴な<ul>/<li>の入れ子構造のままでよい。
+     見た目・演出（ホバー時のドロップダウンパネル、下線アニメーション）はCSS側で
+     実装済み。common/css/style.cssの`.hasSubNav`（<body>に追加）は化ツールを通す前の
+     開発時プレビュー用トグルで、本番のオン・オフはブロック化後にWebChangerの
+     「表示・非表示」機能（13節K）で行う想定。モバイル側のタップ開閉挙動は未実装
+     （common/js/script.jsへの追加対応が必要）。 -->
 <header id="globalHeader">
 <div class="inner">
 <div id="logo">
@@ -36,32 +63,18 @@
 <span class="logoText">タイセイホーム<small>太盛工業株式会社 不動産部</small></span>
 </a>
 </div>
-<!-- [WC] メインナビ全体をエリア・ブロック化する方針（2026-08-18、うにさんの判断で
-     方針転換。詳細はtaisei-site-エリアブロック設置ガイド.md 1.11節参照）：
-     ドロップダウンサブメニュー（賃貸物件・売買物件）を管理画面から内容編集・
-     表示非表示できるようにするため、ナビ自体を固定HTMLではなくWebChangerの
-     エリア・ブロックの仕組みに乗せる。sample-project実物確認済みの「同一エリアIDの
-     再帰参照」パターン（CLAUDE.md 12節H）に沿って、化ツールで<ul class="navUl">を
-     共通エリア（useronly="1"）、各<li>をその配下エリアとして登録する想定。
-     実際のエリアID割り当ては化ツール操作時に確定させるため、このHTML自体は
-     素朴な<ul>/<li>の入れ子構造のままでよい。
-     見た目・演出（ホバー時のドロップダウンパネル、下線アニメーション）はCSS側で
-     実装済み。common/css/style.cssの`.hasSubNav`（<body>に追加）は化ツールを通す前の
-     開発時プレビュー用トグルで、本番のオン・オフはブロック化後にWebChangerの
-     「表示・非表示」機能（13節K）で行う想定。モバイル側のタップ開閉挙動は未実装
-     （common/js/script.jsへの追加対応が必要）。 -->
 <nav id="globalNav">
 <ul class="navUl">
 <li><div><a href="toppage.html">トップ</a></div></li>
 <li><div><a href="toppage.html#features">タイセイの特徴</a></div></li>
-<li class="hasDropdown"><div><a href="normalpage.html">賃貸物件<svg class="navCaret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9 L12 15 L18 9"/></svg></a></div>
+<li class="hasDropdown"><div><a href="normalpage.html">賃貸物件</a><svg class="navCaret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9 L12 15 L18 9"/></svg></div>
 <ul class="subNav">
 <li><a href="normalpage.html">エリアで探す</a></li>
 <li><a href="normalpage.html">間取りで探す</a></li>
 <li><a href="normalpage.html">空室一覧</a></li>
 </ul>
 </li>
-<li class="hasDropdown"><div><a href="normalpage.html">売買物件<svg class="navCaret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9 L12 15 L18 9"/></svg></a></div>
+<li class="hasDropdown"><div><a href="normalpage.html">売買物件</a><svg class="navCaret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9 L12 15 L18 9"/></svg></div>
 <ul class="subNav">
 <li><a href="normalpage.html">売買物件を探す</a></li>
 <li><a href="normalpage.html">土地活用のご相談</a></li>
