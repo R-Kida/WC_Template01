@@ -122,7 +122,12 @@ h6{font-size:11px;}
 #globalHeader{position:sticky;top:0;z-index:100;border-bottom:1px solid var(--line);}
 #globalHeader::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(251,248,241,.94);backdrop-filter:blur(8px);}
 #globalHeader .inner{display:flex;align-items:center;justify-content:space-between;height:82px;gap:20px;}
-#logo a{display:flex;align-items:center;gap:10px;}
+/* [WC] 2026-08-19実機検証：#logoの<a>がsvgアイコン＋テキストを混在させていたため、
+   これを親エリア(cmn001)に指定できなかった。ナビのnavCaretと同じ原因
+   （CLAUDE.md 12節F）。アイコンを.logoIcon（固定、div）として<a>の外に出し、
+   <a>はテキストのみにした。footerBrand側も同様に.logoRowで対応（下記参照）。 */
+#logo{display:flex;align-items:center;gap:10px;}
+.logoIcon{display:flex;flex-shrink:0;}
 .logoMark{width:36px;height:36px;flex-shrink:0;}
 #logo .logoText{font-family:var(--font-display);font-weight:900;font-size:18px;color:var(--tea-deep);line-height:1.3;}
 #logo .logoText small{display:block;font-family:var(--font-body);font-size:10.5px;font-weight:500;letter-spacing:.03em;color:var(--ink-soft);margin-top:2px;}
@@ -453,11 +458,12 @@ body:has(#contactBar) #toTop{bottom:88px;}
 @media(max-width:520px){
   .footerTop{grid-template-columns:1fr 1fr;row-gap:32px;column-gap:20px;}
   .footerBrand{grid-column:1 / -1;text-align:center;}
-  .footerBrand a{justify-content:center;}
+  .footerBrand .logoRow{justify-content:center;}
   .footerBrand .footerDesc{max-width:320px;margin:0 auto;}
   .footerContact{grid-column:1 / -1;text-align:center;}
 }
-.footerBrand a{display:flex;align-items:center;gap:10px;color:#fff;margin-bottom:14px;}
+.footerBrand .logoRow{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.footerBrand .logoLink{color:#fff;}
 .footerBrand .logoText{font-family:var(--font-display);font-weight:900;font-size:15px;}
 .footerBrand .footerDesc{font-size:12px;line-height:1.9;}
 .footerCol h4{font-size:11.5px;letter-spacing:.08em;color:#F3C08D;font-family:var(--font-mono);margin-bottom:14px;}
