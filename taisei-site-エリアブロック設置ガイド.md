@@ -353,7 +353,7 @@ WebChangerのエリア・ブロックの仕組みに乗っている必要があ�
 | セクション | エリア候補 | 中身 | クラス追加候補 | 備考 |
 |---|---|---|---|---|
 | `#logo`（ヘッダー） | `cmn001`（共通エリア） | 画像ブロック1つ | - | sample-project実物の採番例（1.2節） |
-| `#hero .heroSlider` | 未エリア化 or `are0XX` | 画像スライド標準ブロック（`.rdslide`、`data-type="2"`フェード切り替え）を推奨（2026-08-18・方針転換、CLAUDE.md 9節） | - | ヒーローが左右分割レイアウトになりスクリム・テキスト重ねが無くなったため標準ブロックとの相性が良くなった。ドット（`.rdsp-*`）にブランドCSS上書きが必要。乗り換え時は独自JS（`common/js/script.js`のheroSlider制御部分）を撤去し`data-interval`等の属性で制御する |
+| `#hero .heroSlider` | 未エリア化（画像スライド標準ブロックを直接設置） | 画像スライド標準ブロック（`.rdslide`、`data-type="2"`フェード切り替え推奨）（2026-08-19・実装済み、CLAUDE.md 9節） | - | 2026-08-19、うにさんの指示で実際にHTML/CSS/JSを標準ブロック設置前提に修正済み：独自JSスライダー（`common/js/script.js`のheroSlider制御部分）は削除し、HTML側も.slide×3/.heroDotsのモックアップを`.imgPlaceholder`1枚だけの仮置きに簡略化した。ドット（`.rdsp-*`、正確なクラス名未確認）のブランドCSS上書きは`common/css/style.css`の`.heroSlider`直後のコメントに下書きを用意済み。登録時は`data-type="2"`・`data-interval="5000"`目安で設定する |
 | `.heroTop`（バッジ・見出し・リード） | `are005`候補 | テキストブロック1つ | - | h1はbody先頭の隠しh1が別途担当（1.7節） |
 | `.heroCards` | 横並びエリア（`colmode="1"`） | 単体エリア×2、各内部に見出し→タグ→本文の標準ブロック | エリアに`heroCard`、ブロックに`hcTag`相当のクラス | 1.5節のパターン。カード全体のリンクはブロックリンク機能 |
 | `#properties`（メイン） | `are001`（`mstcon="1"`） | `.recoGrid`＋`.noticeBox` | - | `data-prc=""`を親divに付与。新着情報・RSSの概要もここから自動生成される |

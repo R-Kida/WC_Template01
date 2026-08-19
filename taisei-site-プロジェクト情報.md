@@ -474,7 +474,7 @@ WebChanger化ツールの変換工程で自動生成されるものであり、�
 | `blogframe.html`のH1指定可否 | △ほぼ解決 | テンプレート機構としては通常ページと同格のH1プレースホルダーを確認。化ツールGUI上の実操作は未検証（CLAUDE.mdの10節2番・12節M） |
 | `<html class="cmshtml">`/`<body class="cmsbody">`の設置 | ✅対応済み | `taisei-site/`の4テンプレート全てに追加済み（CLAUDE.mdの3節・12節A） |
 | `#globalNav`の`position:fixed`に`#editView`フォールバック | ✅対応済み | `#editView #globalNav{position:static;transform:none;}`を追加（CLAUDE.mdの10節3番・7章参照） |
-| ヒーロー画像レイヤー（`.heroSlider`等）のposition:absoluteの編集画面ズレ | ✅対応済み | `#editView`向け`position:static`フォールバック追加（CLAUDE.mdの10節4番） |
+| ヒーロー画像レイヤー（`.heroSlider`等）のposition:absoluteの編集画面ズレ | ✅対応済み（過去の経緯） | `#editView`向け`position:static`フォールバックを追加していたが（CLAUDE.mdの10節4番）、2026-08-19に`.slide`/`.heroDots`構造自体を廃止したため現在は該当なし。下記の新しい行を参照 |
 | `#globalHeader`の`backdrop-filter`が`#globalNav`の`position:fixed`を破壊 | ✅対応済み（2026-08-18発見・即修正） | `backdrop-filter`は`fixed`子孫のcontaining blockになるため、モバイルメニューを開くとパネルがヘッダーの高さ分に潰れる不具合。ヘッドレスブラウザで実際にメニュー展開状態をレンダリングして発見。`backdrop-filter`を`::before`疑似要素に移して解消（CLAUDE.mdの4節） |
 | ページトップへ戻るボタン・スムーズスクロール・ハンバーガーメニューの開閉演出 | ✅対応済み | `#toTop`（スクロール追従ボタン）・`#navBackdrop`（開いた時の背景幕）・メニュー項目のstagger（ずらしフェードイン）を追加。`#contactBar`との重なりは`:has()`で回避、編集画面でのナビ本体の永久非表示は`.reveal`と同じ理屈で`#editView`フォールバック追加。スムーズスクロールは元々`html{scroll-behavior:smooth}`で対応済みだった（実装ガイド1.10節参照） |
 | デスクトップでスクロール時にメインメニューが画面上部に張り付くか | ✅確認済み（対応不要） | `#globalHeader`に元々`position:sticky;top:0`が設定済みで、実際に正しく動作することをスクリーンショットで確認（`#toTop`ボタンとの同時表示も確認） |
@@ -492,6 +492,7 @@ WebChanger化ツールの変換工程で自動生成されるものであり、�
 | 会社案内・売買物件一覧ページ本体 | ❌未着手 | `normalpage.html`を使い回す想定だが、実データを使った専用コンテンツはまだ作っていない |
 | お問い合わせページ | ❌未着手 | `.contact_item_table`系の実クラスは判明済み（CLAUDE.mdの9節）だが、ページ自体が存在しない |
 | 実写真の差し込み | ❌未着手 | すべて`.imgPlaceholder`ダミーのまま |
+| ヒーロー右側の画像スライドをWebChanger標準ブロック設置前提に変更 | ✅対応済み（2026-08-19） | うにさんの指示で、独自JSスライダー（`.slide`×3・`.heroDots`・`common/js/script.js`のslide制御）を撤去し、`.heroSlider`配下は`.imgPlaceholder`1枚の仮置きに簡略化。登録時の推奨値（`data-type="2"`・`data-interval="5000"`）と、ドット用`.rdsp-*`ブランドCSSの下書き（クラス名未確認）を`[WC]`コメントに明記（実装ガイド2.1節参照） |
 
 ---
 

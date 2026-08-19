@@ -33,30 +33,6 @@
     });
   }
 
-  var heroSlider = document.getElementById('heroSlider');
-  if(heroSlider){
-    var heroSlides = heroSlider.querySelectorAll('.slide');
-    var heroDots = document.getElementById('heroDots');
-    var heroIndex = 0;
-    heroSlides.forEach(function(slide, i){
-      var b = document.createElement('button');
-      if(i === 0){ b.classList.add('isActive'); }
-      b.addEventListener('click', function(){ goToSlide(i); });
-      heroDots.appendChild(b);
-    });
-    var heroDotEls = heroDots.querySelectorAll('button');
-    function goToSlide(i){
-      heroSlides[heroIndex].classList.remove('isActive');
-      heroDotEls[heroIndex].classList.remove('isActive');
-      heroIndex = i;
-      heroSlides[heroIndex].classList.add('isActive');
-      heroDotEls[heroIndex].classList.add('isActive');
-    }
-    setInterval(function(){
-      goToSlide((heroIndex + 1) % heroSlides.length);
-    }, 5000);
-  }
-
   // 数値カウントアップ（#statsの.num）。静的HTML側には最終値（50/13/130等）を
   // そのまま書いておき、JSが実際に動いた時だけ0から数え上げる方式にしている。
   // WebChangerの編集画面ではJSが一切動かないため（8節）、静的な最終値がそのまま

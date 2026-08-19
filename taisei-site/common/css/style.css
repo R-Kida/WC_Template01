@@ -218,19 +218,24 @@ h6{font-size:11px;}
    写真を暗いスクリムで覆うフルブリード構成から、写真とテキストを左右に分割する
    構成に変更した（見た目の重さを減らす狙い、taisei-site-プロジェクト情報.md
    3.2節参照）。#editViewフォールバックは、写真パネルがposition:absoluteの
-   フルブリードでなくなったことで大部分不要になったが、.slideの不透明度切り替え
-   （JS依存）だけは引き続き必要（CLAUDE.md 8節）。 */
+   フルブリードでなくなったことで不要になった。 */
 #hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1.1fr 1fr;grid-template-rows:1fr;background:linear-gradient(160deg,#fff 0%,var(--tea-pale) 100%);}
 @media(max-width:760px){#hero{display:block;}}
+/* [WC] 2026-08-19、右側の写真パネルはWebChanger標準の画像スライドブロック
+   （.rdslide、9節参照）を設置する前提に変更した。以前の独自JSスライダー用
+   （.slide/.heroDots）のCSSは廃止済み。登録後、実際に出力される.rdsp-*系
+   クラスへ以下のようなブランドCSSを追記する想定（クラス名は本家slider-proの
+   命名規則からの推測であり未確認。実機の出力HTMLを見てから正しいクラス名に
+   修正すること）：
+   .heroSlider .rdsp-buttons{position:absolute;bottom:18px;left:0;right:0;
+     display:flex;gap:8px;justify-content:center;z-index:3;}
+   .heroSlider .rdsp-button{width:8px;height:8px;border-radius:50%;
+     background:rgba(255,255,255,.6);transition:all .2s;}
+   .heroSlider .rdsp-selected{background:var(--mikan);transform:scale(1.3);}
+*/
 .heroSlider{position:relative;grid-column:2;grid-row:1;min-height:360px;overflow:hidden;}
 @media(max-width:760px){.heroSlider{min-height:220px;}}
-.heroSlider .slide{position:absolute;inset:0;opacity:0;transition:opacity .8s var(--ease);}
-.heroSlider .slide.isActive{opacity:1;}
-.heroSlider .slide .imgPlaceholder{height:100%;border-radius:0;border-width:0;}
-.heroDots{position:absolute;bottom:18px;left:0;right:0;display:flex;gap:8px;justify-content:center;z-index:3;}
-.heroDots button{width:8px;height:8px;border-radius:50%;border:0;background:rgba(255,255,255,.6);padding:0;cursor:pointer;transition:all .2s;}
-.heroDots button.isActive{background:var(--mikan);transform:scale(1.3);}
-#editView .heroSlider .slide{opacity:1;}
+.heroSlider .imgPlaceholder{height:100%;border-radius:0;border-width:0;}
 .heroContent{grid-column:1;grid-row:1;position:relative;z-index:2;padding:56px 40px 56px 24px;display:flex;flex-direction:column;justify-content:center;}
 @media(max-width:760px){.heroContent{padding:40px 24px 48px;}}
 .heroTop{max-width:680px;}

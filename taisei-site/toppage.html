@@ -96,35 +96,31 @@
 </header>
 
 <section id="hero">
-<!-- [WC] このheroSlider内の画像3枚は、装飾用の固定画像ではなく差し替え頻度が高いコンテンツ画像。
-     エリア化するか、画像スライドブロックへの置き換えを検討。
+<!-- [WC] 2026-08-19、うにさんの指示により、右側の写真パネルはWebChanger標準の
+     画像スライドブロック（.rdslide、9節参照）を設置する前提でHTML/CSSを調整した。
+     以前の独自JSスライダー（setIntervalでの自動送り、ドットのJS動的生成）は
+     廃止し、common/js/script.jsから該当コードを削除済み。
+     ★対象要素：直後の<div class="heroSlider">を、画像スライド標準ブロックの
+     設置先にする。配下の.imgPlaceholderは1枚だけの仮置きだが、実際のブロックは
+     複数枚の画像を内部で保持してスライドさせる。
+     化ツールでのブロック設定値の推奨：
+     - data-type="2"（フェード切り替え。現行デザインの.slide{opacity}遷移と
+       近い見た目になる、CLAUDE.md 9節参照）
+     - data-interval：5000（旧JSのsetInterval間隔と同じ、目安）
+     - 枚数：3〜5枚程度（元の実装が3枚だったのを踏襲する場合の目安。運用側で
+       自由に増減可能）
+     ドット（ページャー）の見た目は、登録後に実際に出力される.rdsp-*系クラスへ
+     ブランドCSSを当てて調整する（common/css/style.cssの該当コメント参照。
+     正確なクラス名は実機の出力を確認してから確定させること）。
      2026-08-18、配色検討の結果「ライト＆ブルー案」採用に伴い、写真を暗いスクリムで
      覆う従来のフルブリード構成から、写真とテキストを左右に分割するレイアウトに変更
-     （taisei-site-プロジェクト情報.md 3.2節参照）。heroScrimは廃止、heroDotsは
-     写真パネル内に移動した。 -->
-<div class="heroSlider" id="heroSlider">
-<div class="slide isActive">
+     （taisei-site-プロジェクト情報.md 3.2節参照）。heroScrimは廃止済み。 -->
+<div class="heroSlider">
 <div class="imgPlaceholder">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="9" cy="10" r="2"/><path d="M3 17 L9 12 L13 15 L21 8"/></svg>
-<span class="phLabel">ここに外観・物件写真が入ります</span>
-<span class="phSize">推奨サイズ 1600 × 900px</span>
+<span class="phLabel">ここに画像スライド標準ブロックが入ります</span>
+<span class="phSize">推奨サイズ 1600 × 900px・3〜5枚程度</span>
 </div>
-</div>
-<div class="slide">
-<div class="imgPlaceholder">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="9" cy="10" r="2"/><path d="M3 17 L9 12 L13 15 L21 8"/></svg>
-<span class="phLabel">ここに室内・設備写真が入ります</span>
-<span class="phSize">推奨サイズ 1600 × 900px</span>
-</div>
-</div>
-<div class="slide">
-<div class="imgPlaceholder">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="1.5"/><circle cx="9" cy="10" r="2"/><path d="M3 17 L9 12 L13 15 L21 8"/></svg>
-<span class="phLabel">ここにスタッフ・接客風景が入ります</span>
-<span class="phSize">推奨サイズ 1600 × 900px</span>
-</div>
-</div>
-<div class="heroDots" id="heroDots"></div>
 </div>
 
 <div class="heroContent">
