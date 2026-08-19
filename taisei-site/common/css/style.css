@@ -122,10 +122,19 @@ h6{font-size:11px;}
 #globalHeader{position:sticky;top:0;z-index:100;border-bottom:1px solid var(--line);}
 #globalHeader::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(251,248,241,.94);backdrop-filter:blur(8px);}
 #globalHeader .inner{display:flex;align-items:center;justify-content:space-between;height:82px;gap:20px;}
-/* [WC] 2026-08-19実機検証：#logoの<a>がsvgアイコン＋テキストを混在させていたため、
-   これを親エリア(cmn001)に指定できなかった。ナビのnavCaretと同じ原因
-   （CLAUDE.md 12節F）。アイコンを.logoIcon（固定、div）として<a>の外に出し、
-   <a>はテキストのみにした。footerBrand側も同様に.logoRowで対応（下記参照）。 */
+/* [WC] 2026-08-19実機検証（3回対応）：
+   1回目：#logoの<a>がsvgアイコン＋テキストを混在させていたため、これを親エリア
+   (cmn001)に指定できなかった（ナビのnavCaretと同じ原因、CLAUDE.md 12節F）。
+   アイコンを.logoIcon（固定、div）として<a>の外に出した。
+   2回目：.logoIconのsvgをそのままブロック化しようとすると「コンテンツ枠が
+   ブロック要素でない」エラー。svgをdata URI化した<img>に置き換えた。
+   3回目：テキスト側の<a class="logoLink"><span class="logoText">...</span></a>を
+   ブロック化しようとしたが、やはり1要素として認識されないエラーになった
+   （うにさんの指摘：divで囲われていないと1要素にならない）。<a>ごと廃止し、
+   <div class="logoText">に置き換えた。href（トップページへのリンク）は静的
+   HTMLに書かず、WebChangerのブロックリンク機能（rdhaslink、13節I）で登録後に
+   付与する想定（リンクの実体はWebChanger側の仕組みに任せ、テンプレート側では
+   持たない方針。うにさんの指摘）。footerBrand側も同様（下記参照）。 */
 #logo{display:flex;align-items:center;gap:10px;}
 .logoIcon{display:flex;flex-shrink:0;}
 .logoMark{width:36px;height:36px;flex-shrink:0;}
@@ -467,8 +476,7 @@ body:has(#contactBar) #toTop{bottom:88px;}
   .footerContact{grid-column:1 / -1;text-align:center;}
 }
 .footerBrand .logoRow{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-.footerBrand .logoLink{color:#fff;}
-.footerBrand .logoText{font-family:var(--font-display);font-weight:900;font-size:15px;}
+.footerBrand .logoText{font-family:var(--font-display);font-weight:900;font-size:15px;color:#fff;}
 .footerBrand .footerDesc{font-size:12px;line-height:1.9;}
 .footerCol h4{font-size:11.5px;letter-spacing:.08em;color:#F3C08D;font-family:var(--font-mono);margin-bottom:14px;}
 .footerCol ul li{margin-bottom:9px;}
