@@ -264,9 +264,19 @@ h6{font-size:11px;}
 .heroContent{grid-column:1;grid-row:1;position:relative;z-index:2;padding:56px 40px 56px 24px;display:flex;flex-direction:column;justify-content:center;}
 @media(max-width:760px){.heroContent{padding:40px 24px 48px;}}
 .heroTop{max-width:680px;}
-.heroBadge{display:inline-flex;align-items:center;gap:8px;background:var(--tea-pale);border:1px solid var(--line);border-radius:999px;padding:7px 16px;font-size:12.5px;font-weight:700;color:var(--tea-deep);}
-.heroBadge .fuji{width:15px;height:15px;color:var(--mikan-deep);flex-shrink:0;}
+/* [WC] 2026-08-19実機検証：うにさんの報告により.heroTop（バッジ+見出し+
+   リード文をまとめて1テキストブロックにする想定だった）のエリア化が失敗。
+   .sectionHead/.noticeBoxと同根の問題（複数の異なる要素を1ブロックにしようと
+   していた・アイコンsvgとテキストが同じ要素に混在していた）と判断し、同じ
+   パターンで解消した：①.heroBadgeのFujiアイコンsvgは廃止（他の同種バッジ
+   .recoTag/.ubBadgeもアイコンなしのプレーンテキストのため統一）、②`<span>`を
+   `<div>`に変更（1節「お弁当箱」の例え：皮は必ずdiv）、③.heroTop配下は
+   .heroBadge/.heroTitle/.heroLeadの3つの個別ブロックとして登録する
+   （sectionHeadと同じ「1ブロック=編集可能領域1箇所」対応、13節A）。 */
+.heroBadge{display:inline-flex;align-items:center;background:var(--tea-pale);border:1px solid var(--line);border-radius:999px;padding:7px 16px;font-size:12.5px;font-weight:700;color:var(--tea-deep);}
 .heroTitle{font-size:clamp(26px,3.6vw,40px);font-weight:900;line-height:1.55;color:var(--tea-deep);margin-top:18px;}
+/* [WC] クラス付き<span>は内容変更確定操作で削除される仕様（CLAUDE.md 3節）のため、
+   `<div class="accent" style="display:inline;">`に変更済み（HTML側参照）。 */
 .heroTitle .accent{color:var(--mikan-deep);}
 .heroLead{margin-top:18px;font-size:14.5px;color:var(--ink-soft);max-width:520px;}
 .heroCards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:36px;}
@@ -276,9 +286,11 @@ h6{font-size:11px;}
 .heroCard .hcTag{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--mikan-deep);}
 .heroCard h3{font-size:19px;color:var(--tea-deep);margin-top:10px;}
 .heroCard .hcBody{font-size:13px;color:var(--ink-soft);margin-top:10px;}
-.heroCard .hcLink{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:13px;font-weight:700;color:var(--tea-deep);}
-.heroCard .hcLink svg{width:14px;height:14px;transition:transform .2s;}
-.heroCard:hover .hcLink svg{transform:translateX(3px);}
+/* [WC] 2026-08-19：.hcLinkの矢印svgをCSS疑似要素に置換（navCaretと同じ理由・
+   同じ手法、CLAUDE.md 12節F末尾参照）。`<span>`は`<div>`に変更済み。 */
+.heroCard .hcLink{display:inline-flex;align-items:center;margin-top:18px;font-size:13px;font-weight:700;color:var(--tea-deep);}
+.heroCard .hcLink::after{content:"";display:inline-block;width:6px;height:6px;margin-left:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);transition:transform .2s;}
+.heroCard:hover .hcLink::after{transform:rotate(-45deg) translate(2px,-2px);}
 
 #contactBar{position:sticky;bottom:0;z-index:90;display:flex;background:#fff;border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(43,42,34,.08);}
 /* [WC] #contactBarの各<a class="cbItem">は、化ツールで#utilityBarと同じ「並列の
@@ -402,8 +414,11 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .pageEyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;color:var(--mikan-deep);text-transform:uppercase;}
 .pageTitle{font-size:clamp(24px,3.4vw,34px);font-weight:900;color:var(--tea-deep);margin-top:10px;}
 .pageLead{margin-top:12px;font-size:13.5px;color:var(--ink-soft);max-width:560px;}
-.pageNote{display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:12px;color:var(--tea-deep);font-weight:700;}
-.pageNote svg{width:14px;height:14px;stroke:var(--tea);}
+/* [WC] 2026-08-19：.heroBadgeと同じ理由でアイコンsvgを廃止、`<span>`を`<div>`に
+   変更済み（#pageHeadは.sectionHeadと同じ「複数要素を1ブロックにしようとして
+   いた」問題のため、pageEyebrow/pageTitle/pageLead/pageNoteを個別ブロックに
+   分ける方針に変更、CLAUDE.md 12節F・13節A参照）。 */
+.pageNote{display:inline-flex;align-items:center;margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:12px;color:var(--tea-deep);font-weight:700;}
 
 #rentList{padding:56px 0 96px;}
 .rentGroupTitle{display:flex;align-items:center;gap:10px;margin:44px 0 22px;}
@@ -427,8 +442,10 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .rentRooms{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
 .rentRooms span{background:var(--tea-pale);color:var(--tea-deep);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700;}
 .rentRooms span.top{background:#FCEBD8;color:var(--mikan-deep);}
-.rentCta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:12.5px;font-weight:700;color:var(--tea-deep);}
-.rentCta svg{width:13px;height:13px;}
+/* [WC] 2026-08-19：.hcLinkと同じ理由で矢印svgをCSS疑似要素に置換、`<span>`は
+   `<div>`に変更済み（CLAUDE.md 12節F末尾参照）。 */
+.rentCta{display:inline-flex;align-items:center;margin-top:16px;font-size:12.5px;font-weight:700;color:var(--tea-deep);}
+.rentCta::after{content:"";display:inline-block;width:5px;height:5px;margin-left:5px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);}
 
 .blogCat{display:inline-block;font-size:10.5px;font-weight:700;color:var(--tea-deep);background:var(--tea-pale);padding:3px 10px;border-radius:999px;margin-left:8px;}
 

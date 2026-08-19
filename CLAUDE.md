@@ -280,6 +280,12 @@
   <div class="bigtext" style="display: inline;">おおきなもじ</div>
   ```
 
+  **✅2026-08-19・実例で確認**：`taisei-site/`の`.heroTitle`内`<span class="accent">`
+  （見出し中の色付き強調テキスト）がこのルールへの対応漏れだったまま残っていた。
+  `.heroTop`全体のエリア化失敗を機に洗い出しを行い、`<div class="accent"
+  style="display:inline;">`へ修正した（設置ガイド1.12節参照）。新しく文字装飾用の
+  `<span>`を追加する際は、このルールを都度チェックすること。
+
 - **エリアマップ（`<map><area>`）は編集する方法がないため、固定ブロックにする**
   （エリア・ブロック化しない）。
 

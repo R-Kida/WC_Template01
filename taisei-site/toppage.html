@@ -137,16 +137,24 @@
 </div>
 
 <div class="heroContent">
-<!-- [WC] エリア候補: are005（見出し・リード文をテキストブロックとして編集可能に）
+<!-- [WC] ✅2026-08-19修正：エリア候補: are005。
      ★対象要素：直後の<div class="heroTop">をエリアの親にする。このコメントは
      heroTopの直下（子要素）ではなく、必ずheroTopより外側に置くこと（エリア直下に
      コメントがあるとバリデーションエラーになるため、2026-08-19実機検証・
      CLAUDE.md 3節参照）。
+     ★登録方法（修正）：当初「バッジ+見出し+リード文をまとめて1テキストブロック」
+     にする想定だったが実機でエリア化に失敗した。.sectionHead/.noticeBoxと同根の
+     問題（複数の異なる要素を1ブロックにしようとしていた、かつアイコンsvgと
+     テキストが混在していた）と判断し、同じ対処をした：heroTop自体は1ブロックに
+     せず、配下の.heroBadge（テキストブロック）・.heroTitle（見出しブロックh2、
+     内部の.accentは装飾用divなので気にせず1ブロックに含めてよい）・.heroLead
+     （テキストブロック）をそれぞれ個別に3つの標準ブロックとして登録する
+     （13節A-1と同じ「エリアのクラス配下のブロックのクラス」パターン）。
      ※h1はbody先頭の視覚非表示テキストがWebChangerのH1指定対象。
        このheroTitleはデザイン上の見出し(h2)で、H1指定の対象ではない。 -->
 <div class="heroTop">
-<span class="heroBadge"><svg class="fuji" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 19 L9 6.5 L11.3 10 L13 7.3 L21.5 19Z"/><path d="M9.7 11.8 L10.7 13.2 L11.6 12 L12.6 13.3 L13.6 12"/></svg>焼津・藤枝　自社物件を自社管理</span>
-<h2 class="heroTitle">大家の顔が見えるから、<br><span class="accent">住んでからも、任せてからも</span>安心。</h2>
+<div class="heroBadge">焼津・藤枝　自社物件を自社管理</div>
+<h2 class="heroTitle">大家の顔が見えるから、<br><div class="accent" style="display:inline;">住んでからも、任せてからも</div>安心。</h2>
 <div class="heroLead">仲介会社を挟まず、13棟130世帯を家族で直接管理。入居者様にもオーナー様にも、同じ担当者がずっと向き合います。</div>
 </div>
 
@@ -185,7 +193,7 @@
 <span class="hcTag">FOR TENANTS</span>
 <h3>お部屋をお探しの方へ</h3>
 <div class="hcBody">自社物件は仲介手数料無料。トラブル時も自社管理だから即時対応します。</div>
-<span class="hcLink">賃貸物件を見る<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8 H13 M8 3 L13 8 L8 13"/></svg></span>
+<div class="hcLink">賃貸物件を見る</div>
 </article>
 </div>
 </div>

@@ -102,16 +102,22 @@
      ★対象要素：直後の<div id="breadcrumb">をエリアの親にする。 -->
 <div id="breadcrumb" class="inner"></div>
 
-<!-- [WC] エリア候補: are003（ページタイトル・リード文。ページごとに内容を差し替える）
+<!-- [WC] ✅2026-08-19修正：エリア候補: are003（ページタイトル・リード文。
+     ページごとに内容を差し替える）
      ★対象要素：直後の<section id="pageHead">の中の<div class="inner">を
-     エリアの親にする（pageEyebrow・pageTitle・pageLead・pageNoteをまとめて
-     1つのテキストブロックにする想定）。<section>タグ自体ではない点に注意。 -->
+     エリアの親にする。<section>タグ自体ではない点に注意。
+     ★登録方法（修正）：当初「pageEyebrow・pageTitle・pageLead・pageNoteを
+     まとめて1つのテキストブロックにする想定」だったが、`.heroTop`と同じ
+     「複数の異なる要素を1ブロックにしようとしていた」問題に該当するため、
+     4つ（pageEyebrow・pageTitle・pageLead・pageNote）をそれぞれ個別の
+     標準ブロックとして登録する（13節A-1と同じパターン。pageNoteはアイコンsvgを
+     廃止済みなのでプレーンテキストとして問題なくブロック化できる）。 -->
 <section id="pageHead">
 <div class="inner">
 <span class="pageEyebrow">RENTAL PROPERTIES</span>
 <h2 class="pageTitle">賃貸物件一覧</h2>
 <div class="pageLead">掲載物件はすべて弊社および親族所有の自社管理物件です。仲介会社を挟まないため、仲介手数料はかかりません。</div>
-<span class="pageNote"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2 L21 7 V12 C21 17 17 21 12 22 C7 21 3 17 3 12 V7 Z"/></svg>仲介手数料無料・トラブル即時対応・自社直接管理</span>
+<div class="pageNote">仲介手数料無料・トラブル即時対応・自社直接管理</div>
 </div>
 </section>
 
@@ -189,7 +195,7 @@
 <span class="top">302号室（最上階）</span>
 <span class="top">305号室（最上階）</span>
 </div>
-<span class="rentCta">この物件について問い合わせる<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8 H13 M8 3 L13 8 L8 13"/></svg></span>
+<div class="rentCta">この物件について問い合わせる</div>
 </div>
 </article>
 
