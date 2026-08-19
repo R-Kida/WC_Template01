@@ -152,9 +152,14 @@
 <div><a href="blogframe.html">#焼津市東小川</a></div>
 </div>
 
+<!-- [WC] 2026-08-19、#utilityBarと同じ理由（並列の裸の<a>が1ブロックに吸収される、
+     CLAUDE.md 3節）で、各リンクを個別のdivで囲んである。.articleNavCellは
+     display:contentsでレイアウトに影響させない（#contactBarと同じパターン）。
+     もっとも前後記事リンクはWebChanger側の自動生成機能に置き換わる可能性が
+     高く、手動でエリア・ブロック化しない想定でもある。 -->
 <div class="articleNav">
-<a href="blogmain.html" class="prev">前の記事<span>新生活応援ガイドを更新しました</span></a>
-<a href="blogmain.html" class="next">次の記事<span>夏季休業のご案内</span></a>
+<div class="articleNavCell"><a href="blogmain.html" class="prev">前の記事<span>新生活応援ガイドを更新しました</span></a></div>
+<div class="articleNavCell"><a href="blogmain.html" class="next">次の記事<span>夏季休業のご案内</span></a></div>
 </div>
 
 </div>

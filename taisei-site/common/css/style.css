@@ -251,6 +251,12 @@ h6{font-size:11px;}
 .heroCard:hover .hcLink svg{transform:translateX(3px);}
 
 #contactBar{position:sticky;bottom:0;z-index:90;display:flex;background:#fff;border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(43,42,34,.08);}
+/* [WC] #contactBarの各<a class="cbItem">は、化ツールで#utilityBarと同じ「並列の
+   裸の<a>が1ブロックに吸収される」問題（CLAUDE.md 3節、2026-08-19実機検証）を
+   避けるため、HTML側で<div class="cbCell">に個別に包んである。.cbCell自体は
+   display:contentsでレイアウトに一切影響させず、既存の.cbItemの見た目・ホバー
+   演出（このセッションで検証済みのtranslateY/box-shadow）はそのまま維持している。 */
+#contactBar .cbCell{display:contents;}
 #contactBar .cbItem{position:relative;flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 10px;font-size:14.5px;font-weight:700;text-align:center;transform:translateY(0);transition:transform .22s var(--ease),box-shadow .22s var(--ease),filter .22s var(--ease);will-change:transform;}
 #contactBar .cbItem:hover,#contactBar .cbItem:focus-visible{transform:translateY(-4px);filter:brightness(1.08) saturate(1.15);box-shadow:0 10px 18px rgba(31,39,51,.22);z-index:1;}
 #contactBar .cbRent{background:var(--mikan);color:#fff;}
@@ -340,6 +346,7 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .ctaTitle{font-size:clamp(20px,2.6vw,27px);font-weight:900;color:var(--tea-deep);}
 .ctaLead{margin-top:14px;font-size:13px;color:var(--ink-soft);}
 .ctaBtns{display:flex;gap:14px;justify-content:center;margin-top:30px;flex-wrap:wrap;}
+.ctaBtnCell{display:contents;}
 .btnPrimary,.btnGhost{padding:15px 26px;border-radius:999px;font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:transform .2s var(--ease),box-shadow .2s;}
 .btnPrimary{background:var(--mikan);color:#fff;box-shadow:0 10px 24px rgba(243,144,63,.3);}
 .btnPrimary:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(243,144,63,.4);}
@@ -421,6 +428,7 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .articleTags{max-width:760px;margin:36px auto 0;display:flex;flex-wrap:wrap;gap:8px;}
 .articleTags a{font-size:11.5px;font-weight:700;color:var(--tea-deep);background:var(--tea-pale);padding:5px 12px;border-radius:999px;}
 .articleNav{max-width:760px;margin:44px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:16px;border-top:1px solid var(--line);padding-top:24px;}
+.articleNavCell{display:contents;}
 .articleNav a{font-size:12.5px;color:var(--ink-soft);}
 .articleNav a span{display:block;font-size:13.5px;color:var(--tea-deep);font-weight:700;margin-top:4px;}
 .articleNav .next{text-align:right;}
