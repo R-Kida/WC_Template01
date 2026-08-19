@@ -397,6 +397,28 @@
 
 </main>
 
+<!-- [WC] 外部不動産ポータルサイト（SUUMO等）のバナー掲載枠（2026-08-19追加）。
+     現状SUUMOのみだが今後他媒体が増える想定のため、1枚固定ではなく複数枚を
+     横に並べられる構成にしている。将来的には折り返しエリア（flexmode="1"）配下に
+     単体エリア×バナー数を並べ、各単体エリアに画像ブロックを1つ置く構成
+     （.recoGrid等と同じ13節A-1のパターン）でエリア・ブロック化し、バナーの
+     追加・削除をWebChanger管理画面から行えるようにする想定。バナー画像自体は
+     各ポータル側指定のトラッキングURL付き素材になることが多いため、実写真と
+     同様.imgPlaceholderで仮置きしている。 -->
+<section id="listingBanners" class="reveal">
+<div class="inner">
+<p class="listingBannersLabel">掲載サイト</p>
+<div class="listingBannersRow">
+<a href="https://suumo.jp/" target="_blank" rel="noopener" class="listingBanner">
+<div class="imgPlaceholder">
+<span class="phLabel">SUUMOバナー</span>
+<span class="phSize">各社バナー規定サイズに準拠</span>
+</div>
+</a>
+</div>
+</div>
+</section>
+
 <footer id="globalFooter">
 <div class="inner footerTop">
 <div class="footerBrand">
@@ -407,7 +429,7 @@
 <p>太盛工業株式会社 不動産部。焼津・藤枝で自社物件を自社管理しています。</p>
 <p class="footerLicense">宅地建物取引業者免許番号　静岡県知事（6）第6874号<br>（社）静岡県宅地建物取引業協会会員</p>
 </div>
-<div class="footerCol">
+<div class="footerCol footerMenu">
 <h4>MENU</h4>
 <ul>
 <li><a href="normalpage.html">初めての方へ</a></li>
@@ -416,7 +438,7 @@
 <li><a href="toppage.html#features">タイセイの特徴</a></li>
 </ul>
 </div>
-<div class="footerCol">
+<div class="footerCol footerCompany">
 <h4>COMPANY</h4>
 <ul>
 <li><a href="normalpage.html">会社案内</a></li>
@@ -427,7 +449,7 @@
 <li><a href="normalpage.html">お問い合わせ</a></li>
 </ul>
 </div>
-<div class="footerCol">
+<div class="footerCol footerContact">
 <h4>CONTACT</h4>
 <address>〒425-0035<br>静岡県焼津市東小川3-6-33<br>太盛工業（株）TEL 054-628-4185<br>タイセイホーム TEL 054-628-4186<br>FAX 054-626-0087（共通）</address>
 </div>

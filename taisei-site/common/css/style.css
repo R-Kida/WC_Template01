@@ -427,10 +427,25 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .articleNav a span{display:block;font-size:13.5px;color:var(--tea-deep);font-weight:700;margin-top:4px;}
 .articleNav .next{text-align:right;}
 
+#listingBanners{background:var(--paper);border-top:1px solid var(--line);padding:28px 0;}
+.listingBannersLabel{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--ink-soft);text-align:center;margin-bottom:14px;}
+.listingBannersRow{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;}
+.listingBanner{display:block;width:220px;max-width:46vw;}
+.listingBanner .imgPlaceholder{aspect-ratio:5/2;padding:8px;gap:4px;transition:border-color .2s;}
+.listingBanner:hover .imgPlaceholder,.listingBanner:focus-visible .imgPlaceholder{border-color:var(--tea-deep);}
+.listingBanner .imgPlaceholder .phLabel{font-size:11px;}
+.listingBanner .imgPlaceholder .phSize{font-size:9px;}
+
 #globalFooter{background:var(--tea-deep);color:#CFE0D2;}
 .footerTop{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:36px;padding:56px 0 36px;border-bottom:1px solid rgba(255,255,255,.12);}
 @media(max-width:820px){.footerTop{grid-template-columns:1fr 1fr;}}
-@media(max-width:520px){.footerTop{grid-template-columns:1fr;}}
+@media(max-width:520px){
+  .footerTop{grid-template-columns:1fr 1fr;row-gap:32px;column-gap:20px;}
+  .footerBrand{grid-column:1 / -1;text-align:center;}
+  .footerBrand a{justify-content:center;}
+  .footerBrand p{max-width:320px;margin:0 auto;}
+  .footerContact{grid-column:1 / -1;text-align:center;}
+}
 .footerBrand a{display:flex;align-items:center;gap:10px;color:#fff;margin-bottom:14px;}
 .footerBrand .logoText{font-family:var(--font-display);font-weight:900;font-size:15px;}
 .footerBrand p{font-size:12px;line-height:1.9;}
