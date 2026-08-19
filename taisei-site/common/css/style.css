@@ -285,17 +285,24 @@ h6{font-size:11px;}
    裸の<a>が1ブロックに吸収される」問題（CLAUDE.md 3節、2026-08-19実機検証）を
    避けるため、HTML側で<div class="cbCell">に個別に包んである。.cbCell自体は
    display:contentsでレイアウトに一切影響させず、既存の.cbItemの見た目・ホバー
-   演出（このセッションで検証済みのtranslateY/box-shadow）はそのまま維持している。 */
+   演出（このセッションで検証済みのtranslateY/box-shadow）はそのまま維持している。
+   ✅2026-08-19修正：うにさんが実際に#contactBarをエリア化（当初は固定要素扱いの
+   想定だったが変更対応のため）。`.cbTel`は`<a><span>054-628-4186</span>
+   <span>タイセイホーム（電話）</span></a>`という入れ子構造で、ロゴのlogoLinkと
+   同じ「単独<a>の自動吸収が効かず、<a>のままでは1要素として認識されない」問題を
+   起こす見込みだったため、先回りで`<div class="cbItem cbTel">054-628-4186
+   <small class="telLabel">タイセイホーム（電話）</small></div>`に変更した
+   （logoTextと同じパターン）。`.cbRent`/`.cbSell`はプレーンテキストのみの単独<a>
+   なので12節Fの自動吸収がそのまま効く想定で変更していない。 */
 #contactBar .cbCell{display:contents;}
 #contactBar .cbItem{position:relative;flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 10px;font-size:14.5px;font-weight:700;text-align:center;transform:translateY(0);transition:transform .22s var(--ease),box-shadow .22s var(--ease),filter .22s var(--ease);will-change:transform;}
 #contactBar .cbItem:hover,#contactBar .cbItem:focus-visible{transform:translateY(-4px);filter:brightness(1.08) saturate(1.15);box-shadow:0 10px 18px rgba(31,39,51,.22);z-index:1;}
 #contactBar .cbRent{background:var(--mikan);color:#fff;}
 #contactBar .cbSell{background:var(--tea-deep);color:#fff;}
-#contactBar .cbTel{background:var(--tea-pale);color:var(--tea-deep);flex:1.2;flex-direction:column;gap:1px;}
+#contactBar .cbTel{background:var(--tea-pale);color:var(--tea-deep);flex:1.2;flex-direction:column;gap:1px;font-family:var(--font-mono);font-size:16.5px;}
 #contactBar .cbTel:hover,#contactBar .cbTel:focus-visible{box-shadow:0 10px 18px rgba(31,39,51,.14);}
-#contactBar .cbTel .telNum{font-family:var(--font-mono);font-size:16.5px;}
-#contactBar .cbTel .telLabel{font-size:10.5px;font-weight:500;color:var(--ink-soft);}
-@media(max-width:600px){#contactBar .cbItem{font-size:12.5px;padding:13px 3px;}#contactBar .cbTel .telNum{font-size:14.5px;}}
+#contactBar .cbTel .telLabel{display:block;font-family:var(--font-body);font-size:10.5px;font-weight:500;color:var(--ink-soft);}
+@media(max-width:600px){#contactBar .cbItem{font-size:12.5px;padding:13px 3px;}#contactBar .cbTel{font-size:14.5px;}}
 /* [WC] ページトップへ戻るボタン。common/js/script.jsがスクロール位置に応じて
    .isVisibleを付け外しする。#contactBar（スクロール追従の下部固定バー）が
    存在するページでは重なってしまうため、:has()で#contactBarの有無を判定して
@@ -320,14 +327,20 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .sectionTitle{font-size:clamp(21px,2.8vw,29px);font-weight:900;color:var(--tea-deep);margin-top:10px;line-height:1.5;}
 .sectionLead{margin-top:14px;font-size:13.5px;color:var(--ink-soft);}
 
-.imgPlaceholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:repeating-linear-gradient(135deg,#EFE9D8,#EFE9D8 10px,#E6DFCB 10px,#E6DFCB 20px);border:1.5px dashed #B9AF8F;color:#8C826A;text-align:center;padding:14px;}
-/* [WC] 2026-08-19実機検証：中身がinline svgのみだと化ツールが画像ブロックの
-   コンテンツ枠をブロック要素と認識できず「編集ブロック配下のコンテンツ枠が
-   ブロック要素でない」エラーになることが確認された。svgをdata URI化した
-   <img class="phIcon">に置き換えて対応（CLAUDE.md 13節B参照）。 */
-.imgPlaceholder .phIcon{width:30px;height:30px;opacity:.7;}
-.imgPlaceholder .phLabel{font-size:12px;font-weight:700;}
-.imgPlaceholder .phSize{font-family:var(--font-mono);font-size:10px;opacity:.75;}
+/* [WC] 2026-08-19実機検証で2段階の修正：
+   1回目：中身がinline svgのみだと化ツールが画像ブロックのコンテンツ枠を
+   ブロック要素と認識できず「編集ブロック配下のコンテンツ枠がブロック要素で
+   ない」エラーになったため、svgをdata URI化した<img>に置き換えた。
+   2回目：うにさんの指摘により、data URI画像は化ツール側で「固定ブロックに
+   しろ」という警告が出ることが判明（固定ブロック化は基本使わない方針、
+   6節参照）。加えて、アイコン(img)+ラベル(span)+サイズ表記(span)という
+   3つの要素が1つのdivに混在していたことで「1つのコンテンツブロックの中に
+   複数の変更種別が混在しています」エラーも発生した。
+   **最終対応**：アイコン画像・ラベル・サイズ表記を全て廃止し、プレーンテキスト
+   1行だけのシンプルな構成に変更（うにさんの指摘：「webchangerで差し替える
+   前提のものは中身も最小限にしておいたほうがいい」）。見た目のハッチング
+   模様はCSSのbackground（下記）のみで表現し、DOM要素は増やさない。 */
+.imgPlaceholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(135deg,#EFE9D8,#EFE9D8 10px,#E6DFCB 10px,#E6DFCB 20px);border:1.5px dashed #B9AF8F;color:#8C826A;text-align:center;padding:14px;font-size:12px;font-weight:700;line-height:1.5;}
 
 .recoGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 @media(max-width:900px){.recoGrid{grid-template-columns:1fr 1fr;}}
@@ -335,9 +348,7 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .recoCard{display:flex;gap:14px;border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--paper);transition:transform .18s,box-shadow .18s;}
 .recoCard:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(43,42,34,.07);}
 .recoThumb{width:76px;height:76px;flex-shrink:0;border-radius:8px;overflow:hidden;}
-.recoThumb .imgPlaceholder{padding:4px;}
-.recoThumb .imgPlaceholder .phIcon{width:18px;height:18px;}
-.recoThumb .phLabel,.recoThumb .phSize{display:none;}
+.recoThumb .imgPlaceholder{padding:4px;font-size:9px;}
 .recoBody{min-width:0;}
 .recoTag{display:inline-block;font-size:10px;font-weight:700;color:var(--mikan-deep);background:#FCEBD8;padding:2px 8px;border-radius:999px;margin-bottom:4px;}
 .recoBody h3{font-size:13.5px;color:var(--tea-deep);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -471,10 +482,8 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .listingBannersLabel{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--ink-soft);text-align:center;margin-bottom:14px;}
 .listingBannersRow{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;}
 .listingBanner{display:block;width:220px;max-width:46vw;}
-.listingBanner .imgPlaceholder{aspect-ratio:5/2;padding:8px;gap:4px;transition:border-color .2s;}
+.listingBanner .imgPlaceholder{aspect-ratio:5/2;padding:8px;font-size:11px;transition:border-color .2s;}
 .listingBanner:hover .imgPlaceholder,.listingBanner:focus-visible .imgPlaceholder{border-color:var(--tea-deep);}
-.listingBanner .imgPlaceholder .phLabel{font-size:11px;}
-.listingBanner .imgPlaceholder .phSize{font-size:9px;}
 
 #globalFooter{background:var(--tea-deep);color:#CFE0D2;}
 .footerTop{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:36px;padding:56px 0 36px;border-bottom:1px solid rgba(255,255,255,.12);}
