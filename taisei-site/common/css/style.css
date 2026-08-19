@@ -244,14 +244,15 @@ h6{font-size:11px;}
 .heroCard:hover .hcLink svg{transform:translateX(3px);}
 
 #contactBar{position:sticky;bottom:0;z-index:90;display:flex;background:#fff;border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(43,42,34,.08);}
-#contactBar .cbItem{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:15px 10px;font-size:13px;font-weight:700;transition:filter .2s;text-align:center;}
-#contactBar .cbItem:hover{filter:brightness(1.05);}
+#contactBar .cbItem{position:relative;flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 10px;font-size:14.5px;font-weight:700;text-align:center;transform:translateY(0);transition:transform .22s var(--ease),box-shadow .22s var(--ease),filter .22s var(--ease);will-change:transform;}
+#contactBar .cbItem:hover,#contactBar .cbItem:focus-visible{transform:translateY(-4px);filter:brightness(1.08) saturate(1.15);box-shadow:0 10px 18px rgba(31,39,51,.22);z-index:1;}
 #contactBar .cbRent{background:var(--mikan);color:#fff;}
 #contactBar .cbSell{background:var(--tea-deep);color:#fff;}
 #contactBar .cbTel{background:var(--tea-pale);color:var(--tea-deep);flex:1.2;flex-direction:column;gap:1px;}
-#contactBar .cbTel .telNum{font-family:var(--font-mono);font-size:15px;}
-#contactBar .cbTel .telLabel{font-size:10px;font-weight:500;color:var(--ink-soft);}
-@media(max-width:600px){#contactBar .cbItem{font-size:11.5px;padding:12px 6px;}}
+#contactBar .cbTel:hover,#contactBar .cbTel:focus-visible{box-shadow:0 10px 18px rgba(31,39,51,.14);}
+#contactBar .cbTel .telNum{font-family:var(--font-mono);font-size:16.5px;}
+#contactBar .cbTel .telLabel{font-size:10.5px;font-weight:500;color:var(--ink-soft);}
+@media(max-width:600px){#contactBar .cbItem{font-size:12.5px;padding:13px 3px;}#contactBar .cbTel .telNum{font-size:14.5px;}}
 /* [WC] ページトップへ戻るボタン。common/js/script.jsがスクロール位置に応じて
    .isVisibleを付け外しする。#contactBar（スクロール追従の下部固定バー）が
    存在するページでは重なってしまうため、:has()で#contactBarの有無を判定して
