@@ -143,21 +143,32 @@ h6{font-size:11px;}
 
 .navUl{display:flex;gap:2px;align-items:center;}
 .navUl>li{position:relative;}
-.navUl>li>div{position:relative;display:flex;align-items:center;padding:11px 14px;font-size:13.5px;font-weight:700;color:var(--ink);border-radius:999px;transition:background .2s,color .2s;white-space:nowrap;}
+.navUl>li>div{position:relative;display:flex;align-items:center;padding:11px 14px;font-size:13.5px;font-weight:700;color:var(--ink);border-radius:999px;transition:background .2s,color .2s;white-space:nowrap;cursor:pointer;}
 .navUl>li>div>a{color:inherit;}
 /* [WC] 2026-08-19：navCaret(svg)を<a>の外（同じdiv内の兄弟要素）に出したため、
    ホバー時の背景・下線演出はdiv側に付け替えた。理由：化ツールでの検証時、
    単独<a>をテキストブロックに自動吸収する仕組み（CLAUDE.md 12節F）が、
    アイコンとテキストが<a>内に混在していると働かず「コンテンツ枠がブロック要素
    でない」エラーになることが判明したため（taisei-site-area-block-guide.md
-   1.11節参照）。 */
+   1.11節参照）。
+   ✅2026-08-19・さらに訂正：<a>の外に出した後も、div自体を1つのブロックとして
+   登録しようとすると、中に<a>（テキストリンク）とnavCaret(svg)という2つの
+   要素が混在しており「1要素として認識されない」系のエラーが再発した
+   （うにさんの指摘：divで囲われていないと1要素にならない、というルールの
+   裏返しで、逆に1つのdivの中に性質の異なる要素が2つ入っているのも同様に
+   問題になる）。navCaretはドロップダウンの有無を示すだけの固定装飾で、
+   個別に編集する必要がないため、svg要素自体を廃止しCSSの疑似要素
+   （border+transformによる矢印）に置き換えた。これにより<a>は再び
+   プレーンテキストのみに戻り、他のナビ項目と全く同じ「単独<a>の自動テキスト
+   ブロック吸収」（12節F）パターンで問題なく登録できる。 */
 .navUl>li>div:hover,.navUl>li.isActive>div{background:var(--tea-pale);color:var(--tea-deep);}
 /* [WC] オンマウス時、背景色の変化に加えて中央から伸びる下線アニメーションを追加
    （2026-08-18、「色が変わるだけじゃない気の利いたアニメーション」の要望対応） */
 .navUl>li>div::after{content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;border-radius:2px;background:var(--mikan);transform:scaleX(0);transition:transform .25s var(--ease);transform-origin:center;}
 .navUl>li>div:hover::after,.navUl>li.isActive>div::after{transform:scaleX(1);}
-.navCaret{width:11px;height:11px;margin-left:2px;flex-shrink:0;transition:transform .25s var(--ease);}
-.navUl>li.hasDropdown:hover .navCaret,.navUl>li.hasDropdown:focus-within .navCaret{transform:rotate(180deg);}
+.navUl>li.hasDropdown>div>a{display:inline-flex;align-items:center;}
+.navUl>li.hasDropdown>div>a::after{content:"";display:inline-block;width:6px;height:6px;margin-left:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);transition:transform .25s var(--ease);flex-shrink:0;}
+.navUl>li.hasDropdown:hover>div>a::after,.navUl>li.hasDropdown:focus-within>div>a::after{transform:rotate(225deg);}
 /* [WC] ドロップダウンサブメニュー。準備のみで現状は非表示（2026-08-18）。
    <body>に`hasSubNav`クラスを追加すると有効化される（toppage.html等の
    #globalNav手前のコメント参照）。有効化前は.hasSubNavが存在しないため
@@ -180,7 +191,7 @@ h6{font-size:11px;}
 .subNav>li:nth-child(1){transition-delay:.03s;}
 .subNav>li:nth-child(2){transition-delay:.06s;}
 .subNav>li:nth-child(3){transition-delay:.09s;}
-.subNav>li>a{display:block;padding:10px 14px;border-radius:9px;font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;transition:background .15s,color .15s,padding-left .15s;}
+.subNav>li>a{display:block;padding:10px 14px;border-radius:9px;font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap;cursor:pointer;transition:background .15s,color .15s,padding-left .15s;}
 .subNav>li>a:hover{background:var(--tea-pale);color:var(--tea-deep);padding-left:18px;}
 
 #navToggle{display:none;background:none;border:0;width:40px;height:40px;position:relative;flex-shrink:0;font-family:inherit;cursor:pointer;}
@@ -198,7 +209,7 @@ h6{font-size:11px;}
   .navUl{flex-direction:column;align-items:stretch;gap:2px;}
   .navUl>li>div{padding:15px;border-bottom:1px solid var(--line);border-radius:0;}
   .navUl>li>div::after{display:none;}
-  .navCaret{display:none;}
+  .navUl>li.hasDropdown>div>a::after{display:none;}
   #navToggle{display:block;}
   /* [WC] メニューを開いた時の演出：背景に半透明の幕(#navBackdrop)をフェードイン
      させつつ、メニュー項目を上から順にずらしてフェードイン(stagger)させる。
