@@ -15,12 +15,19 @@
 
 <h1 class="visuallyHidden">ルミエール203号室、入居者様決定のお知らせ　タイセイホーム</h1>
 
+<!-- [WC] 実機検証で判明（2026-08-19）：#utilityBar（ページ最上部、化ツールで
+     cmn002として登録済み）は、当初.ubBadge（span）と2つの<a>を並列の裸の兄弟要素
+     として書いていたところ、エリア登録時にまとめて1つのブロックに吸収されて
+     しまった。CLAUDE.md 3節「並列に並ぶ要素は入れ子でラップする」の適用漏れが
+     原因（span+複数<a>の組み合わせでも同様に発生することが実機で確認できた）。
+     対策として、営業時間バッジ・各リンクをそれぞれ個別のdivで囲み、独立した
+     ブロックとして登録できるようにした。 -->
 <div id="utilityBar">
 <div class="inner">
 <div class="ubLeft">
-<span class="ubBadge">営業時間 11:00〜19:00</span>
-<a href="normalpage.html">初めての方へ</a>
-<a href="normalpage.html">個人情報保護方針</a>
+<div><span class="ubBadge">営業時間 11:00〜19:00</span></div>
+<div><a href="normalpage.html">初めての方へ</a></div>
+<div><a href="normalpage.html">個人情報保護方針</a></div>
 </div>
 </div>
 </div>
@@ -134,10 +141,15 @@
 <p>次の空室が出次第、こちらのブログと賃貸物件一覧ページで随時お知らせしてまいります。ご希望のエリアや間取りがございましたら、お電話・お問い合わせフォームからお気軽にご相談ください。</p>
 </div>
 
+<!-- [WC] .articleTagsは、実際にはWebChanger標準のブログタグ機能（.rdTaglist、
+     9節参照）に置き換わる可能性が高い見た目確認用の想定だが、万一ここを手動で
+     エリア・ブロック化する場合に備え、#utilityBarと同じ理由（3節・複数<a>が
+     並列の裸の兄弟要素だと1ブロックに吸収される、2026-08-19実機検証）で
+     各タグを個別のdivで囲んである。 -->
 <div class="articleTags">
-<a href="blogframe.html">#空室情報</a>
-<a href="blogframe.html">#ルミエール</a>
-<a href="blogframe.html">#焼津市東小川</a>
+<div><a href="blogframe.html">#空室情報</a></div>
+<div><a href="blogframe.html">#ルミエール</a></div>
+<div><a href="blogframe.html">#焼津市東小川</a></div>
 </div>
 
 <div class="articleNav">

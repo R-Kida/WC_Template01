@@ -18,12 +18,19 @@
      対象にならない場合は、meta descriptionやheader情報側での対応を検討。 -->
 <h1 class="visuallyHidden">お知らせ・ブログ一覧　タイセイホーム　太盛工業株式会社 不動産部</h1>
 
+<!-- [WC] 実機検証で判明（2026-08-19）：#utilityBar（ページ最上部、化ツールで
+     cmn002として登録済み）は、当初.ubBadge（span）と2つの<a>を並列の裸の兄弟要素
+     として書いていたところ、エリア登録時にまとめて1つのブロックに吸収されて
+     しまった。CLAUDE.md 3節「並列に並ぶ要素は入れ子でラップする」の適用漏れが
+     原因（span+複数<a>の組み合わせでも同様に発生することが実機で確認できた）。
+     対策として、営業時間バッジ・各リンクをそれぞれ個別のdivで囲み、独立した
+     ブロックとして登録できるようにした。 -->
 <div id="utilityBar">
 <div class="inner">
 <div class="ubLeft">
-<span class="ubBadge">営業時間 11:00〜19:00</span>
-<a href="normalpage.html">初めての方へ</a>
-<a href="normalpage.html">個人情報保護方針</a>
+<div><span class="ubBadge">営業時間 11:00〜19:00</span></div>
+<div><a href="normalpage.html">初めての方へ</a></div>
+<div><a href="normalpage.html">個人情報保護方針</a></div>
 </div>
 </div>
 </div>
