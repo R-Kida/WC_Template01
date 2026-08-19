@@ -301,7 +301,11 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .sectionLead{margin-top:14px;font-size:13.5px;color:var(--ink-soft);}
 
 .imgPlaceholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:repeating-linear-gradient(135deg,#EFE9D8,#EFE9D8 10px,#E6DFCB 10px,#E6DFCB 20px);border:1.5px dashed #B9AF8F;color:#8C826A;text-align:center;padding:14px;}
-.imgPlaceholder svg{width:30px;height:30px;opacity:.7;}
+/* [WC] 2026-08-19実機検証：中身がinline svgのみだと化ツールが画像ブロックの
+   コンテンツ枠をブロック要素と認識できず「編集ブロック配下のコンテンツ枠が
+   ブロック要素でない」エラーになることが確認された。svgをdata URI化した
+   <img class="phIcon">に置き換えて対応（CLAUDE.md 13節B参照）。 */
+.imgPlaceholder .phIcon{width:30px;height:30px;opacity:.7;}
 .imgPlaceholder .phLabel{font-size:12px;font-weight:700;}
 .imgPlaceholder .phSize{font-family:var(--font-mono);font-size:10px;opacity:.75;}
 
@@ -312,7 +316,7 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .recoCard:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(43,42,34,.07);}
 .recoThumb{width:76px;height:76px;flex-shrink:0;border-radius:8px;overflow:hidden;}
 .recoThumb .imgPlaceholder{padding:4px;}
-.recoThumb .imgPlaceholder svg{width:18px;height:18px;}
+.recoThumb .imgPlaceholder .phIcon{width:18px;height:18px;}
 .recoThumb .phLabel,.recoThumb .phSize{display:none;}
 .recoBody{min-width:0;}
 .recoTag{display:inline-block;font-size:10px;font-weight:700;color:var(--mikan-deep);background:#FCEBD8;padding:2px 8px;border-radius:999px;margin-bottom:4px;}
@@ -322,7 +326,7 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .recoMeta{font-size:11px;color:var(--ink-soft);margin-top:3px;line-height:1.6;}
 
 .noticeBox{display:flex;gap:16px;background:#FFF7EC;border:1px solid #F0D9B2;border-left:4px solid var(--mikan);border-radius:12px;padding:22px 24px;margin-top:36px;}
-.noticeBox svg{width:22px;height:22px;color:var(--mikan-deep);flex-shrink:0;}
+.noticeBox .noticeIcon{width:22px;height:22px;flex-shrink:0;}
 .noticeBox h3{font-size:14px;color:var(--tea-deep);}
 .noticeBox p{font-size:12.5px;color:var(--ink-soft);margin-top:8px;line-height:1.9;}
 
