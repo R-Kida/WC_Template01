@@ -38,9 +38,25 @@
   // WebChangerの編集画面ではJSが一切動かないため（8節）、静的な最終値がそのまま
   // 表示され続ける＝壊れない。目標値もJSにハードコードせずDOM側から読み取るため、
   // 将来.numの中身が編集されても書き換え不要。
+  // [WC] ✅2026-08-21・#statsをWebChangerのテキストブロックとして登録すると、
+  // 自動<p>挿入（CLAUDE.md 3節・13節G）で.numの中身が<div class="num"><p>50</p>
+  // <span>年</span></div>のように書き換わる可能性がある。el.firstChildが単純な
+  // テキストノードである前提だと、これだけで「.firstChildがp要素になり
+  // カウントアップが動かなくなる」（うにさんの報告）。対策として、firstChildに
+  // 決め打ちせず配下の全テキストノードを走査し、数字で始まる最初のノードを探す
+  // 方式に変更した。見つからなければ何もしない（静的な最終値がそのまま表示され
+  // 続けるだけなので、編集画面と同様に壊れずフォールバックする）。
+  function findLeadingNumberTextNode(el){
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    var node;
+    while((node = walker.nextNode())){
+      if(/^\s*\d+/.test(node.textContent)){ return node; }
+    }
+    return null;
+  }
   function animateCountUp(el){
-    var textNode = el.firstChild;
-    if(!textNode || textNode.nodeType !== Node.TEXT_NODE){ return; }
+    var textNode = findLeadingNumberTextNode(el);
+    if(!textNode){ return; }
     var target = parseInt(textNode.textContent.trim(), 10);
     if(isNaN(target)){ return; }
     if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
