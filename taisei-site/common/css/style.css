@@ -244,8 +244,14 @@ h6{font-size:11px;}
    構成に変更した（見た目の重さを減らす狙い、taisei-site-project-info.md
    3.2節参照）。#editViewフォールバックは、写真パネルがposition:absoluteの
    フルブリードでなくなったことで不要になった。 */
-#hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1.1fr 1fr;grid-template-rows:1fr;background:linear-gradient(160deg,#fff 0%,var(--tea-pale) 100%);}
+#hero{position:relative;overflow:hidden;display:grid;grid-template-columns:1.1fr 1fr;grid-template-rows:1fr;align-items:center;background:linear-gradient(160deg,#fff 0%,var(--tea-pale) 100%);}
 @media(max-width:760px){#hero{display:block;}}
+/* [WC] ✅2026-08-21・標準スライドショーブロックの「高さ」は固定px値のみで、
+   左カラム（.heroContent）の実際の高さに自動追従することができない
+   （元の独自JS実装は#heroをdisplay:grid+align-items:stretchにして画像パネルを
+   常にテキスト側の高さいっぱいに伸ばしていたが、固定高さの画像には効かなく
+   なった）。align-items:centerにして、画像の固定高さとテキスト側の実際の高さが
+   ズレても行内で縦中央に来るようにし、上寄りに浮いて見えるのを防いでいる。 */
 /* [WC] 2026-08-19、右側の写真パネルはWebChanger標準の画像スライドブロック
    （.rdslide、9節参照）を設置する前提に変更した。以前の独自JSスライダー用
    （.slide/.heroDots）のCSSは廃止済み。登録後、実際に出力される.rdsp-*系
