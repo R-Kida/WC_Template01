@@ -138,9 +138,14 @@
      ※この共通エリアのID（化ツール登録時に採番）は、blogframe.html/blogmain.htmlの
      保険エリア（blogcmn="1"）とは別番号にすること。一般ページ側だけで完結させ、
      ブログ側に予備コンテンツが漏れないようにするため（2026-08-18、
-     CLAUDE.md 6節参照） -->
-<div id="mainAreaAboveCmn"></div>
-<div id="mainAreaAboveAre"></div>
+     CLAUDE.md 6節参照）。
+     ✅2026-08-19修正：完全に空の<div id="..."></div>のままだと、化ツール側で
+     クリック対象がなくエリアに指定できないとうにさんが実機で確認した。中身が
+     空の<div></div>を1つだけ入れておくことで、その内側のdivをエリア直下の
+     ブロックとして登録できるようにした（うにさんの指摘：「予備エリアにも
+     カラdivがないとえりあにできない」）。 -->
+<div id="mainAreaAboveCmn"><div></div></div>
+<div id="mainAreaAboveAre"><div></div></div>
 
 <main>
 <!-- [WC] エリア候補: are001 メインエリア（mstcon="1"）
@@ -205,9 +210,10 @@
 
 <!-- [WC] リリース後の保険エリア（メインエリアの下、6節参照）：空の共通エリア
      ＋空の通常エリアのペア。上の保険エリアと対になる予備枠。IDはblogcmn側とは
-     別番号にすること（上の注記参照） -->
-<div id="mainAreaBelowCmn"></div>
-<div id="mainAreaBelowAre"></div>
+     別番号にすること（上の注記参照）。中身が空の<div></div>を1つだけ入れている
+     理由も上の注記参照（2026-08-19修正） -->
+<div id="mainAreaBelowCmn"><div></div></div>
+<div id="mainAreaBelowAre"><div></div></div>
 
 <footer id="globalFooter">
 <div class="inner footerTop">

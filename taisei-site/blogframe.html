@@ -122,8 +122,11 @@
      ただし通常の`cmn`（サイト全体共通）ではなく、blogframe.html/blogmain.html
      同士だけで共有される**ブログ共通エリア（`blogcmn="1"`）**として登録すること
      （2026-08-18、うにさんの指摘。12節L参照）。一般ページ（normalpage.html）の
-     保険エリアとはIDも別番号にし、互いに予備コンテンツが漏れないようにする -->
-<div id="mainAreaAboveBlogCmn"></div>
+     保険エリアとはIDも別番号にし、互いに予備コンテンツが漏れないようにする。
+     ✅2026-08-19修正：完全に空の<div></div>のままだと化ツールでエリアに
+     指定できないとうにさんが実機で確認したため、中身が空の<div></div>を
+     1つだけ入れている（normalpage.htmlの同種コメント参照）。 -->
+<div id="mainAreaAboveBlogCmn"><div></div></div>
 
 <!-- [WC] 重要: このHTMLは「ブログフレーム用」テンプレート。
      K-012仕様により、ここには通常のエリア（{%%rdarea%%}）は設置できません。
@@ -140,8 +143,9 @@
 </main>
 
 <!-- [WC] リリース後の保険エリア（メインコンテンツの下、6節参照）：空のブログ共通
-     エリア（`blogcmn="1"`、上の注記参照） -->
-<div id="mainAreaBelowBlogCmn"></div>
+     エリア（`blogcmn="1"`、上の注記参照）。中身が空の<div></div>を1つだけ
+     入れている理由も上の注記参照（2026-08-19修正）。 -->
+<div id="mainAreaBelowBlogCmn"><div></div></div>
 
 <footer id="globalFooter">
 <div class="inner footerTop">

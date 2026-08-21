@@ -107,9 +107,12 @@
      エリア（`blogcmn="1"`、blogframe.htmlと共有。12節L参照）＋空の通常エリア
      （are、記事ごとに個別内容）のペア。ブログ共通エリア側のIDは、一般ページ
      （normalpage.html）の保険エリアとは別番号にすること（2026-08-18、
-     うにさんの指摘） -->
-<div id="mainAreaAboveBlogCmn"></div>
-<div id="mainAreaAboveAre"></div>
+     うにさんの指摘）。
+     ✅2026-08-19修正：完全に空の<div></div>のままだと化ツールでエリアに
+     指定できないとうにさんが実機で確認したため、中身が空の<div></div>を
+     1つだけ入れている（normalpage.htmlの同種コメント参照）。 -->
+<div id="mainAreaAboveBlogCmn"><div></div></div>
+<div id="mainAreaAboveAre"><div></div></div>
 
 <main>
 <div class="inner" id="blogArticle">
@@ -160,9 +163,10 @@
 </main>
 
 <!-- [WC] リリース後の保険エリア（メインエリアの下、6節参照）：空のブログ共通
-     エリア（`blogcmn="1"`）＋空の通常エリアのペア。上の保険エリアと対になる予備枠 -->
-<div id="mainAreaBelowBlogCmn"></div>
-<div id="mainAreaBelowAre"></div>
+     エリア（`blogcmn="1"`）＋空の通常エリアのペア。上の保険エリアと対になる予備枠。
+     中身が空の<div></div>を1つだけ入れている理由も上の注記参照（2026-08-19修正） -->
+<div id="mainAreaBelowBlogCmn"><div></div></div>
+<div id="mainAreaBelowAre"><div></div></div>
 
 <footer id="globalFooter">
 <div class="inner footerTop">

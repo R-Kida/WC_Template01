@@ -270,6 +270,15 @@ WebChanger化ツール「6. エリア・ブロックの指定」作業を効率�
 - [ ] 検索: `mainAreaAboveAre` → 保険通常エリア（空、メインの上）
 - [ ] 検索: `mainAreaBelowCmn` → 保険共通エリア（空、メインの下）
 - [ ] 検索: `mainAreaBelowAre` → 保険通常エリア（空、メインの下）
+- **✅2026-08-19修正**：完全に空の`<div id="..."></div>`のままだと化ツール側で
+  クリック対象がなくエリアに指定できないと実機で判明（うにさんの指摘：「予備
+  エリアにもカラdivがないとえりあにできない」「共通エリアにするにはこの状態
+  じゃないとだめみたい」）。中身が空の`<div></div>`を1つ入れておく形
+  （`<div id="mainAreaAboveCmn"><div></div></div>`）に修正済み。登録時、ツールが
+  内側のdivに自動で`&nbsp;`を挿入した状態になるが、これは正常な挙動（bizGridの
+  アイコンdivと同様、ツール側の自動処理）。この対応は本B-2節・B-3節・B-4節の
+  保険エリア全て（`mainAreaAboveBlogCmn`/`mainAreaBelowBlogCmn`含む）に共通で
+  適用済み。
 
 ### B-3. `blogframe.html`
 
