@@ -585,3 +585,118 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .reveal{transition:opacity .7s var(--ease),transform .7s var(--ease);}
 .reveal.revealArmed{opacity:0;transform:translateY(16px);}
 .reveal.isVisible{opacity:1;transform:translateY(0);}
+
+/* [WC] お問い合わせ表示枠（WebChanger標準の「お問い合わせ表示枠」ブロック、
+   CLAUDE.md 9節の.contact_item_table等）のブランドCSS。2026-08-21、うにさんが
+   実際に登録した出力HTMLを元に追加。
+   ✅重要：装飾機能（枠線・padding等）で自動生成されるラッパークラス
+   （例：.udidqkkn588pxnim095fsxw1o1mfz7fhz）は登録のたびに変わるランダムな
+   クラス名のため対象にせず、常に安定して出力される.rdcontact_mainを起点に
+   スコープしてある（8節「親要素起点のセレクタ設計」の考え方）。 */
+.rdcontact_main{max-width:720px;margin:0 auto;font-size:14.5px;color:var(--ink);}
+.rdcontact_main .contact_item_table{margin:0;}
+.rdcontact_main .contact_item_title{
+  display:block;font-weight:700;color:var(--tea-deep);font-size:14.5px;
+  margin:36px 0 10px;
+}
+.rdcontact_main .contact_item_table > .contact_item_title:first-child{margin-top:0;}
+.rdcontact_main .contact_item_title span{margin-left:8px;font-size:11px;color:var(--mikan-deep);}
+.rdcontact_main .contact_item_input{margin:6px 0 0;color:var(--ink-soft);font-size:13px;line-height:1.7;}
+.rdcontact_main .contact_item_input:has(input,select,textarea,dl){margin-top:0;}
+
+.rdcontact_main input[type="text"],
+.rdcontact_main input[type="email"],
+.rdcontact_main input[type="tel"],
+.rdcontact_main select,
+.rdcontact_main textarea{
+  width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:10px;
+  padding:11px 14px;font-family:var(--font-body);font-size:14px;color:var(--ink);
+  background:#fff;transition:border-color .18s var(--ease),box-shadow .18s var(--ease);
+}
+.rdcontact_main input:focus,
+.rdcontact_main select:focus,
+.rdcontact_main textarea:focus{
+  outline:none;border-color:var(--tea);box-shadow:0 0 0 3px rgba(46,109,164,.14);
+}
+.rdcontact_main textarea{min-height:140px;resize:vertical;}
+
+/* 名前タイトル（姓・名） */
+.rdcontact_main .contact_item_namebox_box{display:flex;gap:16px;flex-wrap:wrap;}
+.rdcontact_main .contact_item_namebox_front,
+.rdcontact_main .contact_item_namebox_back{flex:1;min-width:180px;display:flex;align-items:center;gap:10px;}
+.rdcontact_main .contact_item_namebox_front label,
+.rdcontact_main .contact_item_namebox_back label{flex:0 0 auto;font-size:12.5px;color:var(--ink-soft);}
+
+/* 電話番号タイトル */
+.rdcontact_main .contact_tel_sepalate{display:flex;align-items:center;gap:8px;}
+.rdcontact_main .contact_tel_sepalate input{width:auto;flex:1;min-width:0;text-align:center;}
+
+/* 住所タイトル（郵便番号・住所検索ボタン・都道府県・住所） */
+.rdcontact_main .contact_item_inside_table{margin:0;display:flex;flex-direction:column;gap:14px;}
+.rdcontact_main .contact_item_inside_title{font-size:12.5px;font-weight:700;color:var(--ink-soft);}
+.rdcontact_main .contact_item_inside_input{margin:4px 0 0;}
+.rdcontact_main .contact_sepalate_zip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.rdcontact_main input.contact_address_zip_sepalate{width:84px;flex:0 0 auto;text-align:center;}
+.rdcontact_main .contact_address_zip_sepalater{color:var(--ink-soft);}
+.rdcontact_main .btn_contacts_post_api{
+  flex:0 0 auto;border:1px solid var(--tea);background:#fff;color:var(--tea-deep);
+  border-radius:8px;padding:10px 16px;font-size:13px;font-weight:700;
+  font-family:var(--font-body);cursor:pointer;white-space:nowrap;
+  transition:background .18s var(--ease),color .18s var(--ease);
+}
+.rdcontact_main .btn_contacts_post_api:hover{background:var(--tea-deep);color:#fff;}
+.rdcontact_main .contact_address_pref{max-width:280px;}
+
+/* 日付タイトル（年月の範囲指定） */
+.rdcontact_main .contact-date-inline{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;vertical-align:middle;}
+.rdcontact_main .contact-date-year,
+.rdcontact_main .contact-date-month{display:inline-flex;align-items:center;gap:6px;}
+.rdcontact_main .contact-date-year input,
+.rdcontact_main .contact-date-month input{width:76px;text-align:center;}
+.rdcontact_main .contact-date-year-label,
+.rdcontact_main .contact-date-month-label{font-size:12.5px;color:var(--ink-soft);}
+.rdcontact_main .contact-date-range-label{display:inline-block;margin:0 12px;color:var(--ink-soft);vertical-align:middle;}
+
+/* プルダウンタイトル */
+.rdcontact_main .contact_item_pulldown{max-width:320px;}
+
+/* チェックボックス・ラジオボタンタイトル */
+.rdcontact_main .contact_checkbox_box,
+.rdcontact_main .contact_radio_box{display:flex;flex-wrap:wrap;gap:16px;align-items:center;}
+.rdcontact_main .contact_checkbox,
+.rdcontact_main .contact_radio{display:inline-flex;align-items:center;gap:8px;}
+.rdcontact_main .contact_checkbox label,
+.rdcontact_main .contact_radio label{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13.5px;color:var(--ink);}
+.rdcontact_main .contact_checkbox input[type="checkbox"],
+.rdcontact_main .contact_radio input[type="radio"]{accent-color:var(--tea);width:16px;height:16px;}
+.rdcontact_main .contact_checkbox input[type="text"],
+.rdcontact_main .contact_radio input[type="text"]{width:160px;}
+
+/* ファイルタイトル */
+.rdcontact_main .contact_item_file_box{margin-bottom:8px;}
+.rdcontact_main .contact_item_file_box:last-child{margin-bottom:0;}
+.rdcontact_main input[type="file"]{font-size:13px;color:var(--ink-soft);}
+.rdcontact_main input[type="file"]::file-selector-button{
+  border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--tea-deep);
+  padding:8px 14px;font-family:var(--font-body);font-size:12.5px;font-weight:700;
+  margin-right:10px;cursor:pointer;transition:background .18s var(--ease);
+}
+.rdcontact_main input[type="file"]::file-selector-button:hover{background:var(--tea-pale);}
+
+/* 送信ボタン（.btnPrimaryと同じミカン色のピル型ボタンに統一） */
+.rdcontact_main .rdcontact_btn_area{text-align:center;margin-top:44px;}
+.rdcontact_main .rdcontact_btn_submit{
+  appearance:none;-webkit-appearance:none;border:none;border-radius:999px;
+  background:var(--mikan);color:#fff;font-family:var(--font-body);font-weight:700;
+  font-size:15px;padding:16px 52px;cursor:pointer;box-shadow:0 10px 24px rgba(243,144,63,.3);
+  transition:transform .2s var(--ease),box-shadow .2s var(--ease);
+}
+.rdcontact_main .rdcontact_btn_submit:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(243,144,63,.4);}
+
+@media(max-width:600px){
+  .rdcontact_main{font-size:13.5px;}
+  .rdcontact_main .contact_item_namebox_box{gap:10px;}
+  .rdcontact_main .contact_item_namebox_front,
+  .rdcontact_main .contact_item_namebox_back{min-width:0;flex-basis:100%;}
+  .rdcontact_main .rdcontact_btn_submit{width:100%;}
+}
