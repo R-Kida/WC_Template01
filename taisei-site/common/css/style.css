@@ -629,7 +629,7 @@ body:has(#contactBar) #toTop{bottom:88px;}
 
 /* 電話番号タイトル */
 .rdcontact_main .contact_tel_sepalate{display:flex;align-items:center;gap:8px;}
-.rdcontact_main .contact_tel_sepalate input{width:auto;flex:1;min-width:0;text-align:center;}
+.rdcontact_main .contact_tel_sepalate input{width:auto !important;flex:1;min-width:0;text-align:center;}
 
 /* 住所タイトル（郵便番号・住所検索ボタン・都道府県・住所） */
 /* [WC] ✅2026-08-21・実機報告（うにさん：「なんかおかしい」）で判明：住所タイトル
