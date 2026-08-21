@@ -1031,9 +1031,20 @@ WebChangerが常に読み込む固定CSS/JS（`{%%rdtplcmn_fix%%}/force.css`、
   分割入力
 - `.contact_radio_box` / `.contact_checkbox_box` … ラジオ・チェックボックス
 - `.rdcontact_btn_area` / `.contact_confirm_msg` … 送信ボタン・確認画面
-  → **`taisei-site/`にはまだお問い合わせページ自体が存在しない**。
-  将来作成する際は、独自マークアップではなくこの実クラスに準拠して
-  装飾すること。
+  → **✅2026-08-21・実装済み**：`taisei-site/`の賃貸物件一覧ページ（`normalpage.html`
+  相当）に、うにさんが実際にWebChanger標準の「お問い合わせ表示枠」を設置した。
+  出力される`.rdcontact_main`配下の構造（`.contact_item_table`/`.contact_item_title`/
+  `.contact_item_input`/`.contact_item_namebox_box`/`.contact_tel_sepalate`/
+  `.contact_item_inside_table`/`.contact_sepalate_zip`/`.contact-date-*`/
+  `.contact_checkbox_box`/`.contact_radio_box`/`.contact_item_file_box`/
+  `.rdcontact_btn_area`/`.rdcontact_btn_submit`）に対して、`common/css/style.css`
+  末尾に`.rdcontact_main`を起点としたブランドCSSを追加済み（住所検索ボタンの
+  くっつき対策含む）。**装飾機能で自動生成されるラッパークラス（例：
+  `.udidqkkn588pxnim095fsxw1o1mfz7fhz`のような登録のたびに変わるランダムな
+  クラス名）はスタイリング対象にせず、常に安定して出力される`.rdcontact_main`を
+  起点にスコープする**のが正しいやり方（8節の「親要素起点のセレクタ設計」の
+  具体例）。今後別の案件でお問い合わせ表示枠を装飾する際も、この`.rdcontact_main`
+  起点の設計をそのまま流用してよい。
 
 **表（テーブル）ブロック**
 - `.rdtable` / `.rdtableTable` … 基本
