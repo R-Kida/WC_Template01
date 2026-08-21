@@ -662,9 +662,15 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .rdcontact_main .contact_item_input:has(.contact-date-inline){display:flex;align-items:center;gap:10px;flex-wrap:nowrap;}
 .rdcontact_main .contact-date-inline{display:inline-flex;align-items:center;gap:8px;flex-wrap:nowrap;flex:0 0 auto;}
 .rdcontact_main .contact-date-year,
-.rdcontact_main .contact-date-month{display:inline-flex;align-items:center;gap:4px;}
+.rdcontact_main .contact-date-month{display:inline-flex;align-items:center;gap:4px;flex:0 0 auto;}
+/* ✅2026-08-21・訂正：一度は`.contact-date-year input`という指定でwidth:64pxを
+   狙ったが、汎用のinput[type="text"]{width:100%}と詳細度が同点（0,2,1 vs 0,2,1）
+   になり、実機ではforce.css側の影響もあって実際には効かず、入力欄が幅いっぱいに
+   広がって「年」「月」ラベルと文字が被る不具合が発生した（うにさんの報告）。
+   force.cssの中身が確認できない以上（外部ホスト配信、7節と同じ理由）確実に
+   勝つよう!importantを付与した。 */
 .rdcontact_main .contact-date-year input,
-.rdcontact_main .contact-date-month input{width:64px;flex:0 0 auto;text-align:center;}
+.rdcontact_main .contact-date-month input{width:64px !important;flex:0 0 auto !important;text-align:center;}
 .rdcontact_main .contact-date-year-label,
 .rdcontact_main .contact-date-month-label{font-size:12.5px;color:var(--ink-soft);}
 .rdcontact_main .contact-date-range-label{color:var(--ink-soft);}
