@@ -655,14 +655,22 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .rdcontact_main .contact_address_pref{display:block !important;max-width:280px;}
 
 /* 日付タイトル（年月の範囲指定） */
-.rdcontact_main .contact-date-inline{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;vertical-align:middle;}
+/* [WC] ✅2026-08-21・うにさんの提案：「日付タイトルはPCでは横並びスマホでは
+   隙間作って間に～で縦並び」。dd.contact_item_input自体を:has()で日付欄だけ
+   判定してflexコンテナ化し、PCは横一列、576px以下は縦積み（gapがそのまま
+   ～との間隔になる）に切り替える。 */
+.rdcontact_main .contact_item_input:has(.contact-date-inline){display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.rdcontact_main .contact-date-inline{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .rdcontact_main .contact-date-year,
 .rdcontact_main .contact-date-month{display:inline-flex;align-items:center;gap:6px;}
 .rdcontact_main .contact-date-year input,
 .rdcontact_main .contact-date-month input{width:76px;text-align:center;}
 .rdcontact_main .contact-date-year-label,
 .rdcontact_main .contact-date-month-label{font-size:12.5px;color:var(--ink-soft);}
-.rdcontact_main .contact-date-range-label{display:inline-block;margin:0 12px;color:var(--ink-soft);vertical-align:middle;}
+.rdcontact_main .contact-date-range-label{color:var(--ink-soft);}
+@media(max-width:576px){
+  .rdcontact_main .contact_item_input:has(.contact-date-inline){flex-direction:column;align-items:flex-start;}
+}
 
 /* プルダウンタイトル */
 .rdcontact_main .contact_item_pulldown{max-width:320px;}
