@@ -659,12 +659,12 @@ body:has(#contactBar) #toTop{bottom:88px;}
    隙間作って間に～で縦並び」。dd.contact_item_input自体を:has()で日付欄だけ
    判定してflexコンテナ化し、PCは横一列、576px以下は縦積み（gapがそのまま
    ～との間隔になる）に切り替える。 */
-.rdcontact_main .contact_item_input:has(.contact-date-inline){display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.rdcontact_main .contact-date-inline{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.rdcontact_main .contact_item_input:has(.contact-date-inline){display:flex;align-items:center;gap:10px;flex-wrap:nowrap;}
+.rdcontact_main .contact-date-inline{display:inline-flex;align-items:center;gap:8px;flex-wrap:nowrap;flex:0 0 auto;}
 .rdcontact_main .contact-date-year,
-.rdcontact_main .contact-date-month{display:inline-flex;align-items:center;gap:6px;}
+.rdcontact_main .contact-date-month{display:inline-flex;align-items:center;gap:4px;}
 .rdcontact_main .contact-date-year input,
-.rdcontact_main .contact-date-month input{width:76px;text-align:center;}
+.rdcontact_main .contact-date-month input{width:64px;flex:0 0 auto;text-align:center;}
 .rdcontact_main .contact-date-year-label,
 .rdcontact_main .contact-date-month-label{font-size:12.5px;color:var(--ink-soft);}
 .rdcontact_main .contact-date-range-label{color:var(--ink-soft);}
