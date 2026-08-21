@@ -301,9 +301,7 @@ h6{font-size:11px;}
 #contactBar{position:sticky;bottom:0;z-index:90;display:flex;background:#fff;border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(43,42,34,.08);}
 /* [WC] #contactBarの各<a class="cbItem">は、化ツールで#utilityBarと同じ「並列の
    裸の<a>が1ブロックに吸収される」問題（CLAUDE.md 3節、2026-08-19実機検証）を
-   避けるため、HTML側で<div class="cbCell">に個別に包んである。.cbCell自体は
-   display:contentsでレイアウトに一切影響させず、既存の.cbItemの見た目・ホバー
-   演出（このセッションで検証済みのtranslateY/box-shadow）はそのまま維持している。
+   避けるため、HTML側で<div class="cbCell">に個別に包んである。
    ✅2026-08-19修正：うにさんが実際に#contactBarをエリア化（当初は固定要素扱いの
    想定だったが変更対応のため）。`.cbTel`は`<a><span>054-628-4186</span>
    <span>タイセイホーム（電話）</span></a>`という入れ子構造で、ロゴのlogoLinkと
@@ -311,13 +309,26 @@ h6{font-size:11px;}
    起こす見込みだったため、先回りで`<div class="cbItem cbTel">054-628-4186
    <small class="telLabel">タイセイホーム（電話）</small></div>`に変更した
    （logoTextと同じパターン）。`.cbRent`/`.cbSell`はプレーンテキストのみの単独<a>
-   なので12節Fの自動吸収がそのまま効く想定で変更していない。 */
-#contactBar .cbCell{display:contents;}
-#contactBar .cbItem{position:relative;flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 10px;font-size:14.5px;font-weight:700;text-align:center;transform:translateY(0);transition:transform .22s var(--ease),box-shadow .22s var(--ease),filter .22s var(--ease);will-change:transform;}
+   なので12節Fの自動吸収がそのまま効く想定で変更していない。
+   ✅2026-08-21・重要な訂正：`.cbCell`を`display:contents`にして.cbItemの
+   flex:1をそのまま#contactBarの直接のflex子として通す設計にしていたが、実際に
+   #contactBarをエリア化すると化ツールが各項目を独自のラッパーdivで包む
+   （13節Fの3重ラップと同種の現象、12節Iの「エリア化された要素は本番出力でも
+   階層が深くなり得る」の裏付け）ため、.cbItem自身はもう#contactBarの直接の子で
+   なくなり、flex:1が効かなくなって3項目の横幅バランスが崩れる不具合が実機で
+   確認された（うにさんの報告：「コンテンツバーのバランスがおかしい」）。
+   対策：flex:1を「#contactBarの直接の子（それが元の.cbCellであれ、化ツールが
+   生成した未知のラッパーdivであれ）」に対して`#contactBar>*`という属性・クラス名に
+   依存しないセレクタで指定する方式に変更した。.cbItem側は親を100%幅で埋めるだけに
+   した（12節Iの「>子コンビネータを避け…」の考え方を、ここでは逆に“直接の子”を
+   明示的に狙う形で応用）。 */
+#contactBar>*{flex:1;display:flex;min-width:0;}
+#contactBar>*:last-child{flex:1.2;}
+#contactBar .cbItem{position:relative;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 10px;font-size:14.5px;font-weight:700;text-align:center;transform:translateY(0);transition:transform .22s var(--ease),box-shadow .22s var(--ease),filter .22s var(--ease);will-change:transform;}
 #contactBar .cbItem:hover,#contactBar .cbItem:focus-visible{transform:translateY(-4px);filter:brightness(1.08) saturate(1.15);box-shadow:0 10px 18px rgba(31,39,51,.22);z-index:1;}
 #contactBar .cbRent{background:var(--mikan);color:#fff;}
 #contactBar .cbSell{background:var(--tea-deep);color:#fff;}
-#contactBar .cbTel{background:var(--tea-pale);color:var(--tea-deep);flex:1.2;flex-direction:column;gap:1px;font-family:var(--font-mono);font-size:16.5px;}
+#contactBar .cbTel{background:var(--tea-pale);color:var(--tea-deep);flex-direction:column;gap:1px;font-family:var(--font-mono);font-size:16.5px;}
 #contactBar .cbTel:hover,#contactBar .cbTel:focus-visible{box-shadow:0 10px 18px rgba(31,39,51,.14);}
 #contactBar .cbTel .telLabel{display:block;font-family:var(--font-body);font-size:10.5px;font-weight:500;color:var(--ink-soft);}
 @media(max-width:600px){#contactBar .cbItem{font-size:12.5px;padding:13px 3px;}#contactBar .cbTel{font-size:14.5px;}}
@@ -544,5 +555,22 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .footerLicense{font-size:11px;color:#8FA69A;margin-top:10px;line-height:1.8;}
 #copy{padding:20px 0;text-align:center;font-size:11px;}
 
-.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+/* [WC] ✅2026-08-21・重要な訂正：以前は`.reveal{opacity:0;...}`をデフォルトにし、
+   `#editView .reveal{opacity:1 !important}`のようなフォールバックで内容変更画面
+   だけ強制表示する設計を想定していたが、実機のDevToolsで確認したところ、
+   実際の内容変更画面のDOM階層には`#editView`に相当するidが存在しないことが
+   判明した（うにさんの報告：「webchanger内でメインコンテンツが表示されない。
+   ソースにはいるっぽい」→実際に`#properties`等の`.reveal`セクションがopacity:0の
+   まま固まっていたことが原因）。
+   対策：「非表示にする責務そのものをCSSからJSへ移す」方式に変更した。
+   `.reveal`自体はデフォルトで表示状態（opacity指定なし）とし、実際にJS
+   （common/js/script.js）が動いた場合だけ`.revealArmed`クラスを追加して
+   はじめて非表示になる。JSが動かない環境（内容変更画面、力/JS無効ブラウザ等）
+   では`.revealArmed`が付与されないため、常に表示された状態のまま。8節の
+   数値カウントアップ演出（「静的HTMLには常に最終値を書いておき、JSが動いた
+   場合だけ書き換える」）と同じ考え方を、スクロールフェードインにも適用した形。
+   本番サイトでは`.revealArmed`付与とIntersectionObserverの初回判定がほぼ同一
+   タスク内で同期的に走るため、体感できるレベルのちらつきは発生しない。 */
+.reveal{transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal.revealArmed{opacity:0;transform:translateY(16px);}
 .reveal.isVisible{opacity:1;transform:translateY(0);}

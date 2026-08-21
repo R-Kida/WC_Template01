@@ -827,12 +827,37 @@
     JSが動かないため永久に解除されず、編集画面上でコンテンツが見えなくなる**。
     → `taisei-site/`の`.reveal`クラス（IntersectionObserverでスクロール
     フェードインさせる自前の演出）がまさにこれに該当する問題だった。
-    対処として`common/css/style.css`に以下を追記済み：
-    ```css
-    #editView .reveal{opacity:1 !important;transform:none !important;}
-    ```
-    今後同様のJS依存の初期非表示パターンを追加する場合は、必ず
-    `#editView`配下での強制表示CSSをセットで書くこと。
+    **✅2026-08-21・重大な訂正（うにさんの実機報告：「webchanger内でメイン
+    コンテンツが表示されない。ソースにはいるっぽい」）**：当初`#editView
+    .reveal{opacity:1 !important;...}`という対処をCSSに追記したと記載していたが、
+    実際にはこのCSSは記載されていなかった（ドキュメント上の記載漏れ）。加えて、
+    うにさんが実機のDevToolsで確認したところ、**内容変更画面の実際のDOM階層には
+    `#editView`に相当するidが存在しない**ことも判明した（`#properties`セクション
+    〈`.section.reveal`〉を選択してもDevToolsのパンくずに`#editView`は一切
+    現れなかった）。つまり`#editView`という前提そのものが未確認のまま本ガイド内で
+    多用されていた可能性があり、この節の他の`#editView`向けフォールバック
+    （`position:fixed`→`static`等）も実機で再検証が必要という新たな課題が
+    生まれた。**`.reveal`自体はこの前提に依存しない設計に変更して解決した**：
+    「非表示にする責務をCSSからJSへ移す」方式。`.reveal`はデフォルトで
+    opacity指定なし（＝表示状態）にし、`common/js/script.js`が実際に動いた
+    ときだけ`.revealArmed`クラスを追加して初めて`opacity:0`になる
+    （`common/css/style.css`の`.reveal`/`.reveal.revealArmed`/`.reveal.isVisible`、
+    `common/js/script.js`のIntersectionObserverセットアップ箇所を参照）。
+    JSが動かない環境（編集画面・JS無効ブラウザ等）では`.revealArmed`が
+    付与されないため、`#editView`のようなセレクタの正体を知らなくても
+    常に表示された状態になる。本番サイトでは`.revealArmed`付与と
+    IntersectionObserverの初回判定がほぼ同一タスク内で同期的に走るため、
+    体感できるちらつきは発生しない（Playwrightで`javaScriptEnabled:false`
+    にして検証済み）。
+    **今後の教訓**：JS依存の初期非表示パターンを追加する場合、`#editView`の
+    ようなセレクタ前提の対症療法よりも、この`.reveal`方式（＝非表示化の実行
+    そのものをJSに持たせ、CSS側の基本状態は常に「表示」にしておく）を第一候補に
+    すること。8節の数値カウントアップ演出（下記）も元々同じ考え方で実装済みで
+    無傷だった。`position:fixed`→`static`のような、逆に「本番側の挙動を維持
+    しつつ編集画面側だけ打ち消したい」ケース（JS側に処理を移せない、CSSの
+    プロパティ自体を編集画面限定で変えたいケース）は`#editView`方式に頼らざるを
+    得ないため、これらは実機で`#editView`が本当に機能しているか再検証が必要
+    （10節に要検証事項として追記要）。
   - `taisei-site/`のヒーロースライダー（`#heroSlider`）はJS
     （`common/js/script.js`）で1枚目に`isActive`クラスを付与しているが、
     **HTML側で最初から`class="slide isActive"`をハードコードしている**ため、
@@ -1206,6 +1231,25 @@ WebChangerが常に読み込む固定CSS/JS（`{%%rdtplcmn_fix%%}/force.css`、
     メインエリアそのものではなく配下の単体エリアにクラスを付与する想定のため、
     9番のA-1方針（クラス追加機能でカードの枠線・padding等を持たせる）は
     問題なく成立する。
+11. **内容変更画面の実際のラップ要素は`#editView`という前提で書かれているが、
+    このid自体が実機で未確認（2026-08-21・新規判明）**：うにさんが実機の
+    DevToolsで`#properties`（`.section.reveal`、`.reveal`のopacity:0問題で表示
+    されなくなっていたセクション）を選択したところ、パンくずに`#editView`は
+    一切現れなかった（`.cmshtml div.cmsbody main section#properties.section.reveal
+    div.inner.rdareaWrapper`という階層のみ確認できた）。8節の`#editView`向け
+    フォールバック群（`position:fixed`→`static`の`#globalNav`、
+    `position:absolute`→`static`の`.heroSlider`/`.slide`/`.heroScrim`/
+    `.heroDots`、`#toTop`等）は、この`#editView`という前提が正しいことを
+    暗黙に仮定して書かれたものであり、**実際には一切効いていない可能性がある**
+    （`.reveal`がまさにその実例だった）。`.reveal`自体は「非表示化の責務を
+    CSSからJSへ移す」方式（8節参照）に変更して`#editView`への依存を解消した
+    ため実害なしになったが、`position:fixed`/`absolute`系の対処（本番側の
+    挙動を維持しつつ編集画面側だけ打ち消す必要があり、JS側に処理を移せない
+    ケース）は`#editView`方式に頼らざるを得ない。次に化ツールで該当箇所
+    （`#globalNav`のモバイル展開時・`.heroSlider`のレイヤー等）を実際に編集
+    画面で確認する機会があれば、①`#editView`のようなidが本当に存在するか、
+    ②存在するなら正確なセレクタ（id名・class名）は何か、をDevToolsで確認し、
+    このガイド内の該当箇所を実物に合わせて修正すること。
 
 ## 11. 参照した情報源一覧
 

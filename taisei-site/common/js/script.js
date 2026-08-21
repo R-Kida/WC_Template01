@@ -65,6 +65,7 @@
 
   var revealEls = document.querySelectorAll('.reveal');
   if(revealEls.length && 'IntersectionObserver' in window){
+    revealEls.forEach(function(el){ el.classList.add('revealArmed'); });
     var revealIo = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if(entry.isIntersecting){
