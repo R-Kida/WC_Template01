@@ -25,7 +25,7 @@
 <div id="utilityBar">
 <div class="inner">
 <div class="ubLeft">
-<div><span class="ubBadge">営業時間 11:00〜19:00</span></div>
+<div class="ubBadge">営業時間 11:00〜19:00</div>
 <div><a href="normalpage.html">初めての方へ</a></div>
 <div><a href="normalpage.html">個人情報保護方針</a></div>
 </div>
@@ -159,7 +159,7 @@
      した。色付け（オレンジ強調）は、化ツール登録後にWebChangerのリッチ
      テキストエディタの文字色機能で「住んでからも、任せてからも」を選択して
      直接適用する（3節参照：この方式で生成される`<span style="color:...">`は
-     エディタ自身が生成するものなので、内容変更確定操作で消える心配がない）。 -->
+     エディタ自身が生成するものなので、内容変更確定操作で消える心配がない）。
      ※h1はbody先頭の視覚非表示テキストがWebChangerのH1指定対象。
        このheroTitleはデザイン上の見出し(h2)で、H1指定の対象ではない。 -->
 <div class="heroTop">
@@ -200,7 +200,7 @@
      なるため、2枚に増やせば自動的に2列になる）。 -->
 <div class="heroCards">
 <article class="heroCard">
-<span class="hcTag">FOR TENANTS</span>
+<div class="hcTag">FOR TENANTS</div>
 <h3>お部屋をお探しの方へ</h3>
 <div class="hcBody">自社物件は仲介手数料無料。トラブル時も自社管理だから即時対応します。</div>
 <div class="hcLink">賃貸物件を見る</div>
@@ -247,7 +247,7 @@
      扱う設計（下記★対象要素コメント参照）のため、ここと同じ「コンテンツ枠が
      1つでない」エラーの対象にはならない。 -->
 <div class="sectionHead">
-<span class="sectionEyebrow">RECOMMENDED</span>
+<div class="sectionEyebrow">RECOMMENDED</div>
 <h2 class="sectionTitle">おすすめ賃貸物件情報</h2>
 <div class="sectionLead">すべて自社所有・自社管理の物件です。仲介手数料はかかりません。詳しくは賃貸物件一覧ページをご覧ください。</div>
 </div>
@@ -282,7 +282,7 @@
 <article class="recoCard">
 <div class="recoThumb"><div class="imgPlaceholder">物件写真</div></div>
 <div class="recoBody">
-<span class="recoTag">格安</span>
+<div class="recoTag">格安</div>
 <h3>プレステージ 103号室</h3>
 <div class="recoPrice">4.3<small>万円（共益費3,000円）</small></div>
 <div class="recoMeta">焼津市東小川3丁目・2DK・1階</div>
@@ -291,32 +291,36 @@
 
 </div>
 
-<!-- [WC] ✅2026-08-19修正：以前は`.noticeBox`全体（svgアイコン＋h3+pの2領域）を
-     1つのカスタムブロックとして登録しようとしたところ「編集ブロック配下の
-     コンテンツ枠が1つでない」エラーが実機で発生した（アイコンとテキストの
-     2領域が混在しているため、13節A「1ブロック=編集可能領域1箇所まで」に反する）。
-     対策：`.noticeBox`自体はエリア化せず固定の外枠として残し、アイコンsvgも
-     固定要素のまま外枠の直下に置く。共通エリア候補cmn001は、直後の
-     <div>（h3+p）だけを親にする——アイコンをエリアの外に出すことで、
-     エリア直下は常にブロック要素だけになる。h3+pはCLAUDE.md 3節で
-     「リッチテキスト領域」の例外として扱っている箇所なので、既存の<p>のまま
-     1つのテキストブロックとして登録してよい。
-     ★対象要素：直後の<div>（h3+pを含む方、svgアイコンではない）をエリアの
-     親にする。 -->
+<!-- [WC] ✅2026-08-19修正（3回対応）：
+     1回目：`.noticeBox`全体（svgアイコン＋h3+pの2領域）を1つのカスタムブロックに
+     しようとしたところ「編集ブロック配下のコンテンツ枠が1つでない」エラーが
+     発生（13節A「1ブロック=編集可能領域1箇所まで」に反する）。アイコンを
+     `<img class="noticeIcon">`として固定要素にし、共通エリアcmn001は内側の
+     <div>（h3+p）だけを親にする方針にした。
+     2回目：実際に登録したところ、`.noticeBox`自体をエリアに指定する操作をされ、
+     アイコンimgがエリア直下の未登録要素として残り「ここもだめ」エラーが
+     再発した（「内側のdivだけをエリアの親にする」という操作手順の徹底は
+     非現実的と判断）。
+     3回目：うにさんの指摘（「pタグも使わないほうが」「spanはインライン要素、
+     divで囲うほうがいい」）を受けて全面的に見直した。h3+pをまとめて1つの
+     リッチテキストブロックにする想定自体が、`.heroTop`/`#pageHead`と同じ
+     「複数の異なる要素を1ブロックにしようとしていた」問題だった可能性が高いと
+     判断。**最終対策**：①アイコンは`.heroBadge`/`.pageNote`と同じ考え方で
+     そもそも廃止（他の同種要素と同様、複雑な形状の割に必須ではない装飾のため）。
+     ②`.noticeBox`直下にh3とテキスト用div（`<p>`は使わない）を直接の子要素として
+     並べ、2つの個別ブロックとして登録する（sectionHead等と同じパターン）。
+     ★対象要素：`.noticeBox`自体をエリアの親にする。配下のh3（見出しブロック）・
+     `.noticeBody`（テキストブロック）をそれぞれ個別に登録する。 -->
 <div class="noticeBox">
-<img class="noticeIcon" alt="" width="22" height="22" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D97425' stroke-width='1.6'%3E%3Cpath d='M12 9 V13 M12 16.5 H12.01 M10.3 3.9 L1.8 18 A2 2 0 0 0 3.5 21 H20.5 A2 2 0 0 0 22.2 18 L13.7 3.9 A2 2 0 0 0 10.3 3.9 Z'/%3E%3C/svg%3E">
-<div>
 <h3>お問い合わせについてのお願い</h3>
-<p>弊社は、ご入居されるご本人様からのお問い合わせのみ対応しております。<br>新卒でのご就職や大学・専門学校へのご入学にあたりお部屋をお探しの方の保護者様向けに、弊社の基本ルールをまとめたご案内を用意しております。恐れ入りますが、ご契約前に一度お読みいただきますようお願いいたします。</p>
-</div>
-</div>
+<div class="noticeBody">弊社は、ご入居されるご本人様からのお問い合わせのみ対応しております。<br>新卒でのご就職や大学・専門学校へのご入学にあたりお部屋をお探しの方の保護者様向けに、弊社の基本ルールをまとめたご案内を用意しております。恐れ入りますが、ご契約前に一度お読みいただきますようお願いいたします。</div>
 </div>
 </section>
 
 <section id="features" class="section reveal">
 <div class="inner">
 <div class="sectionHead">
-<span class="sectionEyebrow">WHY TAISEI HOME</span>
+<div class="sectionEyebrow">WHY TAISEI HOME</div>
 <h2 class="sectionTitle">タイセイの特徴</h2>
 </div>
 <!-- [WC] エリア候補: are002 サブエリア。
@@ -327,22 +331,30 @@
      満たしており、recoCard等と違い折り返しエリア+単体エリアの入れ子は不要。
      <div class="bizGrid">を通常エリア（useronly="1"を検討）にし、配下の
      4つの<div class="bizCell">をそれぞれ直接カスタムブロックとして登録すれば
-     よい（2026-08-18確認済み） -->
+     よい（2026-08-18確認済み）。
+     ★2026-08-19修正：`.bicon`は元々<svg>だったが、実機で「編集ブロック配下の
+     コンテンツ枠がブロック要素でない」エラーの原因になった（`.imgPlaceholder`
+     等と同じ問題）。8種類とも形状が異なりCSS疑似要素では再現できないため、
+     中身が空の`<div class="bicon biconXxx">`にしてCSSのbackground-imageで
+     アイコンを表示する方式に変更した（`common/css/style.css`参照。data URIの
+     `<img>`化も検討したが「固定ブロックにしろ」という警告が出るため不採用、
+     CLAUDE.md 12節F末尾参照）。アイコンdivが空になったことで、h3だけが
+     bizCell内の唯一の「コンテンツ枠」として明確に認識されるようになったはず。 -->
 <div class="bizGrid">
 <div class="bizCell">
-<svg class="bicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21 V9 L12 3 L20 9 V21 M9 21 V14 H15 V21"/></svg>
+<div class="bicon biconHome"></div>
 <h3>自社物件・自社管理</h3>
 </div>
 <div class="bizCell">
-<svg class="bicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2 L3 14 H11 L9 22 L21 10 H13 Z"/></svg>
+<div class="bicon biconAlert"></div>
 <h3>トラブルに即時対応</h3>
 </div>
 <div class="bizCell">
-<svg class="bicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21 C7 17 3 13 3 8.5 A5 5 0 0 1 12 5 A5 5 0 0 1 21 8.5 C21 13 17 17 12 21 Z"/></svg>
+<div class="bicon biconHeart"></div>
 <h3>顔の見える関係</h3>
 </div>
 <div class="bizCell">
-<svg class="bicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21 H21 M5 21 V10 L12 4 L19 10 V21 M9 21 V15 H15 V21"/></svg>
+<div class="bicon biconLand"></div>
 <h3>土地運用のご相談も</h3>
 </div>
 </div>
@@ -369,7 +381,7 @@
 <section id="business" class="section reveal">
 <div class="inner">
 <div class="sectionHead">
-<span class="sectionEyebrow">OUR BUSINESS</span>
+<div class="sectionEyebrow">OUR BUSINESS</div>
 <h2 class="sectionTitle">事業案内</h2>
 <div class="sectionLead">不動産だけでなく、太盛工業として幅広い事業を展開しています。</div>
 </div>
@@ -379,35 +391,40 @@
      sectionLead〉は含めない。
      .bizCell 1つ=ブロック1つの目安。bizCellは編集可能項目がh3見出し1つだけなので
      13節Aの制約を満たす。<div class="bizGrid">を通常エリアにし、配下の
-     <div class="bizCell">をそれぞれ直接カスタムブロックとして登録すればよい -->
+     <div class="bizCell">をそれぞれ直接カスタムブロックとして登録すればよい。
+     `.bicon`のアイコン修正内容は#features側の同コメント参照（2026-08-19）。 -->
 <div class="bizGrid">
 <div class="bizCell">
-<svg class="bicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21 V9 L12 3 L20 9 V21"/></svg>
+<div class="bicon biconRent"></div>
 <h3>不動産賃貸・管理</h3>
 </div>
 <div class="bizCell">
-<svg class="bicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21 H21 M6 21 V11 L12 7 L18 11 V21"/></svg>
+<div class="bicon biconDeal"></div>
 <h3>売買・仲介・分譲</h3>
 </div>
 <div class="bizCell">
-<svg class="bicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 V6 M12 18 V22 M4.9 4.9 L7.8 7.8 M16.2 16.2 L19.1 19.1 M2 12 H6 M18 12 H22 M4.9 19.1 L7.8 16.2 M16.2 7.8 L19.1 4.9"/><circle cx="12" cy="12" r="4"/></svg>
+<div class="bicon biconSolar"></div>
 <h3>ソーラー発電事業</h3>
 </div>
 <div class="bizCell">
-<svg class="bicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2 L18 6 L7 17 L3 18 L4 14 Z"/></svg>
+<div class="bicon biconReform"></div>
 <h3>リフォーム事業</h3>
 </div>
 </div>
 </div>
 </section>
 
-<!-- [WC] エリア候補: are004 サブエリア（テキストブロック1つ）
+<!-- [WC] ✅2026-08-19修正：エリア候補: are004 サブエリア。
      ★対象要素：直後の<section id="philosophy">の中の<div class="inner philoWrap">
-     をエリアの親にする（sectionEyebrow・philoQuote・philoBodyをまとめて
-     1つのテキストブロックにする想定）。 -->
+     をエリアの親にする。
+     ★登録方法（修正）：当初「sectionEyebrow・philoQuote・philoBodyをまとめて
+     1つのテキストブロックにする想定」だったが、`.heroTop`/`#pageHead`/
+     `.noticeBox`と同じ「複数の異なる要素を1ブロックにしようとしていた」問題に
+     該当するため、3つ（sectionEyebrow・philoQuote・philoBody）をそれぞれ個別の
+     標準ブロックとして登録する。 -->
 <section id="philosophy" class="section reveal">
 <div class="inner philoWrap">
-<span class="sectionEyebrow">OUR PHILOSOPHY</span>
+<div class="sectionEyebrow">OUR PHILOSOPHY</div>
 <div class="philoQuote">理想は、江戸の長屋の大家さん。</div>
 <div class="philoBody">入居者様と大家、お互いに顔の見える関係でありたい。それが私たちの変わらない考え方です。<br>大手仲介会社に管理を任せていた時期もありましたが、対応に納得がいかず、今はすべて自社で管理しています。</div>
 </div>
