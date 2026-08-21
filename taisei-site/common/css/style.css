@@ -317,18 +317,23 @@ h6{font-size:11px;}
    階層が深くなり得る」の裏付け）ため、.cbItem自身はもう#contactBarの直接の子で
    なくなり、flex:1が効かなくなって3項目の横幅バランスが崩れる不具合が実機で
    確認された（うにさんの報告：「コンテンツバーのバランスがおかしい」）。
-   対策：flex:1を「#contactBarの直接の子（それが元の.cbCellであれ、化ツールが
-   生成した未知のラッパーdivであれ）」に対して`#contactBar>*`という属性・クラス名に
-   依存しないセレクタで指定する方式に変更した。.cbItem側は親を100%幅で埋めるだけに
-   した（12節Iの「>子コンビネータを避け…」の考え方を、ここでは逆に“直接の子”を
-   明示的に狙う形で応用）。 */
-#contactBar>*{flex:1;display:flex;min-width:0;}
-#contactBar>*:last-child{flex:1.2;}
-#contactBar .cbItem{position:relative;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 10px;font-size:14.5px;font-weight:700;text-align:center;transform:translateY(0);transition:transform .22s var(--ease),box-shadow .22s var(--ease),filter .22s var(--ease);will-change:transform;}
+   ✅2026-08-21・さらに訂正：いったん`#contactBar>*{flex:1}`（直接の子を狙う方式）
+   に変更したが、それでも本番で崩れたままだった（うにさんの報告・スクリーンショット
+   で確認）。これは化ツールのラップが「直接の子」1段ではなく、`.rdareaItem`→
+   `.rdareaContents`→素のdiv（13節F）のように**複数段**になっており、.cbItemが
+   #contactBarの孫・ひ孫の位置まで潜ってしまっていたため。何段ラップされるか・
+   どんなクラス名になるかは化ツール側の実装次第で予測できないため、「特定の階層を
+   狙う」アプローチ自体を諦め、**`:has()`で.cbItemを含む祖先要素を丸ごと
+   `display:contents`にする**方式に変更した。これなら間に何段・どんな名前の
+   ラッパーdivが挟まっても、.cbItem自身が実質的に#contactBarの直接のflex子に
+   なる（ラッパーの正体を知る必要が一切ない）。`:has()`は`body:has(#contactBar)
+   #toTop{...}`で既に使用実績あり。 */
+#contactBar :not(.cbItem):has(.cbItem){display:contents;}
+#contactBar .cbItem{position:relative;flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 10px;font-size:14.5px;font-weight:700;text-align:center;transform:translateY(0);transition:transform .22s var(--ease),box-shadow .22s var(--ease),filter .22s var(--ease);will-change:transform;}
 #contactBar .cbItem:hover,#contactBar .cbItem:focus-visible{transform:translateY(-4px);filter:brightness(1.08) saturate(1.15);box-shadow:0 10px 18px rgba(31,39,51,.22);z-index:1;}
 #contactBar .cbRent{background:var(--mikan);color:#fff;}
 #contactBar .cbSell{background:var(--tea-deep);color:#fff;}
-#contactBar .cbTel{background:var(--tea-pale);color:var(--tea-deep);flex-direction:column;gap:1px;font-family:var(--font-mono);font-size:16.5px;}
+#contactBar .cbTel{background:var(--tea-pale);color:var(--tea-deep);flex:1.2;flex-direction:column;gap:1px;font-family:var(--font-mono);font-size:16.5px;}
 #contactBar .cbTel:hover,#contactBar .cbTel:focus-visible{box-shadow:0 10px 18px rgba(31,39,51,.14);}
 #contactBar .cbTel .telLabel{display:block;font-family:var(--font-body);font-size:10.5px;font-weight:500;color:var(--ink-soft);}
 @media(max-width:600px){#contactBar .cbItem{font-size:12.5px;padding:13px 3px;}#contactBar .cbTel{font-size:14.5px;}}
