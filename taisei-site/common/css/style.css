@@ -632,10 +632,17 @@ body:has(#contactBar) #toTop{bottom:88px;}
 .rdcontact_main .contact_tel_sepalate input{width:auto;flex:1;min-width:0;text-align:center;}
 
 /* 住所タイトル（郵便番号・住所検索ボタン・都道府県・住所） */
-.rdcontact_main .contact_item_inside_table{margin:0;display:flex;flex-direction:column;gap:14px;}
-.rdcontact_main .contact_item_inside_title{font-size:12.5px;font-weight:700;color:var(--ink-soft);}
-.rdcontact_main .contact_item_inside_input{margin:4px 0 0;}
-.rdcontact_main .contact_sepalate_zip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+/* [WC] ✅2026-08-21・実機報告（うにさん：「なんかおかしい」）で判明：住所タイトル
+   配下（郵便番号／都道府県／住所）だけラベル・入力欄が中央寄せになり、他の項目
+   （テキストタイトル・名前タイトル等）の左寄せと揃わない崩れが発生した。原因は
+   force.css側にこの`.contact_item_inside_*`向けのtext-align:center等の既定
+   スタイルがあると考えられるが、force.cssは外部ホスト配信のため中身を確認
+   できなかった。7節の既存方針（force.cssに確実に勝つよう!importantを付与）と
+   同じ考え方で、幅・displayを明示的に強制して左寄せに固定した。 */
+.rdcontact_main .contact_item_inside_table{margin:0 !important;width:100% !important;text-align:left !important;display:flex;flex-direction:column;gap:14px;}
+.rdcontact_main .contact_item_inside_title{display:block !important;width:100% !important;text-align:left !important;font-size:12.5px;font-weight:700;color:var(--ink-soft);}
+.rdcontact_main .contact_item_inside_input{display:block !important;width:100% !important;text-align:left !important;margin:4px 0 0;}
+.rdcontact_main .contact_sepalate_zip{display:flex !important;align-items:center;gap:10px;flex-wrap:wrap;}
 .rdcontact_main input.contact_address_zip_sepalate{width:84px;flex:0 0 auto;text-align:center;}
 .rdcontact_main .contact_address_zip_sepalater{color:var(--ink-soft);}
 .rdcontact_main .btn_contacts_post_api{
@@ -645,7 +652,7 @@ body:has(#contactBar) #toTop{bottom:88px;}
   transition:background .18s var(--ease),color .18s var(--ease);
 }
 .rdcontact_main .btn_contacts_post_api:hover{background:var(--tea-deep);color:#fff;}
-.rdcontact_main .contact_address_pref{max-width:280px;}
+.rdcontact_main .contact_address_pref{display:block !important;max-width:280px;}
 
 /* 日付タイトル（年月の範囲指定） */
 .rdcontact_main .contact-date-inline{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;vertical-align:middle;}
